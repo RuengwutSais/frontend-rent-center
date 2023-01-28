@@ -6,6 +6,7 @@ import Router from "vue-router";
 Vue.use(Router)
 
 let router = new Router({
+    mode: "history",
     linkExactActiveClass: "active",
     routes: [
         {
@@ -13,6 +14,15 @@ let router = new Router({
             name: "Login",
             component: () =>
                 import(/* webpackChunkName: "demo" */ "./views/LoginForm.vue"),
+            meta: {
+                guest: true,
+            },
+        },
+        {
+            path: "/register",
+            name: "Register",
+            component: () =>
+                import(/* webpackChunkName: "demo" */ "./views/RegisterForm.vue"),
             meta: {
                 guest: true,
             },

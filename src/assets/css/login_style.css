@@ -5,9 +5,10 @@ body
     margin:0;
     padding:0;
     background-color:#ebecf0;
-    display:flex;align-items:center;
+    display:flex;
+    align-items:center;
     justify-content:center;
-    height:100vh;
+    height:110vh;
     font-family: 'Kanit', sans-serif;
     font-family: 'Mitr', sans-serif;
 }
@@ -20,7 +21,7 @@ body
     flex-direction:column;
     padding:2em;
     box-shadow:rgba(100,100,111,.2) 0px 7px 29px 0px;
-    position:relative
+    position:relative;
 }
 .box .message
 {
@@ -110,6 +111,21 @@ body
     box-shadow:rgba(60,64,67,.3) 0px 0px 0px 0px,rgba(60,64,67,.15) 0px 0px 3px 0px;
     background-size:50px
 }
+.input_error {
+    width:100%;
+    padding:1em;
+    display:flex;
+    background-color: #fff;
+    border-color: #ea2d3f important; 
+    border:1px solid #000;
+    border-radius:.7em;
+    box-shadow:rgba(60,64,67,.3) 0px 0px 0px 0px,rgba(60,64,67,.15) 0px 0px 3px 0px;
+    background-size:50px
+}
+.message_error{
+    color: #ea2d3f;
+    margin:.2em
+}
 .box .in .button_action
 {
     display:flex;
@@ -124,7 +140,8 @@ body
     border:1px solid #ebecf0;
     cursor:pointer;
     transition:250ms;
-    border-radius:5em
+    border-radius:5em;
+    
 }
 .box .in .button_action button:hover
 {
@@ -220,4 +237,18 @@ body
 {
     background-color:#fff;
     box-shadow:rgba(60,64,67,.3) 0px 0px 0px 0px,rgba(60,64,67,.15) 0px 0px 3px 0px
-}/*# sourceMappingURL=style.css.map */
+}
+.vti_dropdown{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+}
+.vue-tel-input{
+    border-radius: 3px;
+    display: flex;
+    border: transparent;
+    text-align: left;
+}
