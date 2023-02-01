@@ -8,12 +8,7 @@
     <div class="in">
       <label for="name">กรอกอีเมล</label>
       <div>
-        <input type="email" name="email" v-model="user.email">
-      </div>
-      <div class="button_action">
-        <button @click="user.email = user.email+'@bumail.net' ">@bumail.net</button> 
-        <button @click="user.email = user.email+'@gmail.com' ">@gmail.com</button>  
-        <button @click="user.email = user.email+'@hotmail.com' ">@hotmail.com</button>
+        <input type="email" name="email" v-model="user.email" placeholder="อีเมล">
       </div>
     </div>
     <div class="in">
@@ -33,6 +28,10 @@
   </div>
  </div>
 </template>
+
+<style lang="css" scoped>
+  @import '@/assets/css/login_style.css';
+</style>
 
 <script>
 export default {
