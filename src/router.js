@@ -10,6 +10,15 @@ let router = new Router({
     linkExactActiveClass: "active",
     routes: [
         {
+            path: "/admin",
+            name: "adminpage",
+            component: () => 
+                import(/* webpackChunkName: "demo" */ "./views/admin/adminPage.vue"),
+            meta: {
+                admin: true,
+            },
+        },
+        {
             path: "/login",
             name: "Login",
             component: () =>
@@ -36,20 +45,31 @@ let router = new Router({
                 guest: true,
             },
         },
+        {
+            path: "*",
+            name: "404PAGE",
+            component: () =>
+                import(/* webpackChunkName: "demo" */ "./views/ERROR/404PAGE.vue"),
+            meta: {
+                guest: true
+            }
+        }
     ]
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.matched.some((record) => record.meta.guest)) {
-        if (localStorage.getItem("access_token") == null) {
+    if(to.matched.some((record) => record.meta.admin)) {
+        if (localStorage.getItem("admin_token") !== null) {
             next();
-        } else {
+        }else {
             next({
-                path: "/",
+                path: "/404FOUND",
             });
         }
-    } else {
-        next({ path: "/" });
+    }else if (to.matched.some((record) => record.meta.guest)) {
+        if (localStorage.getItem("access_token") === null) {
+            next();
+        }
     }
 });
 
