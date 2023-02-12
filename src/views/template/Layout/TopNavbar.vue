@@ -47,7 +47,7 @@
                 </ul>
               </drop-down>
             </md-list-item> -->
-
+<!-- 
             <li class="md-list-item">
               <a
                 href="#/notifications"
@@ -74,7 +74,7 @@
                   </drop-down>
                 </div>
               </a>
-            </li>
+            </li> -->
 
             <md-list-item href="#/user">
               <i class="material-icons">person</i>

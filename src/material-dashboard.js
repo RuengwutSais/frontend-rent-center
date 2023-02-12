@@ -3,7 +3,7 @@ import SideBar from "./components/SidebarPlugin";
 
 // asset imports
 import VueMaterial from "vue-material";
-import "vue-material/dist/vue-material.css";
+import "../node_modules/vue-material/dist/vue-material.css";
 import "./assets/scss/material-dashboard.scss";
 
 // library auto imports
