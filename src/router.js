@@ -105,7 +105,7 @@ let router = new Router({
         //     path: "*",
         //     name: "404PAGE",
         //     component: () =>
-        //         import(/* webpackChunkName: "demo" */ "./views/ERROR/404PAGE.vue"),
+        //         import(/* webpackChunkName: "demo" */ "./views/error/404PAGE.vue"),
         //     meta: {
         //         guest: true
         //     }
