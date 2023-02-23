@@ -2,8 +2,6 @@
   <div
     class="sidebar"
     :data-color="sidebarItemColor"
-    :data-image="sidebarBackgroundImage"
-    :style="sidebarStyle"
   >
     <div class="logo">
       <a href="#" class="simple-text logo-mini">
@@ -47,11 +45,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "Vue MD",
-    },
-    sidebarBackgroundImage: {
-      type: String,
-      default: require("@/assets/img/sidebar-2.jpg"),
+      default: "RENT CENTRAL",
     },
     imgLogo: {
       type: String,
@@ -78,13 +72,6 @@ export default {
     return {
       autoClose: this.autoClose,
     };
-  },
-  computed: {
-    sidebarStyle() {
-      return {
-        backgroundImage: `url(${this.sidebarBackgroundImage})`,
-      };
-    },
   },
 };
 </script>

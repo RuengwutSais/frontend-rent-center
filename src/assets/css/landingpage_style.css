@@ -1,0 +1,549 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&family=Mitr:wght@200&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Kanit', sans-serif;
+    font-size: 20px;
+    height: auto;
+    background-color: #fff;
+    overflow-x: hidden;
+}
+
+.header {
+    width: 100vw;
+    height: 60px;
+    background-color: #fff;
+    box-shadow: 0px 3px 8px rgba(200, 200, 200, 0.2);
+    display: flex;
+    align-items: center;
+}
+
+.navb-logo {
+    justify-items: center;
+    padding-left: 60px;
+}
+
+.img-logo {
+    height: 3rem !important;
+}
+
+.header .coniainer-fluid {
+    width: 100%;
+    padding-right: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+
+}
+
+.header .navb-items {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    letter-spacing: 3px;
+}
+
+.header .items {
+    text-align: center;
+    font-size: 20px;
+    letter-spacing: 3px;
+    margin-right: 6px;
+}
+
+.button-nav {
+    height: 2.75rem;
+    width: 8rem;
+    background-color: #fff;
+    color: #000;
+    border-radius: .4em;
+    border: 1px solid #000;
+    transition: 250ms;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.button-nav:hover {
+    border: 1px solid #000;
+    background-color: #000;
+    color: #fff
+}
+
+.fa-bars {
+    color: #000 !important;
+    padding-left: 20px;
+}
+
+.mobile-toggler {
+    display: none;
+}
+
+.modal-dialog {
+    position: fixed;
+    margin: 0px !important;
+    width: 260px;
+    top: 0px;
+    right: 0px;
+}
+
+.modal-content {
+    border-radius: 0;
+    height: 110vh;
+    background-color: #fff;
+    overflow-y: hidden;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 88%;
+    margin: 0 auto;
+    padding-bottom: 16px;
+}
+
+.modal-header .btn-close {
+    background: transparent;
+    opacity: 1;
+}
+
+.modal-header i {
+    color: #000 !important;
+    font-size: 30px !important;
+}
+
+.modal-body {
+    width: 88%;
+    margin: 0 auto;
+    padding: 75px 0 0;
+    flex: unset;
+    text-align: center;
+}
+
+.modal-button {
+    height: 2.75rem;
+    width: 10rem;
+    background-color: #fff;
+    color: #000;
+    border-radius: .4em;
+    border: 1px solid #000;
+    transition: 250ms;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.modal-button:hover {
+    border: 1px solid #000;
+    background-color: #000;
+    color: #fff
+}
+
+.picture-search {
+    background-image: url(login_background.jpg);
+    background-color: #ebecf0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+}
+
+.picture-search .search-div {
+    width: 70vh;
+}
+
+.picture-search .search-div .search-button {
+    display: flex;
+    align-items: center;
+}
+
+.picture-search .search-div .input-group {
+    background-color: #FFF;
+    position: relative;
+    display: flex;
+    width: 100%;
+    padding: .4em;
+    border-radius: .7em;
+    border: 1px solid #ebecf0;
+    box-shadow: rgb(60 64 67 / 30%) 0px 0px 0px 0px, rgb(60 64 67 / 15%) 0px 0px 3px 0px;
+    background-size: 50px;
+}
+
+.input-group-text {
+    background-color: transparent;
+    border: none;
+}
+
+.search-landing {
+    width: 90%;
+    font-size: 18px;
+    border: none;
+}
+
+.fa {
+    color: #000;
+}
+
+.button-search {
+    height: 2.75rem;
+    width: 8rem;
+    background-color: #000;
+    color: #fff;
+    border-radius: .7em;
+    border: 1px solid #000;
+    transition: 250ms;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-left: 10px;
+}
+
+.button-search:hover {
+    border: 1px solid #fff;
+    background-color: #fff;
+    color: #000;
+}
+
+.picture-search .search-div .dropdown-wrapper {
+    display: flex;
+    margin-top: 10px;
+}
+
+.estate-pop {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.slider-estate {
+    width: 100%;
+    position: relative;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.card-container .card {
+    margin: 5px;
+    box-shadow: rgba(100, 100, 111, .2) 0px 7px 29px 0px;
+    border-radius: 1em;
+    overflow: hidden;
+    position: relative;
+    background-color: #fff;
+}
+
+.card-container .card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-container .card-img img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-container .card-info {
+    padding: 10px;
+    text-align: start;
+    align-items: center;
+}
+
+.card-container .card-info .card-name p {
+    color: #000 !important;
+    font-size: 17px;
+    margin: 0 !important;
+    font-weight: bold;
+}
+
+.card-container .card-info .card-price {
+    display: flex;
+    align-items: center;
+    padding: 0px 0px 0px 3px !important;
+}
+
+.card-container .card-info .card-location {
+    display: flex;
+    align-items: center;
+    padding: 0px 0px 0px 3px !important;
+}
+
+.card-container .card-info .card-bedroom {
+    display: flex;
+    align-items: center;
+    padding: 0px 0px 0px 3px !important;
+}
+
+.card-container .card-info .card-bathroom {
+    display: flex;
+    align-items: center;
+    padding: 0px 0px 0px 3px !important;
+}
+
+.card-container .card-info .card-floor {
+    display: flex;
+    align-items: center;
+    padding: 0px 0px 0px 3px !important;
+}
+
+.card-container .card-info .card-area {
+    display: flex;
+    align-items: center;
+    padding: 0px 0px 0px 3px !important;
+}
+
+
+.card-container .card-info .card-price p {
+    color: #000 !important;
+    font-size: 16px;
+    margin: 0 !important;
+}
+
+.card-container .card-info .card-location p {
+    color: #000 !important;
+    font-size: 16px;
+    margin: 0 !important;
+}
+
+.card-container .card-info .estate-room .card-bedroom p {
+    color: #000 !important;
+    font-size: 14px;
+    margin: 0 !important;
+}
+
+.card-container .card-info .estate-room .card-bathroom p {
+    color: #000 !important;
+    font-size: 14px;
+    margin: 0 !important;
+}
+
+.card-container .card-info .estate-area .card-floor p {
+    color: #000 !important;
+    font-size: 14px;
+    margin: 0 !important;
+}
+
+.card-container .card-info .estate-area .card-area p {
+    color: #000 !important;
+    font-size: 14px;
+    margin: 0 !important;
+}
+
+.card-container .card-info .estate-room i {
+    color: #000 !important;
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.card-container .card-info .estate-area i {
+    color: #000 !important;
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.card-container .card-info i {
+    margin-right: 5px;
+    color: #000;
+    font-size: 16px;
+}
+
+.card-container .card-info .estate-room {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-container .card-info .estate-area {
+    display: flex;
+    justify-content: space-between;
+}
+
+.estate-pop h1 {
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+.more-estate {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+
+.more-estate a {
+    text-decoration: underline;
+    color: #000 !important;
+}
+
+.btn-condo {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.btn-condo .btn {
+    border: none;
+    background-color: transparent;
+    color: #000;
+    font-size: 1.8rem;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+}
+
+.btn-condo .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-condo .btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.btn-condo .left-btn {
+    margin-right: 10px;
+}
+
+.btn-condo .right-btn {
+    margin-left: 10px;
+}
+
+.btn-condo .left-btn:hover,
+.btn-condo .right-btn:hover {
+    cursor: pointer;
+    color: #999;
+}
+
+.btn-condo .left-btn:active,
+.btn-condo .right-btn:active {
+    color: #555;
+}
+
+.footer {
+    background-color: #f8f9fa;
+    padding: 30px 0;
+}
+
+.footer .footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.footer .footer-container .row{
+    width: 100%;
+}
+
+.company-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.footer-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.footer-links li {
+    margin: 0 10px;
+}
+
+.footer-links a {
+    color: #343a40;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.footer-links a:hover {
+    color: #007bff !important;
+}
+
+.footer-links a:focus {
+    color: #007bff !important;
+}
+
+@media only screen and (max-width: 767px) {
+    .header .coniainer-fluid {
+        padding-right: 30px;
+    }
+
+    .navb-logo {
+        padding-left: 30px;
+    }
+
+    .mobile-toggler {
+        display: flex;
+    }
+
+    .button-nav {
+        display: none;
+    }
+
+    .picture-search {
+        height: 60vh;
+    }
+
+    .picture-search .search-div {
+        width: 90%;
+    }
+
+    .picture-search .search-div .input-group {
+        flex-wrap: inherit;
+        height: 2.5rem;
+    }
+
+    .button-search {
+        height: 2.5rem;
+        width: 5rem;
+        margin-top: 2px;
+    }
+
+    .estate-pop h1 {
+        font-family: 'Kanit', sans-serif;
+        font-weight: 500;
+        margin-left: 10px;
+        font-size: 40px;
+    }
+
+    .card-container {
+        flex-wrap: wrap;
+    }
+
+    .card-container .card {
+        flex: 0 0 calc(50% - 10px);
+    }
+
+    .card-container .card-img img {
+        object-fit: fill;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+
+    /* styles for iPad */
+    .picture-search .search-div {
+        width: 90%;
+    }
+}

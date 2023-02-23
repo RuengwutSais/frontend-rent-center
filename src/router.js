@@ -92,6 +92,15 @@ let router = new Router({
                 guest: true,
             },
         },
+        {
+          path: "/main",
+          name: "Main",
+          component: () =>
+              import(/* webpackChunkName: "demo" */ "./views/LandingPage.vue"),
+          meta: {
+              guest: true,
+          },
+        }
         // {
         //     path: "/",
         //     name: "LandingPage",

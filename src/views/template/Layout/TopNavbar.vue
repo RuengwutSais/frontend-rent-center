@@ -26,7 +26,7 @@
             </md-autocomplete>
           </div>
           <md-list>
-            <md-list-item href="#/">
+            <md-list-item href="">
               <i class="material-icons">dashboard</i>
               <p class="hidden-lg hidden-md">Dashboard</p>
             </md-list-item>
@@ -76,7 +76,7 @@
               </a>
             </li> -->
 
-            <md-list-item href="#/user">
+            <md-list-item href="">
               <i class="material-icons">person</i>
               <p class="hidden-lg hidden-md">Profile</p>
             </md-list-item>

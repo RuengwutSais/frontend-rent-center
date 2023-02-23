@@ -1,5 +1,5 @@
 <template>
-  <ul class="nav nav-mobile-menu">
+  <!-- <ul class="nav nav-mobile-menu">
     <li>
       <md-field>
         <label>Search</label>
@@ -11,7 +11,7 @@
         <i class="material-icons">dashboard</i>
         <p>Dashboard</p></a
       >
-    </li>
+    </li>  -->
     <!-- <li>
       <drop-down>
         <a slot="title" class="dropdown-toggle" data-toggle="dropdown">
@@ -28,13 +28,14 @@
         </ul>
       </drop-down>
     </li> -->
-    <li>
+    <!-- <li>
       <a href="#" data-toggle="dropdown" class="dropdown-toggle"
         ><i class="material-icons">person</i>
         <p>Profile</p></a
       >
     </li>
-  </ul>
+  </ul> -->
+  <div></div>
 </template>
 <script>
 export default {

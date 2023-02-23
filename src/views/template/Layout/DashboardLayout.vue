@@ -2,28 +2,27 @@
   <div class="wrapper" :class="{ 'nav-open': $sidebar.showSidebar }">
     <side-bar
       :sidebar-item-color="sidebarBackground"
-      :sidebar-background-image="sidebarBackgroundImage"
     >
       <mobile-menu slot="content"></mobile-menu>
-      <sidebar-link class="border-danger" @click="linktoPath('dashboard')" to="/admin/dashboard">
+      <sidebar-link to="/admin/dashboard">
         <md-icon>dashboard</md-icon>
-        <p>Dashboard</p>
+        <p>ภาพรวม</p>
       </sidebar-link>
       <sidebar-link to="/admin/user">
         <md-icon>person</md-icon>
-        <p>User Profile</p>
+        <p>ตั้งค่าบัญชี</p>
       </sidebar-link>
       <sidebar-link to="/admin/table">
         <md-icon>content_paste</md-icon>
-        <p>Table list</p>
+        <p>อสังหาริมทรัพย์</p>
       </sidebar-link>
       <sidebar-link to="/admin/typography">
         <md-icon>library_books</md-icon>
-        <p>Typography</p>
+        <p>ข้อความ</p>
       </sidebar-link>
       <sidebar-link to="/admin/icons">
         <md-icon>bubble_chart</md-icon>
-        <p>Icons</p>
+        <p>ค้นหา</p>
       </sidebar-link>
       <sidebar-link to="/admin/maps">
         <md-icon>location_on</md-icon>
@@ -31,7 +30,7 @@
       </sidebar-link>
       <sidebar-link to="/admin/upgrade" class="active-pro">
         <md-icon>unarchive</md-icon>
-        <p>Upgrade to PRO</p>
+        <p>ออกจากระบบ</p>
       </sidebar-link>
     </side-bar>
 
@@ -40,7 +39,6 @@
 
       <fixed-plugin
         :color.sync="sidebarBackground"
-        :image.sync="sidebarBackgroundImage"
       >
       </fixed-plugin>
 
@@ -71,7 +69,6 @@ export default {
   data() {
     return {
       sidebarBackground: "green",
-      sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg"),
     };
   },
   methods: {
