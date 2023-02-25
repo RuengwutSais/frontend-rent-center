@@ -66,24 +66,6 @@ let router = new Router({
       },
     },
     {
-      path: "/login",
-      name: "Login",
-      component: () =>
-        import(/* webpackChunkName: "demo" */ "./views/LoginForm.vue"),
-      meta: {
-        guest: true,
-      },
-    },
-    {
-      path: "/register",
-      name: "Register",
-      component: () =>
-        import(/* webpackChunkName: "demo" */ "./views/RegisterForm.vue"),
-      meta: {
-        guest: true,
-      },
-    },
-    {
       path: "/main",
       name: "Main",
       component: () =>
@@ -104,10 +86,22 @@ let router = new Router({
             import(/* webpackChunkName: "demo" */ "./views/LandingPage.vue"),
         },
         {
-          path: "term-of-service",
-          name: "TermOfService",
+          path: "termpage",
+          name: "TermPage",
           component: () =>
-            import(/* webpackChunkName: "demo" */ "./views/LandingPage.vue"),
+            import(/* webpackChunkName: "demo" */ "./views/TermOfServicePage.vue"),
+        },
+        {
+          path: "login",
+          name: "Login",
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/LoginForm.vue"),
+        },
+        {
+          path: "register",
+          name: "Register",
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/RegisterForm.vue"),
         },
       ],
       meta: {

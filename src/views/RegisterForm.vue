@@ -74,10 +74,6 @@
     </div>
 </template>
 
-<style lang="css" scoped>
-     @import '@/assets/css/register_style.css';
-</style>
-
 <script>
     export default{
         data(){
@@ -210,3 +206,6 @@
         }
     }
 </script>
+<style lang="scss" scoped>
+@import url('@/assets/scss/registerstyle.scss');
+</style>

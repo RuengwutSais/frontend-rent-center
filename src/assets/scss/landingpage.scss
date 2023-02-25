@@ -19,6 +19,15 @@ body {
     align-items: center;
     position: fixed;
     z-index: 100;
+    top: 0;
+}
+
+.margin-4rem {
+    margin-top: 3.8rem;
+}
+
+.border-danger {
+  border: 1px solid red;
 }
 
 .navb-logo {
@@ -147,7 +156,7 @@ a {
 }
 
 .picture-search {
-    background-image: url(login_background.jpg);
+    background-image: url('../img/login_background.png');
     background-color: #ebecf0;
     background-size: cover;
     background-repeat: no-repeat;
@@ -435,56 +444,58 @@ a {
 .btn-condo .right-btn:active {
     color: #555;
 }
+    .footer {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        background-color: #f8f9fa;
+        padding: 30px 0;
+    }
 
-.footer {
-    background-color: #f8f9fa;
-    padding: 30px 0;
-}
+    .footer .footer-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
 
-.footer .footer-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
+    .footer .footer-container .row{
+        width: 100%;
+    }
 
-.footer .footer-container .row{
-    width: 100%;
-}
+    .company-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin: 0;
+    }
 
-.company-name {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 0;
-}
+    .footer-links {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: flex-end;
+    }
 
-.footer-links {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: flex-end;
-}
+    .footer-links li {
+        margin: 0 10px;
+    }
 
-.footer-links li {
-    margin: 0 10px;
-}
+    .footer-links a {
+        color: #343a40;
+        text-decoration: none;
+        font-size: 1rem;
+    }
 
-.footer-links a {
-    color: #343a40;
-    text-decoration: none;
-    font-size: 1rem;
-}
+    .footer-links a:hover {
+        color: #007bff !important;
+    }
 
-.footer-links a:hover {
-    color: #007bff !important;
-}
-
-.footer-links a:focus {
-    color: #007bff !important;
-}
+    .footer-links a:focus {
+        color: #007bff !important;
+    }
 
 @media only screen and (max-width: 767px) {
     .header .coniainer-fluid {

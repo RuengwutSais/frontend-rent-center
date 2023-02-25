@@ -179,7 +179,7 @@
         <div class="more-estate">
           <a href="">ดูบ้านเดี่ยวเพิ่มเติม ></a>
         </div>
-        <div class="slider-estate border-danger">
+        <div class="slider-estate">
           <div class="card-container">
             <div
               class="card"

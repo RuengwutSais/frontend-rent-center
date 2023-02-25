@@ -2,18 +2,11 @@
 
 body
 {
-    margin:0;
-    padding:0;
-    background-image: url(login_background.jpg);
+    background-image: url('../img/login_background.png');
     background-color:#ebecf0;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    height:100vh;
-    font-family: 'Kanit', sans-serif;
 }
 .box
 {
@@ -129,7 +122,11 @@ body
 }
 .message_error{
     color: #ea2d3f;
-    margin:.2em
+    margin:.3em
+}
+.box .in .error-icon{
+    color: #ea2d3f;
+    margin:.3em
 }
 .box .check_bar
 {
@@ -146,7 +143,7 @@ body
 {
   height: 1em;
   width: 1em;
-  margin:0 0.5em;
+  margin:0 1em
 }
 .box span
 {
@@ -158,6 +155,24 @@ body
 {
     color:#000
 }
+.box .password_bar
+{
+    display:flex;
+    width:100%
+}
+.box .password_bar .bar
+{
+    width:15%;
+    height:6px;
+    background-color:#ebecf0;
+    border-radius:1em;
+    margin:4px;
+}
+.box .password_bar .green
+{
+    background-color:#6dd16d
+}
+
 .gold-mid
 {
     background-color:#666
@@ -206,26 +221,38 @@ body
     box-shadow:rgba(60,64,67,.3) 0px 0px 0px 0px,rgba(60,64,67,.15) 0px 0px 3px 0px
 }
 
-
 @media only screen and (max-width: 767px) {
+     /* styles for mobile phones */
     body {
-        background-size:cover;
+      height:auto;
+      background-size:cover;
     }
     .box
     {
         padding:2em;
-        width:40vh;
+        margin: 2em;
+        width:35vh;
     }
     .box .log
     {
         font-size: 14px;
     }
-  }
+    .box .password_bar .bar{
+        margin: 3px;
+    }
+}
 
-  @media only screen and (min-width: 768px) and (max-width: 1024px){
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    /* styles for iPad */
+    body {
+        background-size: cover;
+        height: 100vh;
+    }
     .box
     {
         padding:2em;
+        margin: 2em;
         width:40vh;
     }
   }
+  

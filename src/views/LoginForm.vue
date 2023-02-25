@@ -29,10 +29,6 @@
  </div>
 </template>
 
-<style lang="css" scoped>
-  @import '@/assets/css/login_style.css';
-</style>
-
 <script>
 export default {
   data() {
@@ -71,5 +67,7 @@ export default {
     }
 }
 </script> 
-
+<style lang="scss" scoped>
+@import url('@/assets/scss/loginstyle.scss');
+</style>
 

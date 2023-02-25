@@ -1,20 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&family=Mitr:wght@200&display=swap');
 
-body
-{
-    margin:0;
-    padding:0;
-    background-image: url(login_background.jpg);
-    background-color:#ebecf0;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    height:120vh;
-    font-family: 'Kanit', sans-serif;
-}
 .box
 {
     background-color:#fff;
@@ -129,11 +114,7 @@ body
 }
 .message_error{
     color: #ea2d3f;
-    margin:.3em
-}
-.box .in .error-icon{
-    color: #ea2d3f;
-    margin:.3em
+    margin:.2em
 }
 .box .check_bar
 {
@@ -150,7 +131,7 @@ body
 {
   height: 1em;
   width: 1em;
-  margin:0 1em
+  margin:0 0.5em;
 }
 .box span
 {
@@ -162,24 +143,6 @@ body
 {
     color:#000
 }
-.box .password_bar
-{
-    display:flex;
-    width:100%
-}
-.box .password_bar .bar
-{
-    width:15%;
-    height:6px;
-    background-color:#ebecf0;
-    border-radius:1em;
-    margin:4px;
-}
-.box .password_bar .green
-{
-    background-color:#6dd16d
-}
-
 .gold-mid
 {
     background-color:#666
@@ -228,38 +191,26 @@ body
     box-shadow:rgba(60,64,67,.3) 0px 0px 0px 0px,rgba(60,64,67,.15) 0px 0px 3px 0px
 }
 
+
 @media only screen and (max-width: 767px) {
-     /* styles for mobile phones */
     body {
-      height:auto;
-      background-size:cover;
+        background-size:cover;
     }
     .box
     {
         padding:2em;
-        margin: 2em;
-        width:35vh;
+        width:40vh;
     }
     .box .log
     {
         font-size: 14px;
     }
-    .box .password_bar .bar{
-        margin: 3px;
-    }
-}
+  }
 
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
-    /* styles for iPad */
-    body {
-        background-size: cover;
-        height: 100vh;
-    }
+  @media only screen and (min-width: 768px) and (max-width: 1024px){
     .box
     {
         padding:2em;
-        margin: 2em;
         width:40vh;
     }
   }
-  
