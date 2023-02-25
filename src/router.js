@@ -9,133 +9,137 @@ import Typography from "@/views/template/Typography.vue";
 import Icons from "@/views/template/Icons.vue";
 import Maps from "@/views/template/Maps.vue";
 import UpgradeToPRO from "@/views/template/UpgradeToPRO.vue";
+import LayoutLandingPage from "@/views/template/Layout/LayoutLandingPage.vue";
 
-
-Vue.use(Router)
+Vue.use(Router);
 
 let router = new Router({
-    mode: "history",
-    linkExactActiveClass: "active",
-    routes: [
+  mode: "history",
+  linkExactActiveClass: "active",
+  routes: [
+    {
+      path: "/admin",
+      component: DashboardLayout,
+      redirect: "/admin/dashboard",
+      children: [
         {
-            path: "/admin",
-            component: DashboardLayout,
-            redirect: "/admin/dashboard",
-            children: [
-              {
-                path: "dashboard",
-                name: "DashboardView",
-                component: Dashboard,
-              },
-              {
-                path: "user",
-                name: "User Profile",
-                component: UserProfile,
-              },
-              {
-                path: "table",
-                name: "Table List",
-                component: TableList,
-              },
-              {
-                path: "typography",
-                name: "Typography",
-                component: Typography,
-              },
-              {
-                path: "icons",
-                name: "Icons",
-                component: Icons,
-              },
-              {
-                path: "maps",
-                name: "Maps",
-                meta: {
-                  hideFooter: true,
-                },
-                component: Maps,
-              },
-              {
-                path: "upgrade",
-                name: "Upgrade to PRO",
-                component: UpgradeToPRO,
-              },
-            ],
-            meta: {
-                guest: true,
-            }
-        },
-        // {
-        //     path: "/admin",
-        //     name: "adminpage",
-        //     component: () => 
-        //         import(/* webpackChunkName: "demo" */ "./views/admin/adminPage.vue"),
-        //     meta: {
-        //         admin: true,
-        //     },
-        // },
-        {
-            path: "/login",
-            name: "Login",
-            component: () =>
-                import(/* webpackChunkName: "demo" */ "./views/LoginForm.vue"),
-            meta: {
-                guest: true,
-            },
+          path: "dashboard",
+          name: "DashboardView",
+          component: Dashboard,
         },
         {
-            path: "/register",
-            name: "Register",
-            component: () =>
-                import(/* webpackChunkName: "demo" */ "./views/RegisterForm.vue"),
-            meta: {
-                guest: true,
-            },
+          path: "user",
+          name: "User Profile",
+          component: UserProfile,
         },
         {
-          path: "/main",
-          name: "Main",
-          component: () =>
-              import(/* webpackChunkName: "demo" */ "./views/LandingPage.vue"),
+          path: "table",
+          name: "Table List",
+          component: TableList,
+        },
+        {
+          path: "typography",
+          name: "Typography",
+          component: Typography,
+        },
+        {
+          path: "icons",
+          name: "Icons",
+          component: Icons,
+        },
+        {
+          path: "maps",
+          name: "Maps",
           meta: {
-              guest: true,
+            hideFooter: true,
           },
-        }
-        // {
-        //     path: "/",
-        //     name: "LandingPage",
-        //     component: () =>
-        //         import(/* webpackChunkName: "demo" */ "./views/LandingPage.vue"),
-        //     meta: {
-        //         guest: true,
-        //     },
-        // },
-        // {
-        //     path: "*",
-        //     name: "404PAGE",
-        //     component: () =>
-        //         import(/* webpackChunkName: "demo" */ "./views/error/404PAGE.vue"),
-        //     meta: {
-        //         guest: true
-        //     }
-        // }
-    ]
+          component: Maps,
+        },
+        {
+          path: "upgrade",
+          name: "Upgrade to PRO",
+          component: UpgradeToPRO,
+        },
+      ],
+      meta: {
+        admin: true,
+      },
+    },
+    {
+      path: "/login",
+      name: "Login",
+      component: () =>
+        import(/* webpackChunkName: "demo" */ "./views/LoginForm.vue"),
+      meta: {
+        guest: true,
+      },
+    },
+    {
+      path: "/register",
+      name: "Register",
+      component: () =>
+        import(/* webpackChunkName: "demo" */ "./views/RegisterForm.vue"),
+      meta: {
+        guest: true,
+      },
+    },
+    {
+      path: "/main",
+      name: "Main",
+      component: () =>
+        import(/* webpackChunkName: "demo" */ "./views/LandingPage.vue"),
+      meta: {
+        guest: true,
+      },
+    },
+    {
+      path: "/",
+      component: LayoutLandingPage,
+      redirect: "/landingpage",
+      children: [
+        {
+          path: "landingpage",
+          name: "LandingPage",
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/LandingPage.vue"),
+        },
+        {
+          path: "term-of-service",
+          name: "TermOfService",
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/LandingPage.vue"),
+        },
+      ],
+      meta: {
+        guest: true,
+      },
+    },
+    {
+      path: "*",
+      name: "404PAGE",
+      component: () =>
+        import(/* webpackChunkName: "demo" */ "./views/error/404PAGE.vue"),
+      meta: {
+        guest: true,
+      },
+    },
+  ],
 });
 
 router.beforeEach((to, from, next) => {
-    if(to.matched.some((record) => record.meta.admin)) {
-        if (localStorage.getItem("admin_token") !== null) {
-            next();
-        }else {
-            next({
-                path: "/404FOUND",
-            });
-        }
-    }else if (to.matched.some((record) => record.meta.guest)) {
-        if (localStorage.getItem("access_token") === null) {
-            next();
-        }
+  if (to.matched.some((record) => record.meta.admin)) {
+    if (localStorage.getItem("admin_token") !== null) {
+      next();
+    } else {
+      next({
+        path: "/404FOUND",
+      });
     }
+  } else if (to.matched.some((record) => record.meta.guest)) {
+    if (localStorage.getItem("access_token") === null) {
+      next();
+    }
+  }
 });
 
 export default router;
