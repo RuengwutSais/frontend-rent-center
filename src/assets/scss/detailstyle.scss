@@ -2,8 +2,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 55rem;
+  height: auto;
   flex-wrap: wrap;
+  background-image: url("../img/login_background.png");
+  background-color: #ebecf0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .detail-card {
@@ -11,7 +16,6 @@
   display: flex;
   border-radius: 1em;
   width: 50%;
-  height: 50%;
   flex-direction: column;
   padding: 2rem;
   margin: 2rem;
@@ -153,6 +157,7 @@
 .detail-wrapper .detail-card .detail-estate{
   padding: 5px;
   border-top: 1px solid #000;
+  margin-bottom: 1rem;
 }
 
 
@@ -160,6 +165,11 @@
   color: #000 !important;
   font-size: 16px;
   margin: 0 !important;
+}
+
+.detail-wrapper .detail-report{
+  display: flex;
+  justify-content: flex-end;
 }
 
 .button-report {
@@ -181,18 +191,6 @@
   color: #df4759;
 }
 
-.owner-wrapper{
-  background-color: #fff;
-  display: flex;
-  border-radius: 1em;
-  width: 20%;
-  height: 50%;
-  flex-direction: column;
-  padding: 2rem;
-  margin: 2rem;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-}
-
 .owner-wrapper .owner-detail{
   text-align: center;
 }
@@ -208,7 +206,6 @@
   height: 100px;
   border-radius: 50%;
   overflow: hidden;
-  background-color: #000;
 }
 
 .owner-wrapper .owner-detail .owner-avatar img {
@@ -317,10 +314,6 @@
     height: auto;
 
   }
-  .owner-wrapper{
-    width: 90%;
-    height: auto;
-  }
   .detail-wrapper .detail-card .detail-header .estate-status{
     width: 5rem;
     height: 2.3rem;
@@ -362,13 +355,9 @@
 
 @media only screen and (min-width: 768px) and (max-width: 1023px){
   .detail-wrapper{
-    height: auto;
+    height: 60.4rem;
   }
   .detail-card{
-    width: 80%;
-    height: auto;
-  }
-  .owner-wrapper{
     width: 80%;
     height: auto;
   }
