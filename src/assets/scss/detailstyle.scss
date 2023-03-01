@@ -100,10 +100,22 @@
   padding-bottom: 1rem;
 }
 
+.detail-wrapper .detail-card .estate-room p{
+  color: #000 !important;
+  font-size: 18px;
+  margin: 0 !important;
+}
+
 .detail-wrapper .detail-card .estate-area {
   display: flex;
   justify-content: space-between;
   padding-bottom: 1rem;
+}
+
+.detail-wrapper .detail-card .estate-area p{
+  color: #000 !important;
+  font-size: 18px;
+  margin: 0 !important;
 }
 
 .detail-wrapper .detail-card .detail-bedroom {
@@ -112,22 +124,10 @@
   padding: 0px 0px 0px 3px !important;
 }
 
-.detail-wrapper .detail-card .detail-bedroom p {
-  color: #000 !important;
-  font-size: 18px;
-  margin: 0 !important;
-}
-
 .detail-wrapper .detail-card .detail-bathroom {
   display: flex;
   align-items: center;
   padding: 0px 0px 0px 3px !important;
-}
-
-.detail-wrapper .detail-card .detail-bathroom p {
-  color: #000 !important;
-  font-size: 18px;
-  margin: 0 !important;
 }
 
 .detail-wrapper .detail-card .detail-floor {
@@ -136,22 +136,10 @@
   padding: 0px 0px 0px 3px !important;
 }
 
-.detail-wrapper .detail-card .detail-floor p {
-  color: #000 !important;
-  font-size: 18px;
-  margin: 0 !important;
-}
-
 .detail-wrapper .detail-card .detail-area {
   display: flex;
   align-items: center;
   padding: 0px 0px 0px 3px !important;
-}
-
-.detail-wrapper .detail-card .detail-area p {
-  color: #000 !important;
-  font-size: 18px;
-  margin: 0 !important;
 }
 
 .detail-wrapper .detail-card .detail-estate{
@@ -275,6 +263,7 @@
   flex-direction: row;
   align-items: center;
   max-width: 600px;
+  width: 100%;
 }
 
 .owner-wrapper .owner-detail .chat-owner .chat-input{
@@ -312,13 +301,13 @@
   .detail-card{
     width: 90%;
     height: auto;
-
   }
+  
   .detail-wrapper .detail-card .detail-header .estate-status{
     width: 5rem;
     height: 2.3rem;
   }
-  .detail-wrapper .detail-card .detail-price p {
+  .detail-wrapper .detail-card p {
     font-size: 16px;
   }
   .detail-wrapper .detail-card i{
@@ -327,29 +316,20 @@
   .detail-wrapper .detail-card .detail-location p {
     font-size: 16px;
   }
-  .detail-wrapper .detail-card .detail-bedroom p{
+  .detail-wrapper .detail-card .estate-room p{
     font-size: 15px;
   }
-  .detail-wrapper .detail-card .detail-bedroom i{
+  .detail-wrapper .detail-card .estate-room i{
     font-size: 15px;
   }
-  .detail-wrapper .detail-card .detail-bathroom p{
+  .detail-wrapper .detail-card .estate-area p{
     font-size: 15px;
   }
-  .detail-wrapper .detail-card .detail-bathroom i{
+  .detail-wrapper .detail-card .estate-area i{
     font-size: 15px;
   }
-  .detail-wrapper .detail-card .detail-floor p{
-    font-size: 15px;
-  }
-  .detail-wrapper .detail-card .detail-floor i{
-    font-size: 15px;
-  }
-  .detail-wrapper .detail-card .detail-area p{
-    font-size: 15px;
-  }
-  .detail-wrapper .detail-card .detail-area i{
-    font-size: 15px;
+  .owner-wrapper .owner-detail .chat-owner form{
+    width: auto;
   }
 }
 
@@ -365,7 +345,7 @@
     width: 6rem;
     height: 3rem;
   }
-  .detail-wrapper .detail-card .detail-price p {
+.detail-wrapper .detail-card p {
     font-size: 18px;
   }
   .detail-wrapper .detail-card i{
@@ -374,28 +354,16 @@
   .detail-wrapper .detail-card .detail-location p {
     font-size: 18px;
   }
-  .detail-wrapper .detail-card .detail-bedroom p{
+  .detail-wrapper .detail-card .estate-room p{
     font-size: 16px;
   }
-  .detail-wrapper .detail-card .detail-bedroom i{
+  .detail-wrapper .detail-card .estate-room i{
     font-size: 16px;
   }
-  .detail-wrapper .detail-card .detail-bathroom p{
+  .detail-wrapper .detail-card .estate-area p{
     font-size: 16px;
   }
-  .detail-wrapper .detail-card .detail-bathroom i{
-    font-size: 16px;
-  }
-  .detail-wrapper .detail-card .detail-floor p{
-    font-size: 16px;
-  }
-  .detail-wrapper .detail-card .detail-floor i{
-    font-size: 16px;
-  }
-  .detail-wrapper .detail-card .detail-area p{
-    font-size: 16px;
-  }
-  .detail-wrapper .detail-card .detail-area i{
+  .detail-wrapper .detail-card .estate-area i{
     font-size: 16px;
   }
 }
