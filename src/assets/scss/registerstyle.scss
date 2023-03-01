@@ -1,19 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&family=Mitr:wght@200&display=swap');
 
-body
+.register-wrapper
 {
     background-image: url('../img/login_background.png');
     background-color:#ebecf0;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 65rem;
 }
 .box
 {
     background-color:#fff;
     display:flex;
     border-radius:1em;
-    width:30vw;
+    width:30%;
     flex-direction:column;
     padding:2em;
     box-shadow:rgba(100,100,111,.2) 0px 7px 29px 0px;
@@ -153,7 +157,8 @@ body
 }
 .box span a
 {
-    color:#000
+    color:#000 !important;
+    text-decoration: underline !important;
 }
 .box .password_bar
 {
@@ -223,7 +228,7 @@ body
 
 @media only screen and (max-width: 767px) {
      /* styles for mobile phones */
-    body {
+    .register-wrapper {
       height:auto;
       background-size:cover;
     }
@@ -231,7 +236,7 @@ body
     {
         padding:2em;
         margin: 2em;
-        width:35vh;
+        width:90%;
     }
     .box .log
     {
@@ -240,19 +245,21 @@ body
     .box .password_bar .bar{
         margin: 3px;
     }
+    h1{
+        font-size: 40px;
+    }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     /* styles for iPad */
-    body {
+    .register-wrapper {
         background-size: cover;
-        height: 100vh;
     }
     .box
     {
         padding:2em;
         margin: 2em;
-        width:40vh;
+        width:80%;
     }
-  }
+}
   

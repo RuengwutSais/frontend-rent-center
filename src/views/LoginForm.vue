@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login-wrapper">
     <div class="box">
       <!--<div class="banner_high">
             <img src="">

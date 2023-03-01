@@ -92,6 +92,12 @@ let router = new Router({
             import(/* webpackChunkName: "demo" */ "./views/TermOfServicePage.vue"),
         },
         {
+          path: "estatedetail",
+          name: "EstateDetail",
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/EstateDetailPage.vue"),
+        },
+        {
           path: "login",
           name: "Login",
           component: () =>

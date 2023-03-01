@@ -70,7 +70,7 @@
             <div class="col-sm-12 col-md-6">
             <ul class="footer-links">
                 <li><a href="#">Contact Us</a></li>
-                <li><a href="#">Terms of Service</a></li>
+                <li><a href="/termpage">Terms of Service</a></li>
             </ul>
             </div>
         </div>
@@ -109,5 +109,6 @@
   };
   </script>
 <style lang="scss" scoped>
-@import url('@/assets/scss/landingpage.scss');
+@import url('@/assets/scss/headerstyle.scss');
+@import url('@/assets/scss/footerstyle.scss');
 </style>

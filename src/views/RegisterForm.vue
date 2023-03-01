@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="register-wrapper">
         <div class="box">
        <!--<div class="banner_high">
             <img src="">
