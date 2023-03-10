@@ -116,62 +116,8 @@
         <div class="more-estate">
           <a href="">ดูคอนโดเพิ่มเติม ></a>
         </div>
-        <div class="slider-estate">
-          <div class="card-container">
-            <div
-              class="card"
-              v-for="(estate, index) in condos.slice(0, maxCard)"
-              :key="index"
-              :style="{ transform: `translateX(-${translateValue}%)` }"
-            >
-              <div class="card-img">
-                <img :src="estate.image" alt="estate image" />
-              </div>
-              <div class="card-info">
-                <div class="card-name">
-                  <p>{{ estate.name }}</p>
-                </div>
-                <div class="card-price">
-                  <i class="fa-solid fa-tag"></i><p>{{ estate.price }}</p>
-                </div>
-                <div class="card-location">
-                  <i class="fa-solid fa-location-dot"></i><p>{{ estate.location }}</p>
-                </div>
-                <div class="estate-room">
-                  <div class="card-bedroom">
-                    <i class="fa-solid fa-bed"></i><p>{{ estate.bedroom }}</p>
-                  </div>
-                  <div class="card-bathroom">
-                    <i class="fa-solid fa-bath"></i><p>{{ estate.bathroom }}</p>
-                  </div>
-                </div>
-                <div class="estate-area">
-                  <div class="card-floor">
-                    <i class="fa-solid fa-stairs"></i><p>{{ estate.floor }}</p>
-                  </div>
-                  <div class="card-area">
-                    <i class="fa-solid fa-chart-area"></i><p>{{ estate.area }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="btn-condo">
-            <button
-              class="btn left-btn"
-              @click="slideCondoLeft"
-              :disabled="translateValue === 0"
-            >
-              &lt;
-            </button>
-            <button
-              class="btn right-btn"
-              @click="slideCondoRight"
-              :disabled="translateValue === (condos.length - maxCard) * 100"
-            >
-              &gt;
-            </button>
-          </div>
+        <div class="">
+          <global-carousel :condos="condos" />
         </div>
       </div>
       <div class="estate-pop">
@@ -179,62 +125,8 @@
         <div class="more-estate">
           <a href="">ดูบ้านเดี่ยวเพิ่มเติม ></a>
         </div>
-        <div class="slider-estate">
-          <div class="card-container">
-            <div
-              class="card"
-              v-for="(estate, index) in estates.slice(0, maxCard)"
-              :key="index"
-              :style="{ transform: `translateX(-${translateValue}%)` }"
-            >
-              <div class="card-img">
-                <img :src="estate.image" alt="estate image" />
-              </div>
-              <div class="card-info">
-                <div class="card-name">
-                  <p>{{ estate.name }}</p>
-                </div>
-                <div class="card-price">
-                  <i class="fa-solid fa-tag"></i><p>{{ estate.price }}</p>
-                </div>
-                <div class="card-location">
-                  <i class="fa-solid fa-location-dot"></i><p>{{ estate.location }}</p>
-                </div>
-                <div class="estate-room">
-                  <div class="card-bedroom">
-                    <i class="fa-solid fa-bed"></i><p>{{ estate.bedroom }}</p>
-                  </div>
-                  <div class="card-bathroom">
-                    <i class="fa-solid fa-bath"></i><p>{{ estate.bathroom }}</p>
-                  </div>
-                </div>
-                <div class="estate-area">
-                  <div class="card-floor">
-                    <i class="fa-solid fa-stairs"></i><p>{{ estate.floor }}</p>
-                  </div>
-                  <div class="card-area">
-                    <i class="fa-solid fa-chart-area"></i><p>{{ estate.area }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="btn-condo">
-            <button
-              class="btn left-btn"
-              @click="slideEstateLeft"
-              :disabled="translateValue === 0"
-            >
-              &lt;
-            </button>
-            <button
-              class="btn right-btn"
-              @click="slideEstateRight"
-              :disabled="translateValue === (estates.length - maxCard) * 100"
-            >
-              &gt;
-            </button>
-          </div>
+        <div class="">
+          <global-carousel :condos="estates" />
         </div>
       </div>
       <div class="estate-pop">
@@ -242,62 +134,8 @@
         <div class="more-estate">
           <a href="">ดูทาวน์เฮ้าส์เพิ่มเติม ></a>
         </div>
-        <div class="slider-estate">
-          <div class="card-container">
-            <div
-              class="card"
-              v-for="(estate, index) in townhouses.slice(0, maxCard)"
-              :key="index"
-              :style="{ transform: `translateX(-${translateValue}%)` }"
-            >
-              <div class="card-img">
-                <img :src="estate.image" alt="estate image" />
-              </div>
-              <div class="card-info">
-                <div class="card-name">
-                  <p>{{ estate.name }}</p>
-                </div>
-                <div class="card-price">
-                  <i class="fa-solid fa-tag"></i><p>{{ estate.price }}</p>
-                </div>
-                <div class="card-location">
-                  <i class="fa-solid fa-location-dot"></i><p>{{ estate.location }}</p>
-                </div>
-                <div class="estate-room">
-                  <div class="card-bedroom">
-                    <i class="fa-solid fa-bed"></i><p>{{ estate.bedroom }}</p>
-                  </div>
-                  <div class="card-bathroom">
-                    <i class="fa-solid fa-bath"></i><p>{{ estate.bathroom }}</p>
-                  </div>
-                </div>
-                <div class="estate-area">
-                  <div class="card-floor">
-                    <i class="fa-solid fa-stairs"></i><p>{{ estate.floor }}</p>
-                  </div>
-                  <div class="card-area">
-                    <i class="fa-solid fa-chart-area"></i><p>{{ estate.area }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="btn-condo">
-            <button
-              class="btn left-btn"
-              @click="slideTownhouseLeft"
-              :disabled="translateValue === 0"
-            >
-              &lt;
-            </button>
-            <button
-              class="btn right-btn"
-              @click="slideTownhouseRight"
-              :disabled="translateValue === (townhouses.length - maxCard) * 100"
-            >
-              &gt;
-            </button>
-          </div>
+        <div class="">
+          <global-carousel :condos="townhouses" />
         </div>
       </div>
     </div>    
@@ -305,8 +143,12 @@
 </template>
 
 <script>
+import GlobalCarousel from '@/components/Global/GlobalCarousel.vue';
 export default {
   name: "EstateInfo",
+  components: {
+    GlobalCarousel
+  },
   data() {
     return {
       condos: [
@@ -501,8 +343,8 @@ export default {
       }
     },
   },
+  mounted() {
+    console.log('condos', this.condos.length)
+  }
 };
 </script>
-<style lang="scss" scoped>
-@import url('@/assets/scss//landingpage.scss');
-</style>

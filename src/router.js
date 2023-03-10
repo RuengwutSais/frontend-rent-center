@@ -62,15 +62,6 @@ let router = new Router({
         },
       ],
       meta: {
-        admin: true,
-      },
-    },
-    {
-      path: "/main",
-      name: "Main",
-      component: () =>
-        import(/* webpackChunkName: "demo" */ "./views/LandingPage.vue"),
-      meta: {
         guest: true,
       },
     },

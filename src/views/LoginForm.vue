@@ -1,9 +1,6 @@
 <template>
   <div class="login-wrapper">
     <div class="box">
-      <!--<div class="banner_high">
-            <img src="">
-        </div> -->
     <h1>เข้าสู่ระบบ</h1>
     <div class="in">
       <label for="name">กรอกอีเมล</label>
@@ -42,22 +39,25 @@ export default {
     methods:{
       async LoginUser()
       {
-        console.log(this.user.email)
-        console.log(this.user.password)
         const bodyraw = {
           email: this.user.email,
           password: this.user.password
         }
         await this.$axios.post(this.$API_URL+'/login', bodyraw)
-        .then(response => {
-          console.log(response)
-          let jsonData = JSON.stringify(response.data)
-          localStorage.setItem("profiles", jsonData)
-          let logProfile = JSON.parse(jsonData)
-          console.log("token :",logProfile.token)
+        .then(res => {
+          const status = res.data.status
+          if(status) {
+            const jsonData = JSON.stringify(res.data.data)
+            const token = jsonData.token
+            delete jsonData.token
+            localStorage.setItem("profiles", jsonData)
+            localStorage.setItem("token", token)
+            this.$router.push('/landingpage')
+          }
         })
         .catch(error => {
-          console.log(error)
+          console.log('what error', error.response.data)
+          // TODO doing something if error
         });
         
       }
@@ -66,8 +66,5 @@ export default {
       console.log("Loging",this.$API_URL)
     }
 }
-</script> 
-<style lang="scss" scoped>
-@import url('@/assets/scss/loginstyle.scss');
-</style>
+</script>
 

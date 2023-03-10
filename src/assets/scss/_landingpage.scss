@@ -93,7 +93,7 @@
   transition: transform 0.3s ease-in-out;
 }
 
-.card-container .card {
+.card {
   margin: 5px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 1em;
@@ -102,127 +102,127 @@
   background-color: #fff;
 }
 
-.card-container .card-img {
+.card-img {
   width: 100%;
   height: 200px;
   object-fit: cover;
 }
 
-.card-container .card-img img {
+.card-img img {
   width: 100%;
   height: 200px;
   object-fit: cover;
 }
 
-.card-container .card-info {
+.card-info {
   padding: 10px;
   text-align: start;
   align-items: center;
 }
 
-.card-container .card-info .card-name p {
+.card-info .card-name p {
   color: #000 !important;
   font-size: 17px;
   margin: 0 !important;
   font-weight: bold;
 }
 
-.card-container .card-info .card-price {
+.card-info .card-price {
   display: flex;
   align-items: center;
   padding: 0px 0px 0px 3px !important;
 }
 
-.card-container .card-info .card-location {
+.card-info .card-location {
   display: flex;
   align-items: center;
   padding: 0px 0px 0px 3px !important;
 }
 
-.card-container .card-info .card-bedroom {
+.card-info .card-bedroom {
   display: flex;
   align-items: center;
   padding: 0px 0px 0px 3px !important;
 }
 
-.card-container .card-info .card-bathroom {
+.card-info .card-bathroom {
   display: flex;
   align-items: center;
   padding: 0px 0px 0px 3px !important;
 }
 
-.card-container .card-info .card-floor {
+.card-info .card-floor {
   display: flex;
   align-items: center;
   padding: 0px 0px 0px 3px !important;
 }
 
-.card-container .card-info .card-area {
+.card-info .card-area {
   display: flex;
   align-items: center;
   padding: 0px 0px 0px 3px !important;
 }
 
-.card-container .card-info .card-price p {
+.card-info .card-price p {
   color: #000 !important;
   font-size: 16px;
   margin: 0 !important;
 }
 
-.card-container .card-info .card-location p {
+.card-info .card-location p {
   color: #000 !important;
   font-size: 16px;
   margin: 0 !important;
 }
 
-.card-container .card-info .estate-room .card-bedroom p {
+.card-info .estate-room .card-bedroom p {
   color: #000 !important;
   font-size: 14px;
   margin: 0 !important;
 }
 
-.card-container .card-info .estate-room .card-bathroom p {
+.card-info .estate-room .card-bathroom p {
   color: #000 !important;
   font-size: 14px;
   margin: 0 !important;
 }
 
-.card-container .card-info .estate-area .card-floor p {
+.card-info .estate-area .card-floor p {
   color: #000 !important;
   font-size: 14px;
   margin: 0 !important;
 }
 
-.card-container .card-info .estate-area .card-area p {
+.card-info .estate-area .card-area p {
   color: #000 !important;
   font-size: 14px;
   margin: 0 !important;
 }
 
-.card-container .card-info .estate-room i {
+.card-info .estate-room i {
   color: #000 !important;
   font-size: 14px;
   margin-right: 5px;
 }
 
-.card-container .card-info .estate-area i {
+.card-info .estate-area i {
   color: #000 !important;
   font-size: 14px;
   margin-right: 5px;
 }
 
-.card-container .card-info i {
+.card-info i {
   margin-right: 5px;
   color: #000;
   font-size: 16px;
 }
 
-.card-container .card-info .estate-room {
+.card-info .estate-room {
   display: flex;
   justify-content: space-between;
 }
 
-.card-container .card-info .estate-area {
+.card-info .estate-area {
   display: flex;
   justify-content: space-between;
 }
