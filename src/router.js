@@ -77,32 +77,38 @@ let router = new Router({
             import(/* webpackChunkName: "demo" */ "./views/LandingPage.vue"),
         },
         {
-          path: "termpage",
-          name: "TermPage",
+          path: "termofservice",
+          name: "Termofservicepage",
           component: () =>
             import(/* webpackChunkName: "demo" */ "./views/TermOfServicePage.vue"),
         },
         {
+          path: "privacy",
+          name: "Privacypage",
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/PrivacyPolicyPage.vue"),
+        },
+        {
           path: "estatedetail",
-          name: "EstateDetail",
+          name: "EstateDetailpage",
           component: () =>
             import(/* webpackChunkName: "demo" */ "./views/EstateDetailPage.vue"),
         },
         {
           path: "login",
-          name: "Login",
+          name: "Loginpage",
           component: () =>
             import(/* webpackChunkName: "demo" */ "./views/LoginForm.vue"),
         },
         {
           path: "register",
-          name: "Register",
+          name: "Registerpage",
           component: () =>
             import(/* webpackChunkName: "demo" */ "./views/RegisterForm.vue"),
         },
         {
           path: "listestate",
-          name: "listestate",
+          name: "listestatepage",
           component: () =>
             import(/* webpackChunkName: "demo" */ "./views/ListEstatePage.vue")
         }

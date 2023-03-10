@@ -207,5 +207,5 @@
     }
 </script>
 <style lang="scss" scoped>
-@import url('@/assets/scss/registerstyle.scss');
+@import url("@/assets/scss/_registerstyle.scss");
 </style>

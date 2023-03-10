@@ -3,7 +3,7 @@
     <div class="header">
       <div class="coniainer-fluid">
         <div class="navb-logo">
-          <img class="img-logo" src="@/assets/logo.png" alt="logo" />
+          <img class="img-logo" src="@/assets/RentCentral-logo.png" alt="logo" />
         </div>
         <div class="navb-items">
           <div v-if="isUser" class="d-flex flex-row">
@@ -60,11 +60,6 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <img
-                  class="img-logo"
-                  src="@/assets/logo.png"
-                  alt="logo-mobile"
-                />
                 <button
                   type="button"
                   class="close"
@@ -107,8 +102,8 @@
           </div>
           <div class="col-sm-12 col-md-6">
             <ul class="footer-links">
-              <li><a href="#">Contact Us</a></li>
-              <li><a href="/termpage">Terms of Service</a></li>
+              <li><a href="/privacy" target="_blank">นโยบายคุ้มครองข้อมูลส่วนบุคคล</a></li>
+              <li><a href="/termofservice" target="_blank">ข้อตกลงผู้ให้บริการ</a></li>
             </ul>
           </div>
         </div>
@@ -153,6 +148,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import url("@/assets/scss/headerstyle.scss");
-@import url("@/assets/scss/footerstyle.scss");
+@import url("@/assets/scss/_headerstyle.scss");
+@import url("@/assets/scss/_footerstyle.scss");
 </style>
