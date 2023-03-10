@@ -100,6 +100,12 @@ let router = new Router({
           component: () =>
             import(/* webpackChunkName: "demo" */ "./views/RegisterForm.vue"),
         },
+        {
+          path: "listestate",
+          name: "listestate",
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/ListEstatePage.vue")
+        }
       ],
       meta: {
         guest: true,

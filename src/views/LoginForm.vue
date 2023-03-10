@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { required } from "vuelidate/lib/validators"
 export default {
   data() {
     return {
@@ -34,6 +35,12 @@ export default {
         email: "",
         password: "",
       }
+    }
+  },
+  validations: {
+    user: {
+      email : required,
+      password : required
     }
   },
     methods:{

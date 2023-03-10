@@ -1,9 +1,9 @@
 <template>
-  <transition name="fade" mode="out-in">
-    <div>
+  <!-- <transition name="fade" mode="out-in"> -->
+    <!-- <div> -->
       <router-view></router-view>
-    </div>
-  </transition>
+    <!-- </div> -->
+  <!-- </transition> -->
 </template>
 <script>
 export default {

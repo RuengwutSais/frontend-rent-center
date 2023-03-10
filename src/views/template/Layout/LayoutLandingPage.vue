@@ -20,7 +20,7 @@
           </div>
           <div v-else>
             <div v-if="user.image" class="">
-              <img class="img" src="user.image" />
+              <img class="img" :src="user.image" />
             </div>
             <div v-else>
               <div>
@@ -96,9 +96,9 @@
       </div>
     </div>
     <div class="margin-4rem padding-bottom-5rem">
-      <dashboard-content> </dashboard-content>
+      <router-view></router-view>
     </div>
-    <div class="footer">
+    <div class="footer-layout">
       <div class="footer-container">
         <div class="row">
           <div class="col-sm-12 col-md-6">
@@ -118,16 +118,14 @@
 </template>
 
 <script>
-import DashboardContent from "./Content.vue";
 
 export default {
-  components: {
-    DashboardContent,
-  },
   data() {
     return {
       isUser: false,
-      user: null,
+      user: {
+        image: ''
+      },
     };
   },
   methods: {

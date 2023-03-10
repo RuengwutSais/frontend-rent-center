@@ -1,14 +1,14 @@
 
-.footer {
+.footer-layout {
   width: 100%;
-  position: relative;
+  position: absolute;
   background-color: #f8f9fa;
   padding: 30px 0;
-  bottom: 0;
+  bottom: 0 !important;
   left: 0;
 }
 
-.footer .footer-container {
+.footer-layout .footer-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -17,7 +17,7 @@
   padding: 20px;
 }
 
-.footer .footer-container .row {
+.footer-layout .footer-container .row {
   width: 100%;
 }
 
