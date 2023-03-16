@@ -1,9 +1,9 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-import DashboardLayout from "@/views/template/Layout/DashboardLayout.vue";
+import DashboardLayoutAdmin from "@/views/template/Layout/DashboardLayoutAdmin.vue";
+import DashboardLayoutUser from "@/views/template/Layout/DashboardLayoutUser.vue";
 import Dashboard from "@/views/template/Dashboard.vue";
-import UserProfile from "@/views/template/UserProfile.vue";
 import TableList from "@/views/template/TableList.vue";
 import Typography from "@/views/template/Typography.vue";
 import Icons from "@/views/template/Icons.vue";
@@ -19,18 +19,22 @@ let router = new Router({
   routes: [
     {
       path: "/admin",
-      component: DashboardLayout,
+      component: DashboardLayoutAdmin,
       redirect: "/admin/dashboard",
       children: [
         {
           path: "dashboard",
           name: "DashboardView",
           component: Dashboard,
+          meta: {
+            requireAuth: true
+          }
         },
         {
           path: "user",
           name: "User Profile",
-          component: UserProfile,
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/template/UserProfile.vue"),
         },
         {
           path: "table",
@@ -64,6 +68,40 @@ let router = new Router({
       meta: {
         guest: true,
       },
+    },
+    {
+      path: "/manage",
+      component: DashboardLayoutUser,
+      redirect: "/manage/dashboard",
+      children: [
+        {
+          path: "dashboard",
+          name: "DashboardView",
+          component: Dashboard,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: "user",
+          name: "User Profile",
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/template/UserProfile.vue"),
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: "chatuser",
+          name: "ChatPage",
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/ChatTemplate.vue"),
+          meta: {
+            guest: true,
+            hideFooter: true
+          }
+        },
+      ]
     },
     {
       path: "/",
@@ -138,8 +176,14 @@ router.beforeEach((to, from, next) => {
         path: "/404FOUND",
       });
     }
-  } else if (to.matched.some((record) => record.meta.guest)) {
-    if (localStorage.getItem("access_token") === null) {
+  } else if (to.matched.some((record) => record.meta.guest)) {    
+    next();
+  } else if (to.matched.some((record) => record.meta.requireAuth)) {
+    if(localStorage.getItem("token") === null) {
+      next({
+        path: "/404FOUND",
+      });
+    }else {
       next();
     }
   }

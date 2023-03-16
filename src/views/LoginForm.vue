@@ -51,15 +51,18 @@ export default {
           password: this.user.password
         }
         await this.$axios.post(this.$API_URL+'/login', bodyraw)
-        .then(res => {
+        .then(async res => {
           const status = res.data.status
           if(status) {
-            const jsonData = JSON.stringify(res.data.data)
-            const token = jsonData.token
+            const jsonData = res.data.data
+            const token = jsonData['token']
             delete jsonData.token
-            localStorage.setItem("profiles", jsonData)
-            localStorage.setItem("token", token)
-            this.$router.push('/landingpage')
+            await localStorage.setItem("profiles", JSON.stringify(jsonData))
+            await localStorage.setItem("token", token)
+            console.log('doing first')
+            if(localStorage.getItem("profiles")) {
+              this.$router.push('/landingpage')
+            }
           }
         })
         .catch(error => {
@@ -70,7 +73,9 @@ export default {
       }
     },
     mounted(){
-      console.log("Loging",this.$API_URL)
+      if(JSON.parse(localStorage.getItem('profiles'))) {
+        this.$router.push('/landingpage')
+      }
     }
 }
 </script>

@@ -24,7 +24,7 @@
 
 // Core CSS
 // @import "md/typography";
-// @import "md/sidebar-and-main-panel";
+@import "md/sidebar-and-main-panel";
 // @import "md/buttons";
 @import "md/misc";
 // @import "md/inputs";
@@ -32,7 +32,7 @@
 @import "md/forms";
 // @import "md/alerts";
 // @import "md/tables";
-// @import "md/layout";
+@import "md/layout";
 @import "md/checkboxes";
 @import "md/togglebutton";
 @import "md/ripples";
@@ -54,9 +54,8 @@
 @import "detailstyle";
 @import "registerstyle";
 @import "loginstyle";
-@import "_listestatestyle";
-@import "footerstyle";
-@import "headerstyle";
-
+@import "listestatestyle";
+@import "registerstyle";
+@import "allpage";
 
 

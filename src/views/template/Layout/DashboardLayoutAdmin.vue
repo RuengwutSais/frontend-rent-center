@@ -8,25 +8,9 @@
         <md-icon>dashboard</md-icon>
         <p>ภาพรวม</p>
       </sidebar-link>
-      <sidebar-link to="/admin/user">
-        <md-icon>person</md-icon>
-        <p>ตั้งค่าบัญชี</p>
-      </sidebar-link>
       <sidebar-link to="/admin/table">
         <md-icon>content_paste</md-icon>
-        <p>อสังหาริมทรัพย์</p>
-      </sidebar-link>
-      <sidebar-link to="/admin/typography">
-        <md-icon>library_books</md-icon>
-        <p>ข้อความ</p>
-      </sidebar-link>
-      <sidebar-link to="/admin/icons">
-        <md-icon>bubble_chart</md-icon>
-        <p>ค้นหา</p>
-      </sidebar-link>
-      <sidebar-link to="/admin/maps">
-        <md-icon>location_on</md-icon>
-        <p>Maps</p>
+        <p>ร้องเรียนอสังหา</p>
       </sidebar-link>
       <sidebar-link to="/admin/upgrade" class="active-pro">
         <md-icon>unarchive</md-icon>

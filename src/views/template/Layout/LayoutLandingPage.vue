@@ -6,7 +6,7 @@
           <img class="img-logo" src="@/assets/RentCentral-logo.png" alt="logo" />
         </div>
         <div class="navb-items">
-          <div v-if="isUser" class="d-flex flex-row">
+          <div v-if="!isUser" class="d-flex flex-row">
             <div class="items">
               <button class="button-nav" @click="redirectPath('/register')">
                 ลงทะเบียน
@@ -33,8 +33,8 @@
                   <template #button-content>
                     <i class="fa-solid fa-user-tie"></i>
                   </template>
-                  <b-dropdown-item href="#">จัดการอสังหาริมทรัพย์</b-dropdown-item>
-                  <b-dropdown-item href="#">ตั้งค่าโปรไฟล์</b-dropdown-item>
+                  <b-dropdown-item href="/manage">ภาพรวมอสังหาริมทรัพย์</b-dropdown-item>
+                  <b-dropdown-item href="/manage/user">ตั้งค่าโปรไฟล์</b-dropdown-item>
                   <b-dropdown-item @click="logout"
                     >ออกจากระบบ</b-dropdown-item
                   >
@@ -117,34 +117,43 @@
 export default {
   data() {
     return {
-      isUser: false,
       user: {
         image: ''
       },
+      isUser: false
     };
   },
+  watch: {
+    $route: function(){
+      this.isUserLogin()
+    }
+  },
   methods: {
+    async isUserLogin() {
+      const profiles = await JSON.parse(localStorage.getItem("profiles"));
+      if (profiles) {
+        this.isUser = true
+      }else {
+        this.isUser = false
+      }
+    },
     redirectPath(path) {
       return this.$router.push(path);
     },
-    isUserLogin() {
-      const profiles = JSON.parse(localStorage.getItem("profiles"));
-      if (profiles) {
-        return true;
+    async logout() {
+      this.$axios.post(this.$API_URL + '/logout')
+      await localStorage.removeItem('profiles');
+      if(this.$router.currentRoute.path === '/landingpage'){
+        window.location.reload();
       }
-      return false;
-    },
-    logout() {
-      this.$axios.post(this.$API_URL + '/logout', )
+      if(!JSON.parse(localStorage.getItem('profiles'))){
+        this.$router.push('/landingpage');
+      }
     }
   },
   mounted() {
-    const userLogin = JSON.parse(localStorage.getItem("profiles"));
-    if (userLogin) {
-      this.user = userLogin;
-    }
-    console.log("user login: ", userLogin);
-  },
+    this.isUserLogin()
+  }
 };
 </script>
 <style lang="scss" scoped>
