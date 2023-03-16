@@ -26,6 +26,9 @@ let router = new Router({
           path: "dashboard",
           name: "DashboardView",
           component: Dashboard,
+          meta: {
+            requireAuth: true
+          }
         },
         {
           path: "user",
@@ -86,6 +89,16 @@ let router = new Router({
             import(/* webpackChunkName: "demo" */ "./views/template/UserProfile.vue"),
           meta: {
             requireAuth: true
+          }
+        },
+        {
+          path: "chatuser",
+          name: "ChatPage",
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/ChatTemplate.vue"),
+          meta: {
+            guest: true,
+            hideFooter: true
           }
         },
       ]
