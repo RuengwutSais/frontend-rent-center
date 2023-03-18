@@ -77,23 +77,28 @@ let router = new Router({
         {
           path: "dashboard",
           name: "DashboardView",
+          nameThai: "ภาพรวมอสังหาริมทรัพย์",
           component: Dashboard,
           meta: {
-            requireAuth: true
+            requireAuth: true,
+            hideFooter: true
           }
         },
         {
           path: "user",
           name: "User Profile",
+          nameThai: "โปรไฟล​์",
           component: () =>
             import(/* webpackChunkName: "demo" */ "./views/template/UserProfile.vue"),
           meta: {
-            requireAuth: true
+            requireAuth: true,
+            hideFooter: true
           }
         },
         {
           path: "chatuser",
           name: "ChatPage",
+          nameThai: "กล่องข้อความ",
           component: () =>
             import(/* webpackChunkName: "demo" */ "./views/ChatTemplate.vue"),
           meta: {

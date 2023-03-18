@@ -2,10 +2,10 @@
   <div class="content">
     <div class="md-layout">
       <div class="md-layout-item md-medium-size-100 md-size-66">
-        <edit-profile-form data-background-color="green"> </edit-profile-form>
+        <edit-profile-form data-background-color="green" :inputUser="inputUser" > </edit-profile-form>
       </div>
       <div class="md-layout-item md-medium-size-100 md-size-33">
-        <user-card> </user-card>
+        <user-card :user="inputUser"> </user-card>
       </div>
     </div>
   </div>
@@ -19,5 +19,26 @@ export default {
     EditProfileForm,
     UserCard,
   },
+  data() {
+    return {
+      inputUser: {
+        email: '',
+        lastname: '',
+        firstname: '',
+        address: '',
+        phone: '',
+        lineid: '',
+      }
+    }
+  },
+  created() {
+    const profiles = JSON.parse(localStorage.getItem('profiles'))
+    console.log('profiles: ', profiles)
+    this.inputUser.email = profiles.email
+    this.inputUser.firstname = profiles.first_name
+    this.inputUser.lastname = profiles.last_name
+    this.inputUser.phone = profiles.phone
+    this.inputUser.lineid = profiles.lineid
+  }
 };
 </script>
