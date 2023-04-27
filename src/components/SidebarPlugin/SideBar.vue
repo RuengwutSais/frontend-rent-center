@@ -6,13 +6,12 @@
     <div class="logo">
       <a href="#" class="simple-text logo-mini">
         <div class="logo-img">
-          <img :src="imgLogo" alt="" />
+          <img @click="onPushMainPage" :src="imgLogo" alt="" />
         </div>
       </a>
 
       <a
-        href=""
-        target="_blank"
+        href="/"
         class="simple-text logo-normal"
       >
         {{ title }}
@@ -21,7 +20,6 @@
     <div class="sidebar-wrapper">
       <slot name="content"></slot>
       <md-list class="nav">
-        <!--By default vue-router adds an active class to each route link. This way the links are colored when clicked-->
         <slot>
           <sidebar-link
             v-for="(link, index) in sidebarLinks"
@@ -73,6 +71,11 @@ export default {
       autoClose: this.autoClose,
     };
   },
+  methods: {
+    onPushMainPage() {
+      this.$router.push('/')
+    }
+  }
 };
 </script>
 <style>

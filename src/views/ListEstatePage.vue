@@ -138,7 +138,7 @@
                 :key="index"
                 class="col-lg-4 col-md-6 col-sm-6 mt-2"
               >
-                <CardEstate :item="item" />
+                <CardEstate class="cursor-pointer" :item="item" @click.native="pushDetailEstate(item.id)" />
               </div>
             </div>
           </div>
@@ -166,6 +166,7 @@ export default {
       itemsEstate: {
         data: [
           {
+            id: "1",
             price: "Condo price",
             name: "Condo name",
             location: "Condo location",
@@ -176,6 +177,7 @@ export default {
             image: "https://via.placeholder.com/350x200?text=Estate+1",
           },
           {
+            id: "1",
             price: "Condo price",
             name: "Condo name",
             location: "Condo location",
@@ -186,6 +188,7 @@ export default {
             image: "https://via.placeholder.com/350x200?text=Estate+2",
           },
           {
+            id: "1",
             price: "Condo price",
             name: "Condo name",
             location: "Condo location",
@@ -196,6 +199,7 @@ export default {
             image: "https://via.placeholder.com/350x200?text=Estate+3",
           },
           {
+            id: "1",
             price: "Condo price",
             name: "Condo name",
             location: "Condo location",
@@ -206,6 +210,7 @@ export default {
             image: "https://via.placeholder.com/350x200?text=Estate+4",
           },
           {
+            id: "1",
             price: "Condo price",
             name: "Condo name",
             location: "Condo location",
@@ -216,6 +221,7 @@ export default {
             image: "https://via.placeholder.com/350x200?text=Estate+5",
           },
           {
+            id: "1",
             price: "Condo price",
             name: "Condo name",
             location: "Condo location",
@@ -226,6 +232,7 @@ export default {
             image: "https://via.placeholder.com/350x200?text=Estate+6",
           },
           {
+            id: "1",
             price: "Condo price",
             name: "Condo name",
             location: "Condo location",
@@ -236,6 +243,7 @@ export default {
             image: "https://via.placeholder.com/350x200?text=Estate+7",
           },
           {
+            id: "1",
             price: "Condo price",
             name: "Condo name",
             location: "Condo location",
@@ -246,6 +254,7 @@ export default {
             image: "https://via.placeholder.com/350x200?text=Estate+8",
           },
           {
+            id: "1",
             price: "Condo price",
             name: "Condo name",
             location: "Condo location",
@@ -297,7 +306,9 @@ export default {
     };
   },
   methods: {
-    findEstate() {},
+    pushDetailEstate(key) {
+      return this.$router.push({ path: `/estatedetail/${key}`});
+    },
   },
 };
 </script>

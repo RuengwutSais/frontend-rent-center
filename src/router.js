@@ -96,6 +96,16 @@ let router = new Router({
           }
         },
         {
+          path: "estate",
+          name: "EstateManage",
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/EstateManage.vue"),
+          meta: {
+            requireAuth: true,
+            hideFooter: true
+          }
+        },
+        {
           path: "chatuser",
           name: "ChatPage",
           nameThai: "กล่องข้อความ",
@@ -132,7 +142,7 @@ let router = new Router({
             import(/* webpackChunkName: "demo" */ "./views/PrivacyPolicyPage.vue"),
         },
         {
-          path: "estatedetail",
+          path: "/estatedetail/:estateId",
           name: "EstateDetailpage",
           component: () =>
             import(/* webpackChunkName: "demo" */ "./views/EstateDetailPage.vue"),

@@ -3,7 +3,7 @@
     <div class="header">
       <div class="coniainer-fluid">
         <div class="navb-logo">
-          <img class="img-logo" src="@/assets/RentCentral-logo.png" alt="logo" />
+          <img class="img-logo" src="@/assets/RentCentral-logo.png" @click="onPush()" alt="logo" />
         </div>
         <div class="navb-items">
           <div v-if="!isUser" class="d-flex flex-row">
@@ -129,6 +129,9 @@ export default {
     }
   },
   methods: {
+    onPush() {
+      this.$router.push('/')
+    },
     async isUserLogin() {
       const profiles = await JSON.parse(localStorage.getItem("profiles"));
       if (profiles) {
