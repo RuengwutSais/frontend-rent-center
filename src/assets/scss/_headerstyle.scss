@@ -1,5 +1,6 @@
 
 .header {
+    font-family: 'kanit' !important;
     width: 100%;
     height: 3.8rem;
     background-color: #fff;
@@ -22,6 +23,7 @@
 .navb-logo {
     justify-items: center;
     padding-left: 60px;
+    cursor: pointer;
 }
 
 .img-logo {

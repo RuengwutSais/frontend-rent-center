@@ -6,6 +6,7 @@
     <div class="card-info">
       <div class="card-name">
         <p>{{ item.name }}</p>
+        <i class="fa-solid fa-circle-check"></i>
       </div>
       <div class="card-price">
         <i class="fa-solid fa-tag"></i>

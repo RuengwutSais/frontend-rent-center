@@ -1,112 +1,19 @@
 <template>
   <div>
     <div class="picture-search">
-      <div class="search-div">
-        <div class="search-button">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fa fa-search"></i></span>
-            </div>
-            <input type="text" class="search-landing" placeholder="Search" />
-          </div>
-          <span><button class="button-search">ค้นหา</button></span>
+      <div class="search-div d-flex w-60">
+          <div class="input-group mt-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="ค้นหาอสังหาริมทรัพย์"
+              @keydown.enter="findEstate()"
+            />
+            <div class="input-group-append cursor-pointer">
+          <span class="input-group-text"
+            ><i class="fa-solid fa-magnifying-glass"></i
+          ></span>
         </div>
-        <div class="dropdown-wrapper">
-          <div class="dropdown-box">
-            <div class="dropdown">
-              <button
-                class="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="dropdown1"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Dropdown 1
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdown1">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </div>
-          </div>
-          <div class="dropdown-box">
-            <div class="dropdown">
-              <button
-                class="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="dropdown2"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Dropdown 2
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdown2">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </div>
-          </div>
-          <div class="dropdown-box">
-            <div class="dropdown">
-              <button
-                class="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="dropdown3"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Dropdown 3
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdown3">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </div>
-          </div>
-          <div class="dropdown-box">
-            <div class="dropdown">
-              <button
-                class="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="dropdown4"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Dropdown 4
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdown4">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </div>
-          </div>
-          <div class="dropdown-box">
-            <div class="dropdown">
-              <button
-                class="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="dropdown4"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Dropdown 5
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdown5">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -138,16 +45,16 @@
           <global-carousel :condos="townhouses" />
         </div>
       </div>
-    </div>    
+    </div>
   </div>
 </template>
 
 <script>
-import GlobalCarousel from '@/components/Global/GlobalCarousel.vue';
+import GlobalCarousel from "@/components/Global/GlobalCarousel.vue";
 export default {
   name: "EstateInfo",
   components: {
-    GlobalCarousel
+    GlobalCarousel,
   },
   data() {
     return {
@@ -338,13 +245,16 @@ export default {
       }
     },
     slideTownhouseRight() {
-      if (this.translateValue !== (this.townhouses.length - this.maxCard) * 100) {
+      if (
+        this.translateValue !==
+        (this.townhouses.length - this.maxCard) * 100
+      ) {
         this.translateValue -= 100;
       }
     },
   },
   mounted() {
-    console.log('condos', this.condos.length)
-  }
+    console.log("condos", this.condos.length);
+  },
 };
 </script>

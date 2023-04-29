@@ -43,7 +43,7 @@
             </div>
           </div>
           <!-- hamberker mobile -->
-          <div class="mobile-toggler">
+          <div class="mobile-toggler" v-if="!isUser">
             <a href="#" data-toggle="modal" data-target="#navbarmodal">
               <i class="fa-solid fa-bars"></i>
             </a>
@@ -56,6 +56,7 @@
           role="dialog"
           aria-labelledby="exampleModalLongTitle"
           aria-hidden="true"
+          v-if="!isUser"
         >
           <div class="modal-dialog" role="document">
             <div class="modal-content">

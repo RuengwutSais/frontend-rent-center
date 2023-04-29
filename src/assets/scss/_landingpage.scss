@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@200&family=Mitr:wght@200&display=swap");
 
 .picture-search {
+  font-family: 'kanit' !important;
   background-image: url("../img/login_background.png");
   background-color: #ebecf0;
   background-size: cover;
@@ -9,34 +10,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 70vh;
+  height: 60vh;
 }
 
-.picture-search .search-div {
-  width: 70vh;
-}
-
-.picture-search .search-div .search-button {
-  display: flex;
-  align-items: center;
-}
-
-.picture-search .search-div .input-group {
-  background-color: #fff;
-  position: relative;
-  display: flex;
-  width: 100%;
-  padding: 0.4em;
-  border-radius: 0.7em;
-  border: 1px solid #ebecf0;
-  box-shadow: rgb(60 64 67 / 30%) 0px 0px 0px 0px,
-    rgb(60 64 67 / 15%) 0px 0px 3px 0px;
-  background-size: 50px;
+.search-div{
+  width: 60%;
 }
 
 .input-group-text {
-  background-color: transparent;
-  border: none;
+  background-color: #000 !important;
+  border: none !important;
+}
+
+.input-group-text i{
+  color: #fff;
 }
 
 .search-landing {
@@ -96,10 +83,11 @@
 .card {
   margin: 5px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  border-radius: 1em;
+  border-radius: 1em !important;
   overflow: hidden;
   position: relative;
   background-color: #fff;
+  cursor: pointer;
 }
 
 .card-img {
@@ -120,11 +108,10 @@
   align-items: center;
 }
 
-.card-info .card-name p {
-  color: #000 !important;
-  font-size: 17px;
-  margin: 0 !important;
-  font-weight: bold;
+.card-info .card-name{
+  display: flex;
+  align-items: center;
+  padding: 0px 0px 0px 3px !important;
 }
 
 .card-info .card-price {
@@ -163,6 +150,13 @@
   padding: 0px 0px 0px 3px !important;
 }
 
+.card-info .card-name p {
+  color: #000 !important;
+  font-size: 17px;
+  margin: 0 !important;
+  font-weight: bold;
+}
+
 .card-info .card-price p {
   color: #000 !important;
   font-size: 16px;
@@ -197,6 +191,12 @@
   color: #000 !important;
   font-size: 14px;
   margin: 0 !important;
+}
+
+.card-info .card-name i {
+  color: #43a047 !important;
+  font-size: 18px;
+  margin-left: 5px;
 }
 
 .card-info .estate-room i {
@@ -242,6 +242,7 @@
 .more-estate a {
   text-decoration: underline;
   color: #000 !important;
+  font-family: 'kanit' !important;
 }
 
 .btn-condo {
@@ -290,26 +291,26 @@
   color: #555;
 }
 
+.VueCarousel-navigation-button[data-v-453ad8cd]:focus{
+  outline: none !important;
+}
+
+.VueCarousel-dot[data-v-438fd353]:focus{
+  outline: none !important;
+}
+
 @media only screen and (max-width: 767px) {
   .picture-search {
-    height: 60vh;
+    height: 40vh;
   }
 
   .picture-search .search-div {
-    width: 90%;
+    width: 90% !important;
   }
 
-  .picture-search .search-div .input-group {
-    flex-wrap: inherit;
-    height: 2.5rem;
+  .estate-pop{
+    margin: 20px;
   }
-
-  .button-search {
-    height: 2.5rem;
-    width: 5rem;
-    margin-top: 2px;
-  }
-
   .estate-pop h1 {
     font-family: "Kanit", sans-serif;
     font-weight: 500;
@@ -332,7 +333,13 @@
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
   /* styles for iPad */
+  .picture-search {
+    height: 30vh;
+  }
   .picture-search .search-div {
-    width: 90%;
+    width: 90% !important;
+  }
+  .estate-pop{
+    margin: 20px;
   }
 }

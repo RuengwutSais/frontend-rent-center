@@ -4,7 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&family=Mitr:wght@200&display=swap');
 
 // Typography elements
-$mdb-font-family: 'Kanit', 'Helvetica', 'Arial', sans-serif !default;
+$mdb-font-family: 'Kanit' !default;
 $mdb-text-color-light:  $white !default;
 $mdb-text-color-light-hex: $white !default; // for contrast function in inverse
 $mdb-text-color-primary: unquote("rgba(#{$rgb-black}, 0.87)") !default;

@@ -84,7 +84,33 @@
         </div>
       </div>
       <div class="detail-report">
-        <button class="button-report">แจ้งรายงาน</button>
+        <b-button v-b-modal.modal-1 class="button-report" variant="#df4759"
+          >แจ้งรายงาน</b-button
+        >
+        <b-modal id="modal-1" title="BootstrapVue">
+          <p class="my-4">Hello from modal!</p>
+        </b-modal>
+      </div>
+      <div class="detail-review">
+        <div class="review-header">
+          <img class="reviewer-img" :src="reviewerImg.image" alt="reviewerImage"/>
+          <h2 class="reviewer-name">{{ reviewerName.name }}</h2>
+          <div class="review-date">{{ reviewDate.date }}</div>
+        </div>
+        <div class="review-text">{{ reviewText.detail }}</div>
+        <div class="review-rating">
+          <span v-for="n in 5" :key="n" :class="{ active: n <= reviewRating.rating }">
+            <i class="fa-solid fa-star"></i>
+          </span>
+        </div>
+      </div>
+      <div class="review-estate">
+        <input
+                  class="review-input"
+                  type="text"
+                  placeholder="รีวิวอสังหาริมทรัพย์..."
+                />
+        <b-form-rating id="rating-inline" inline value="4"></b-form-rating>
       </div>
     </div>
   </div>
@@ -92,6 +118,34 @@
 
 <script>
 export default {
-  
-}
+  data() {
+    return {
+      reviewerImg: {
+      image: "https://via.placeholder.com/350x200?text=User", 
+      type: String,
+      required: true,
+    },
+      reviewerName: {
+        name: "Reviewer Name",
+        type: String,
+        required: true,
+      },
+      reviewDate: {
+        date: "Review Date",
+        type: String,
+        required: true,
+      },
+      reviewText: {
+        detail: "Review Detail",
+        type: String,
+        required: true,
+      },
+      reviewRating: {
+        rating: 4,
+        type: Number,
+        required: true,
+      },
+    };
+  },
+};
 </script>

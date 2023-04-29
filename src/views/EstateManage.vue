@@ -198,7 +198,7 @@ export default {
 <style lang="scss" scoped>
 .drop-box-shadow {
     // border: 1px solid black;
-    border-radius: 5px;
-    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 1em;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 </style>

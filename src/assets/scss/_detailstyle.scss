@@ -1,4 +1,5 @@
 .detail-wrapper {
+  font-family: 'kanit' !important;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -160,7 +161,7 @@
   justify-content: flex-end;
 }
 
-.button-report {
+.detail-wrapper .detail-report .btn {
   margin-top: 1rem;
   height: 2.75rem;
   width: 10rem;
@@ -173,7 +174,7 @@
   font-size: 1rem;
 }
 
-.button-report:hover {
+.detail-wrapper .detail-report .btn:hover {
   border: 1px solid #df4759;
   background-color: #fff;
   color: #df4759;
@@ -294,6 +295,67 @@
   margin: 0 !important;
 }
 
+.detail-review {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f5f5f5;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.reviewer-img {
+  width: 50px;
+  height: 50px !important;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.reviewer-name {
+  font-size: 18px;
+  margin: 0;
+}
+
+.review-date {
+  font-size: 14px;
+  color: #999;
+  margin-left: 10px;
+}
+
+.review-text {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.detail-review .review-rating i{
+  font-size: 16px;
+  color: #999 !important;
+  margin-bottom: 10px;
+}
+.detail-review .review-rating .active {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.detail-review .review-rating .active i{
+  color: #ffc107 !important;
+}
+
+.detail-card .review-input{
+  width: 100%;
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: none ;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
 @media only screen and (max-width: 767px){
   .detail-wrapper{
     height: auto;
@@ -333,9 +395,11 @@
   }
 }
 
+
+
 @media only screen and (min-width: 768px) and (max-width: 1023px){
   .detail-wrapper{
-    height: 60.4rem;
+    height: auto;
   }
   .detail-card{
     width: 80%;
