@@ -26,7 +26,9 @@ $white-transparent: rgba($white-color, .8);
 
 $gray-color:  #999999 !default;
 
-$brand-primary: $purple !default;
+$default: #172b4d !default;
+$brand-primary: $indigo-A700 !default;
+$brand-secondary: $indigo-A700 !default;
 $brand-success: $green !default;
 $brand-danger: $red !default;
 $brand-warning: $orange !default;
@@ -134,6 +136,16 @@ $headings-font-weight:    700 !default;
 $headings-line-height:    1.1 !default;
 $headings-color:          inherit !default;
 
+$theme-colors: (
+  ) !default;
+$theme-colors: map-merge(("default": $default,
+      "primary": $brand-primary,
+      "secondary": $brand-secondary,
+      "success": $brand-success,
+      "info": $brand-info,
+      "warning": $brand-warning,
+      "danger": $brand-danger), $theme-colors
+);
 
 //== Iconography
 //
@@ -676,7 +688,7 @@ $modal-content-fallback-border-color:          #999 !default;
 //** Modal backdrop background color
 $modal-backdrop-bg:           #000 !default;
 //** Modal backdrop opacity
-$modal-backdrop-opacity:      .5 !default;
+$modal-backdrop-opacity:      .75 !default;
 //** Modal header border color
 $modal-header-border-color:   #e5e5e5 !default;
 //** Modal footer border color
