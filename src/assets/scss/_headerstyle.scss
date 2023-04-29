@@ -1,6 +1,5 @@
-
-.header {
-    font-family: 'kanit' !important;
+.layout-style-header {
+  .header {
     width: 100%;
     height: 3.8rem;
     background-color: #fff;
@@ -10,161 +9,161 @@
     position: fixed;
     z-index: 9999;
     top: 0;
-}
+  }
 
-.margin-4rem {
+  .margin-4rem {
     margin-top: 3.8rem;
-}
+  }
 
-.border-danger {
-  border: 1px solid red;
-}
+  .border-danger {
+    border: 1px solid red;
+  }
 
-.navb-logo {
+  .navb-logo {
     justify-items: center;
     padding-left: 60px;
     cursor: pointer;
 }
 
-.img-logo {
+  .img-logo {
     height: 3.5rem !important;
-}
+  }
 
-.header .coniainer-fluid {
+  .header .coniainer-fluid {
     width: 100%;
     padding-right: 60px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
+  }
 
-a {
+  a {
     text-decoration: none;
     color: #000;
+  }
 
-}
-
-.header .navb-items {
+  .header .navb-items {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-}
+  }
 
-.header .items {
+  .header .items {
     text-align: center;
     font-size: 20px;
-    
-    margin-right: 6px;
-}
 
-.button-nav {
+    margin-right: 6px;
+  }
+
+  .button-nav {
     height: 2.75rem;
     width: 8rem;
     background-color: #fff;
     color: #000;
-    border-radius: .4em;
+    border-radius: 0.4em;
     border: 1px solid #000;
     transition: 250ms;
     cursor: pointer;
     font-size: 1rem;
-}
+  }
 
-.button-nav:hover {
+  .button-nav:hover {
     border: 1px solid #000;
     background-color: #000;
-    color: #fff
-}
+    color: #fff;
+  }
 
-.fa-bars {
+  .fa-bars {
     color: #000 !important;
     padding-left: 20px;
-}
+  }
 
-.mobile-toggler {
+  .mobile-toggler {
     display: none;
-}
+  }
 
-.modal-dialog {
+  .modal-dialog {
     position: fixed;
     margin: 0px !important;
     width: 260px;
     top: 0px;
     right: 0px;
-}
+  }
 
-.modal-content {
+  .modal-content {
     border-radius: 0;
     height: 110vh;
     background-color: #fff;
     overflow-y: hidden;
-}
+  }
 
-.modal-header {
+  .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 88%;
     margin: 0 auto;
     padding-bottom: 16px;
-}
+  }
 
-.modal-header .btn-close {
+  .modal-header .btn-close {
     background: transparent;
     opacity: 1;
-}
+  }
 
-.modal-header i {
+  .modal-header i {
     color: #000 !important;
     font-size: 30px !important;
-}
+  }
 
-.modal-body {
+  .modal-body {
     width: 88%;
     margin: 0 auto;
     padding: 75px 0 0;
     flex: unset;
     text-align: center;
-}
+  }
 
-.modal-button {
+  .modal-button {
     height: 2.75rem;
     width: 10rem;
     background-color: #fff;
     color: #000;
-    border-radius: .4em;
+    border-radius: 0.4em;
     border: 1px solid #000;
     transition: 250ms;
     cursor: pointer;
     font-size: 1rem;
     margin-bottom: 20px;
-}
+  }
 
-.modal-button:hover {
+  .modal-button:hover {
     border: 1px solid #000;
     background-color: #000;
-    color: #fff
-}
+    color: #fff;
+  }
 
-@media only screen and (max-width: 767px)  {
+  @media only screen and (max-width: 767px) {
     .header .coniainer-fluid {
-        padding-right: 30px;
+      padding-right: 30px;
     }
 
     .navb-logo {
-        padding-left: 30px;
+      padding-left: 30px;
     }
 
     .mobile-toggler {
-        display: flex;
+      display: flex;
     }
 
     .button-nav {
-        display: none;
+      display: none;
     }
-    .modal{
-        padding-left: 30%;
+    .modal {
+      padding-left: 30%;
     }
-    .modal-open .modal{
-        overflow: hidden !important;
+    .modal-open .modal {
+      overflow: hidden !important;
     }
+  }
 }

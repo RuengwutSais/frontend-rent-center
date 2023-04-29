@@ -1,0 +1,38 @@
+//
+// Modal
+//
+
+
+// Fluid modal
+
+.modal-fluid {
+    .modal-dialog {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    .modal-content {
+        border-radius: 0;
+    }
+}
+.modal-title {
+    font-size: 1.3rem;
+    padding-top: 5px;
+    width: 100%;
+}
+
+
+// @each $color, $value in $theme-colors {
+//     .modal-#{$color} {
+//         @include modal-variant($value);
+//     }
+// }
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem !important;
+}
+.modal-body {
+    padding: 0 1.5rem !important;
+    margin-bottom: 1.2rem;
+}
