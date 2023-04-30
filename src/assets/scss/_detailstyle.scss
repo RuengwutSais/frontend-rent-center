@@ -356,6 +356,45 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
+.detail-card .rating{
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+  text-align: center;
+}
+
+.detail-card .rating p{
+  margin: 0 !important;
+}
+
+.detail-card .rating .star-rating{
+  width: 20%;
+  border: none;
+  color: #ffc107;
+}
+
+.detail-card .rating .review-button{
+  height: 2.5rem;
+  width: 4.5rem;
+  color: #fff;
+  background-color: #000;
+  border: none;
+  border-radius: 0.4em;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.detail-card .rating .review-button:hover{
+  color: #000;
+  background-color: #fff;
+  border: 1px solid #000;
+}
+
+.message_error{
+  color: #ea2d3f;
+  margin:.3em
+}
+
 @media only screen and (max-width: 767px){
   .detail-wrapper{
     height: auto;
@@ -393,9 +432,14 @@
   .owner-wrapper .owner-detail .chat-owner form{
     width: auto;
   }
+
+  .detail-card .rating .div-review-btn{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 35%;
+  }
 }
-
-
 
 @media only screen and (min-width: 768px) and (max-width: 1023px){
   .detail-wrapper{

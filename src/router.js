@@ -27,7 +27,25 @@ let router = new Router({
           name: "DashboardView",
           component: Dashboard,
           meta: {
-            requireAuth: true
+            requireAuth: true,
+          }
+        },
+        {
+          path: "reportestate",
+          name: "Report Estate",
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/admin/ReportEstatePage.vue"),
+          meta: {
+            requireAuth: true,
+          }
+        },
+        {
+          path: "holdestate",
+          name: "Hold Estate",
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/admin/HoldEstatePage.vue"),
+          meta: {
+            requireAuth: true,
           }
         },
         {
@@ -81,7 +99,6 @@ let router = new Router({
           component: Dashboard,
           meta: {
             requireAuth: true,
-            hideFooter: true
           }
         },
         {
@@ -92,7 +109,6 @@ let router = new Router({
             import(/* webpackChunkName: "demo" */ "./views/template/UserProfile.vue"),
           meta: {
             requireAuth: true,
-            hideFooter: true
           }
         },
         {
@@ -102,7 +118,6 @@ let router = new Router({
             import(/* webpackChunkName: "demo" */ "./views/EstateManage.vue"),
           meta: {
             requireAuth: true,
-            hideFooter: true
           }
         },
         {
@@ -113,7 +128,6 @@ let router = new Router({
             import(/* webpackChunkName: "demo" */ "./views/ChatTemplate.vue"),
           meta: {
             guest: true,
-            hideFooter: true
           }
         },
       ]

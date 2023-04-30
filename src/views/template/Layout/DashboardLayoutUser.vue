@@ -31,14 +31,12 @@
     <div class="main-panel">
       <top-navbar></top-navbar>
       <dashboard-content> </dashboard-content>
-      <content-footer v-if="!$route.meta.hideFooter"></content-footer>
     </div>
   </div>
 </template>
 
 <script>
 import TopNavbar from "./TopNavbar.vue";
-import ContentFooter from "./ContentFooter.vue";
 import DashboardContent from "./Content.vue";
 import MobileMenu from "@/views/template/Layout/MobileMenu.vue";
 import SidebarLink from '@/components/SidebarPlugin/SidebarLink.vue';
@@ -47,7 +45,6 @@ export default {
   components: {
     TopNavbar,
     DashboardContent,
-    ContentFooter,
     MobileMenu,
     SidebarLink
   },

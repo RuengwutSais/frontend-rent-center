@@ -3,33 +3,55 @@
     <div class="md-layout-item md-size-100" v-if="stepPage === 'listEstate'">
       <md-card>
         <md-card-header :data-background-color="dataBackgroundColor">
-          <div class="d-flex align-items-center justify-content-between">
-            <div>
-              <h4 class="title">อสังหาริมทรัพย์</h4>
-              <p class="category">
-                ข้อมูลรายละเอียดอสังหาริมทรัพย์ทั้งหมดของคุณ
-              </p>
+          <div class="d-flex align-items-center justify-content-between row">
+            <div class="col-12 col-lg-6">
+              <div>
+                <h4 class="title">อสังหาริมทรัพย์</h4>
+                <p class="category">
+                  ข้อมูลรายละเอียดอสังหาริมทรัพย์ทั้งหมดของคุณ
+                </p>
+              </div>
             </div>
-            <div>
-              <b-button
-                variant="primary"
-                class="d-flex justify-content-center align-items-center w-100"
-                @click="goToListState('addEstate')"
-              >
-                <i class="fa-solid fa-plus"></i>
-              </b-button>
+            <div class="col-12 col-lg-6">
+              <div class="input-group mt-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="ค้นหาอสังหาริมทรัพย์"
+                />
+                <div class="input-group-append cursor-pointer">
+                  <span class="input-group-text"
+                    ><i class="fa-solid fa-magnifying-glass"></i
+                  ></span>
+                </div>
+              </div>
+            </div> 
+            <div  class="col-12 col-lg-6">
+              <div class="mt-4">
+                <b-button
+                  class="d-flex justify-content-center align-items-center w-25"
+                  style="
+                  color: #fff;
+                  background-color: #000;
+                  border: 1px solid #000;
+                  height: 2em;"
+                  @click="goToListState('addEstate')"
+                >
+                  <i class="fa-solid fa-plus"></i>
+                </b-button>
+              </div> 
             </div>
           </div>
         </md-card-header>
         <md-card-content>
           <div>
             <md-table v-model="users" :table-header-color="dataBackgroundColor">
-              <md-table-row slot="md-table-row" slot-scope="{ item }">
-                <md-table-cell md-label="ลำดับ">{{ item.id }}</md-table-cell>
+              <md-table-row slot="md-table-row" slot-scope="{ item, index }">
+                <md-table-cell md-label="ลำดับ">{{ index }}</md-table-cell>
                 <md-table-cell md-label="ชื่อ - นามสกุล">{{
                   item.name
                 }}</md-table-cell>
-                <md-table-cell md-label="ประเภทอสังหาริมทรัพย์">{{
+                <md-table-cell md-label="ประเภทอสังหาฯ">{{
                   item.salary
                 }}</md-table-cell>
                 <md-table-cell md-label="ราคา">{{ item.salary }}</md-table-cell>
@@ -57,7 +79,10 @@
                       <i class="fa-solid fa-pen-to-square"></i>
                     </div>
                     <div class="w-100 cursor-pointer">
-                      <i class="fa-solid fa-trash-can" @click="openModal('trash')"></i>
+                      <i
+                        class="fa-solid fa-trash-can"
+                        @click="openModal('trash')"
+                      ></i>
                     </div>
                   </div>
                 </md-table-cell>
@@ -189,18 +214,38 @@
             </div>
             <p>
               ท่านยืนยันที่จะลบ
-              <span class="text-primary">
-                ddd
-              </span>
+              <span class="text-primary"> ddd </span>
               หรือไม่ ?
             </p>
           </div>
           <div class="d-flex justify-content-center mt-3">
             <div>
-              <b-button variant="outline-primary" @click="close('yesorno')">
-                ย้อนกลับ
+              <b-button
+                @click="close('yesorno')"
+                style="
+                  color: #fff;
+                  background-color: #000;
+                  border: 1px solid #000;
+                  height: 2.5em;
+                  width: 6em;
+                  margin-right: 20px;
+                  font-family: 'Kanit';
+                "
+              >
+                ยกเลิก
               </b-button>
-              <b-button variant="primary" @click="actionYesOrNo()">
+              <b-button
+                @click="actionYesOrNo()"
+                style="
+                  color: #fff;
+                  background-color: #df4759;
+                  border: 1px solid #df4759;
+                  height: 2.5em;
+                  width: 6em;
+                  margin-right: 20px;
+                  font-family: 'Kanit';
+                "
+              >
                 ยืนยัน
               </b-button>
             </div>
@@ -276,29 +321,38 @@ export default {
   },
   methods: {
     openModal(key) {
-        if(key === 'trash') {
-            this.$bvModal.show('modal-yes-or-no')
-        }
+      if (key === "trash") {
+        this.$bvModal.show("modal-yes-or-no");
+      }
     },
     goToListState(key) {
       this.stepPage = key;
     },
-    actionYesOrNo() {
-
-    },
+    actionYesOrNo() {},
     close(key) {
-        if(key === 'yesorno') {
-            this.$bvModal.hide('modal-yes-or-no')
-        }
-    }
+      if (key === "yesorno") {
+        this.$bvModal.hide("modal-yes-or-no");
+      }
+    },
+    getOverAllIndex(index) {
+      return this.search.page * 25 - 25 + index + 1;
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .drop-box-shadow {
-    // border: 1px solid black;
-    border-radius: 1em;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  // border: 1px solid black;
+  border-radius: 1em;
+  box-shadow: rgba(100, 100, 111, 0.2) 0 12px 20px -10px;
+}
+
+.input-group input {
+  border-radius: 0.7em;
+}
+
+.input-group-text {
+  border-radius: 0.7em;
 }
 </style>

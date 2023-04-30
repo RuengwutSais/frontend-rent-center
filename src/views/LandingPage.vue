@@ -2,18 +2,18 @@
   <div>
     <div class="picture-search">
       <div class="search-div d-flex w-60">
-          <div class="input-group mt-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="ค้นหาอสังหาริมทรัพย์"
-              @keydown.enter="findEstate()"
-            />
-            <div class="input-group-append cursor-pointer">
-          <span class="input-group-text"
-            ><i class="fa-solid fa-magnifying-glass"></i
-          ></span>
-        </div>
+        <div class="input-group mt-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="ค้นหาอสังหาริมทรัพย์"
+            @keydown.enter="findEstate()"
+          />
+          <div class="input-group-append cursor-pointer">
+            <span class="input-group-text"
+              ><i class="fa-solid fa-magnifying-glass"></i
+            ></span>
+          </div>
         </div>
       </div>
     </div>

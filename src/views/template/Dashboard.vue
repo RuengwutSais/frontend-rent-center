@@ -70,16 +70,67 @@
           </template> -->
         </stats-card>
       </div>
-      <div
-        class="md-layout-item md-size-100"
-      >
+      <div class="md-layout-item md-size-100">
         <md-card>
-          <md-card-header data-background-color="orange">
-            <h4 class="title">Employees Stats</h4>
-            <p class="category">New employees on 15th September, 2016</p>
+          <md-card-header :data-background-color="dataBackgroundColor">
+            <div class="d-flex align-items-center justify-content-between row">
+              <div class="col-12 col-lg-6">
+                <div>
+                  <h4 class="title">รายการอสังหาริมทรัพย์</h4>
+                  <p class="category">ข้อมูลรายละเอียดของอสังหาริมทรัพย์</p>
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="input-group mt-4 w-100">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="ค้นหาอสังหาริมทรัพย์"
+                  />
+                  <div class="input-group-append cursor-pointer">
+                    <span class="input-group-text"
+                      ><i class="fa-solid fa-magnifying-glass"></i
+                    ></span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </md-card-header>
           <md-card-content>
-            <ordered-table table-header-color="orange"></ordered-table>
+            <div>
+              <md-table
+                v-model="users"
+                :table-header-color="dataBackgroundColor"
+              >
+                <md-table-row slot="md-table-row" slot-scope="{ item, index }">
+                  <md-table-cell md-label="ลำดับ">{{ index }}</md-table-cell>
+                  <md-table-cell md-label="ชื่ออสังหาฯ">{{
+                    item.estate_name
+                  }}</md-table-cell>
+                  <md-table-cell md-label="ประเภทอสังหาฯ">{{
+                    item.estate_type
+                  }}</md-table-cell>
+                  <md-table-cell md-label="ราคา">{{
+                    item.estate_price
+                  }}</md-table-cell>
+                  <md-table-cell md-label="พื้นที่/ตร.ม">{{
+                    item.estate_area
+                  }}</md-table-cell>
+                  <md-table-cell md-label="ห้องนอน">{{
+                    item.estate_bedrooms
+                  }}</md-table-cell>
+                  <md-table-cell md-label="ห้องนำ้">{{
+                    item.estate_bathrooms
+                  }}</md-table-cell>
+                  <md-table-cell md-label="โรงรถ">{{
+                    item.estate_garage
+                  }}</md-table-cell>
+                  <md-table-cell md-label="สถานะ">{{
+                    item.estate_status
+                  }}</md-table-cell>
+                </md-table-row>
+              </md-table>
+            </div>
           </md-card-content>
         </md-card>
       </div>
@@ -88,19 +139,39 @@
 </template>
 
 <script>
-import {
-  StatsCard,
-  OrderedTable,
-} from "@/components";
+import { StatsCard } from "@/components";
 
 export default {
-  name: 'DashboardView',
+  name: "DashboardView",
   components: {
     StatsCard,
-    OrderedTable,
   },
   data() {
     return {
+      dataBackgroundColor: "blue",
+      users: [
+        {
+          estate_id: 1,
+          estate_name: "สิรินคอนโด",
+          estate_type: "คอนโด",
+          estate_location: "",
+          estate_price: "1,500,000",
+          estate_area: "60",
+          estate_bedrooms: "2",
+          estate_bathrooms: "4",
+          estate_garage: "1",
+          estate_description: "",
+          estate_image: "",
+          estate_status: "ไม่ว่าง",
+          estate_user_id: "",
+          gps_latitude: "",
+          gps_longitude: "",
+          province_id: "",
+          geographies_id: "",
+          amphures_id: "",
+          districts_id: "",
+        },
+      ],
       dailySalesChart: {
         data: {
           labels: ["M", "T", "W", "T", "F", "S", "S"],
@@ -189,5 +260,25 @@ export default {
       },
     };
   },
+  methods: {
+    getOverAllIndex(index) {
+      return this.search.page * 25 - 25 + index + 1;
+    },
+  },
 };
 </script>
+
+<style lang="scss" scoped>
+.drop-box-shadow {
+  // border: 1px solid black;
+  border-radius: 1em;
+  box-shadow: rgba(100, 100, 111, 0.2) 0 12px 20px -10px;
+}
+.input-group input {
+  border-radius: 0.7em;
+}
+
+.input-group-text {
+  border-radius: 0.7em;
+}
+</style>

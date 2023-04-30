@@ -53,11 +53,11 @@
               </div>
             </div>
             <!-- hamberker mobile -->
-            <div class="mobile-toggler">
+            <!-- <div class="mobile-toggler">
               <a href="#" data-toggle="modal" data-target="#navbarmodal">
                 <i class="fa-solid fa-bars"></i>
               </a>
-            </div>
+            </div> -->
           </div>
           <div
             class="modal fade"

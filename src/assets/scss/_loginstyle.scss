@@ -104,35 +104,17 @@ h1 {
     rgba(60, 64, 67, 0.15) 0px 0px 3px 0px;
   background-size: 50px;
 }
-.input_error {
-  width: 100%;
-  padding: 1em;
+.box .div-check-bar {
+  margin: 0.5em 0;
   display: flex;
-  background-color: #fff;
-  border-color: #ea2d3f important;
-  border: 1px solid #000;
-  border-radius: 0.7em;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 0px 0px 0px,
-    rgba(60, 64, 67, 0.15) 0px 0px 3px 0px;
-  background-size: 50px;
-}
-.message_error {
-  color: #ea2d3f;
-  margin: 0.2em;
-}
-.box .check_bar {
-  margin: 1em 0;
-  display: flex;
-  flex-direction: row;
   justify-content: space-between;
 }
-.box .check_bar a {
+.box .div-check-bar a {
   color: #000;
 }
-.box .check_bar div input[type="checkbox"] {
+.box .div-check-bar div input[type="checkbox"] {
   height: 1em;
   width: 1em;
-  margin: 0 0.5em;
 }
 .box span {
   text-align: center;

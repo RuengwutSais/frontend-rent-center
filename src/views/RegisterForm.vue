@@ -111,6 +111,20 @@
           <p class="message_error">{{ user.phoneError }}</p>
         </div>
       </div>
+      <div class="div-check-bar">
+        <div>
+          <input type="checkbox" v-model="user.checked" />
+          <label for="">ยอมรับ</label>
+          <a href="/termofservice" target="_blank">ข้อตกลงผู้ให้บริการ</a>
+          <label for="">และ</label>
+          <a href="/privacy" target="_blank">นโยบายคุ้มครองข้อมูลส่วนบุคคล</a>
+          <div v-if="user.checkedError" class="check-bar-error">
+            <i class="fa-solid fa-circle-xmark error-icon"></i>
+            <p class="message_error">{{ user.checkedError }}</p>
+          </div>
+        </div>
+      </div>
+
       <button class="log" @click="registerUser">สมัครสมาชิก</button>
       <span>หากมีบัญชีอยู่แล้ว <a href="/login">เข้าสู่ระบบ</a> </span>
     </div>
@@ -134,6 +148,8 @@ export default {
         lastnameError: "",
         phoneNumber: "",
         phoneError: "",
+        checked: false,
+        checkedError: "",
       },
     };
   },
@@ -186,6 +202,13 @@ export default {
         this.user.phoneError = "";
       }
     },
+    validateCheck() {
+      if (!this.user.checked) {
+        this.user.checkedError = "กรุณายอมรับข้อตกลง";
+      } else {
+        this.user.checkedError = "";
+      }
+    },
     async registerUser() {
       if (
         this.user.email &&
@@ -209,8 +232,8 @@ export default {
             delete profiles.token;
             localStorage.setItem("profiles", JSON.stringify(profiles));
             localStorage.setItem("token", token);
-            if(JSON.parse(localStorage.getItem("profiles"))) {
-                this.$router.push('/landingpage')
+            if (JSON.parse(localStorage.getItem("profiles"))) {
+              this.$router.push("/landingpage");
             }
           })
           .catch((error) => {
@@ -222,6 +245,7 @@ export default {
         this.validateLastName();
         this.validatePassword();
         this.validatePhone();
+        this.validateCheck();
       }
     },
   },

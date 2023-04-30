@@ -14,7 +14,7 @@
         <input type="password" name="password" v-model="user.password" placeholder="อย่างน้อย 8 ตัวอักษร" required> 
       </div>
     </div>
-    <div class="check_bar">
+    <div class="div-check-bar">
       <div>
         <input type="checkbox" name="" id="">
         <label for="">จดจำฉัน</label>
@@ -34,13 +34,14 @@ export default {
       user: {
         email: "",
         password: "",
+        emailError: ""
       }
     }
   },
   validations: {
     user: {
       email : required,
-      password : required
+      password : required,
     }
   },
     methods:{
@@ -70,7 +71,7 @@ export default {
           // TODO doing something if error
         });
         
-      }
+      },
     },
     mounted(){
       if(JSON.parse(localStorage.getItem('profiles'))) {
