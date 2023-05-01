@@ -10,18 +10,27 @@ FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 COPY --from=build-stage /app/dist/ .
 
-# Install OpenSSL
-RUN apk add openssl
+# Install Certbot and Nginx plugin
+RUN apk add --no-cache certbot certbot-nginx
 
-# Generate self-signed SSL certificate and key pair
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=localhost"
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/cert.key -out /etc/nginx/cert.pem -subj "/CN=localhost"
-
-# Copy nginx config and certificate files
+# Copy nginx config file
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY nginx-selfsigned.conf /etc/nginx/conf.d/default.conf
 
 # Expose ports 80 and 443
 EXPOSE 80
 EXPOSE 443
 
+# Set up Certbot
+RUN certbot certonly --agree-tos --email your-email@example.com --webroot -w /usr/share/nginx/html -d 188.166.244.29
+
+# Set up Nginx to use Let's Encrypt SSL certificate
+RUN sed -i 's/# server {/server {/' /etc/nginx/nginx.conf \
+    && sed -i 's/#\s*listen\s*80/listen 80/' /etc/nginx/nginx.conf \
+    && sed -i 's/#\s*listen\s*\[::\]:80/listen [::]:80/' /etc/nginx/nginx.conf \
+    && sed -i 's/#\s*listen\s*443\s*ssl/listen 443 ssl/' /etc/nginx/nginx.conf \
+    && sed -i 's/#\s*listen\s*\[::\]:443\s*ssl/listen [::]:443 ssl/' /etc/nginx/nginx.conf \
+    && sed -i 's/#\s*ssl_certificate/ssl_certificate/' /etc/nginx/nginx.conf \
+    && sed -i 's/#\s*ssl_certificate_key/ssl_certificate_key/' /etc/nginx/nginx.conf \
+    && sed -i 's/#\s*include\s*.*ssl_dhparams.pem/ssl_protocols TLSv1.2 TLSv1.3;\n    include \/etc\/letsencrypt\/options-ssl-nginx.conf;\n    ssl_dhparam \/etc\/letsencrypt\/ssl-dhparams.pem;/' /etc/nginx/nginx.conf \
+    && sed -i 's/#\s*server_name\s*example.com/server_name 188.166.244.29/' /etc/nginx/nginx.conf \
+    && echo "0 12 * * * root certbot renew --quiet --nginx --agree-tos --non-interactive" > /etc/crontabs/root
