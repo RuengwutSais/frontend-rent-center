@@ -30,7 +30,8 @@ RUN apk add openssl
 # Generate self-signed SSL certificate and key pair
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=localhost"
 
-# Copy SSL certificate and key pair to production stage
+# Copy nginx config and certificate files
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=build-stage /app/nginx-selfsigned.conf /etc/nginx/conf.d/default.conf
 COPY --from=build-stage /app/nginx-selfsigned.key /etc/ssl/private/nginx-selfsigned.key
 COPY --from=build-stage /app/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigned.crt
@@ -38,3 +39,4 @@ COPY --from=build-stage /app/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigne
 # Expose ports 80 and 443
 EXPOSE 80
 EXPOSE 443
+
