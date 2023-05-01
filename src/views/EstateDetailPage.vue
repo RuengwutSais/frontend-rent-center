@@ -33,8 +33,8 @@
         </div>
       </div>
       <div class="estate-area">
-        <div class="detail-floor">
-          <i class="fa-solid fa-stairs"></i>
+        <div class="detail-garage">
+          <i class="fa-solid fa-warehouse"></i>
           <p>N/A</p>
         </div>
         <div class="detail-area">
@@ -44,6 +44,27 @@
       </div>
       <div class="detail-estate">
         <p>Estate Detail</p>
+      </div>
+      <div class="map-container">
+        <GmapMap
+          ref="mymap"
+          :center="center"
+          :zoom="17"
+          style="width: 100%; height: 300px;"
+          map-type-id="roadmap"
+          :options="{
+            zoomControl: true,
+            fullscreenControl: false,
+            disableDefaultUI: true,
+          }"
+        >
+        </GmapMap>
+        <div class="location-dot">
+          <i
+            class="fa-solid fa-location-dot"
+            style="color: #ff0000 !important; font-size: 30px;"
+          ></i>
+        </div>
       </div>
       <div class="owner-wrapper">
         <div class="owner-detail">
@@ -161,8 +182,14 @@
                 font-family: 'Kanit';
               "
             />
-            <div v-if="report.detailError" style="display: flex; align-items: center; margin-top: 5px;">
-              <i class="fa-solid fa-circle-xmark error-icon" style="color: #df4759;"></i>
+            <div
+              v-if="report.detailError"
+              style="display: flex; align-items: center; margin-top: 5px"
+            >
+              <i
+                class="fa-solid fa-circle-xmark error-icon"
+                style="color: #df4759"
+              ></i>
               <p class="message_error">{{ report.detailError }}</p>
             </div>
           </div>
@@ -206,6 +233,7 @@
 </template>
 
 <script>
+import { gmapApi } from "vue2-google-maps";
 export default {
   data() {
     return {
@@ -242,11 +270,20 @@ export default {
         image: "",
       },
       isUser: false,
+      center: {
+        lat: 18.313244,
+        lng: 99.421067,
+      },
     };
   },
   watch: {
     $route: function () {
       this.isUserLogin();
+    },
+  },
+  computed: {
+    google() {
+      return gmapApi;
     },
   },
   methods: {
@@ -288,7 +325,6 @@ export default {
         this.report.detail = "";
         this.report.detailError = "";
       }
-
     },
     validateReport() {
       if (!this.report.detail) {

@@ -111,21 +111,21 @@
           <h2 style="font-weight: 900">เพิ่มอสังหาริมทรัพย์</h2>
         </div>
         <div class="row">
-          <div class="col-6">
+          <div class="col-lg-6 col-sm-12">
             <label for=""> ชื่ออสังหา ฯ </label>
             <b-form-input
               v-model="addEstate.name"
               placeholder="กรุณาใส่ชื่ออสังหาฯ"
             ></b-form-input>
           </div>
-          <div class="col-3">
+          <div class="col-lg-3 col-sm-12">
             <label for=""> จังหวัด </label>
             <b-form-input
               v-model="addEstate.province"
               placeholder="เลือกจังหวัด"
             ></b-form-input>
           </div>
-          <div class="col-3">
+          <div class="col-lg-3 col-sm-12">
             <label for=""> อำเภอ/เขต </label>
             <b-form-input
               v-model="addEstate.state"
@@ -134,14 +134,14 @@
           </div>
         </div>
         <div class="row mt-2">
-          <div class="col-6">
+          <div class="col-lg-6 col-sm-12">
             <label for=""> ราคา </label>
             <b-form-input
               v-model="addEstate.price"
               placeholder="กรุณาใส่ราคาอสังหาฯ"
             ></b-form-input>
           </div>
-          <div class="col-3">
+          <div class="col-lg-3 col-sm-12">
             <label for=""> รหัสไปรษณีย์ </label>
             <b-form-input
               v-model="addEstate.zipcode"
@@ -151,14 +151,14 @@
           <div class="col-3" />
         </div>
         <div class="row mt-2">
-          <div class="col-6">
+          <div class="col-lg-6 col-sm-12">
             <label for=""> ประเภทอสังหาฯ </label>
             <b-form-input
               v-model="addEstate.typeEstate"
               placeholder="ประเภทอสังหาริมทรัพย์"
             ></b-form-input>
           </div>
-          <div class="col-6">
+          <div class="col-lg-6 col-sm-12">
             <label for=""> ที่อยู่ </label>
             <b-form-input
               v-model="addEstate.address"
@@ -167,7 +167,7 @@
           </div>
         </div>
         <div class="row mt-2">
-          <div class="col-3">
+          <div class="col-lg-3 col-sm-12">
             <label for=""> ตารางเมตร </label>
             <b-form-input
               v-model="addEstate.typeEstate"
@@ -175,8 +175,12 @@
             ></b-form-input>
           </div>
           <div class="col-3"></div>
-          <div class="col-6 align-self-end">
-            <b-button block variant="success" @click="$bvModal.show('modal-gps')">
+          <div class="col-lg-6 col-sm-12 align-self-end mt-4">
+            <b-button
+              block
+              variant="success"
+              @click="$bvModal.show('modal-gps')"
+            >
               <i
                 class="fa-solid fa-map-location-dot"
                 style="color: #ffffff"
@@ -186,47 +190,41 @@
           </div>
         </div>
         <div class="row mt-2">
-          <div class="col-2">
-            <label for="">
-              ห้องนอน  
-            </label>
+          <div class="col-lg-2 col-sm-12">
+            <label for=""> ห้องนอน </label>
             <b-form-input
               v-model="addEstate.bedroom"
               placeholder=""
             ></b-form-input>
           </div>
-          <div class="col-2">
-            <label for="">
-              ห้องน้ำ
-            </label>
+          <div class="col-lg-2 col-sm-12">
+            <label for=""> ห้องน้ำ </label>
             <b-form-input
               v-model="addEstate.bathroom"
               placeholder=""
             ></b-form-input>
           </div>
-          <div class="col-2">
-            <label for="">
-              โรงรถ
-            </label>
+          <div class="col-lg-2 col-sm-12">
+            <label for=""> โรงรถ </label>
             <b-form-input
               v-model="addEstate.garage"
               placeholder=""
             ></b-form-input>
           </div>
-          <div class="col-6 align-self-end">
+          <div class="col-lg-6 col-sm-12 align-self-end">
             <label for="">อัพโหลดรูปภาพ</label>
             <b-form-file multiple>
-             <template slot="file-name" slot-scope="{ names }">
-               <b-badge variant="dark">{{ names[0] }}</b-badge>
-               <b-badge v-if="names.length > 1" variant="dark" class="ml-1">
-                 + {{ names.length - 1 }} More files
-               </b-badge>
-             </template>
+              <template slot="file-name" slot-scope="{ names }">
+                <b-badge variant="dark">{{ names[0] }}</b-badge>
+                <b-badge v-if="names.length > 1" variant="dark" class="ml-1">
+                  + {{ names.length - 1 }} More files
+                </b-badge>
+              </template>
             </b-form-file>
           </div>
         </div>
         <div class="row mt-2">
-          <div class="col-6">
+          <div class="col-lg-6 col-sm-12">
             <label for="">รายละเอียดเพิ่มเติ่ม</label>
             <b-form-textarea
               id="textarea"
@@ -236,17 +234,13 @@
               max-rows="6"
             ></b-form-textarea>
           </div>
-          <div class="col-6 align-self-end">
+          <div class="col-lg-6 mt-4 align-self-end">
             <div class="d-flex align-items-end justify-content-end">
               <div class="mr-2">
-                <b-button variant="primary">
-                  ยืนยันเพิ่มอสังหา ฯ
-                </b-button>
+                <b-button variant="primary"> ยืนยันเพิ่มอสังหา ฯ </b-button>
               </div>
               <div>
-                <b-button variant="danger">
-                  รีเซ็ต
-                </b-button>
+                <b-button variant="danger"> รีเซ็ต </b-button>
               </div>
             </div>
           </div>
@@ -267,93 +261,139 @@
         <div class="">
           <h2 style="font-weight: 900">แก้ไขอสังหาริมทรัพย์</h2>
         </div>
-        <div class="md-layout">
-          <div class="md-layout-item md-small-size-50 md-size-50">
-            <md-field>
-              <label>ชื่ออสังหา ฯ</label>
-              <md-input v-model="editEstate.name" type="text"></md-input>
-            </md-field>
+        <div class="row">
+          <div class="col-lg-6 col-sm-12">
+            <label for=""> ชื่ออสังหา ฯ </label>
+            <b-form-input
+              v-model="editEstate.name"
+              placeholder="กรุณาใส่ชื่ออสังหาฯ"
+            ></b-form-input>
           </div>
-          <div class="md-layout-item md-small-size-25 md-size-25">
-            <md-field>
-              <label>จังหวัด</label>
-              <md-input v-model="editEstate.province" type="text"></md-input>
-            </md-field>
+          <div class="col-lg-3 col-sm-12">
+            <label for=""> จังหวัด </label>
+            <b-form-input
+              v-model="editEstate.province"
+              placeholder="เลือกจังหวัด"
+            ></b-form-input>
           </div>
-          <div class="md-layout-item md-small-size-25 md-size-25">
-            <md-field>
-              <label>อำเภอเขต</label>
-              <md-input v-model="editEstate.state" type="text"></md-input>
-            </md-field>
+          <div class="col-lg-3 col-sm-12">
+            <label for=""> อำเภอ/เขต </label>
+            <b-form-input
+              v-model="editEstate.state"
+              placeholder="เลือกอำเภอและเขต"
+            ></b-form-input>
           </div>
-          <div class="md-layout-item md-small-size-50 md-size-50">
-            <md-field>
-              <label>ราคา</label>
-              <md-input v-model="editEstate.price" type="number"></md-input>
-            </md-field>
+        </div>
+        <div class="row mt-2">
+          <div class="col-lg-6 col-sm-12">
+            <label for=""> ราคา </label>
+            <b-form-input
+              v-model="editEstate.price"
+              placeholder="กรุณาใส่ราคาอสังหาฯ"
+            ></b-form-input>
           </div>
-          <div class="md-layout-item md-small-size-50 md-size-25">
-            <md-field>
-              <label>รหัสไปรษณีย์</label>
-              <md-input v-model="editEstate.zipcode" type="text"></md-input>
-            </md-field>
+          <div class="col-lg-3 col-sm-12">
+            <label for=""> รหัสไปรษณีย์ </label>
+            <b-form-input
+              v-model="editEstate.zipcode"
+              placeholder="กรุณากรอกรหัสไปรษณีย์"
+            ></b-form-input>
           </div>
-          <div class="md-layout-item md-small-size-50 md-size-50">
-            <md-field>
-              <label>ประเภทอสังหาฯ</label>
-              <md-input v-model="editEstate.typeEstate" type="text"></md-input>
-            </md-field>
+          <div class="col-3" />
+        </div>
+        <div class="row mt-2">
+          <div class="col-lg-6 col-sm-12">
+            <label for=""> ประเภทอสังหาฯ </label>
+            <b-form-input
+              v-model="editEstate.typeEstate"
+              placeholder="ประเภทอสังหาริมทรัพย์"
+            ></b-form-input>
           </div>
-          <div class="md-layout-item md-small-size-50 md-size-50">
-            <md-field>
-              <label>ที่อยู่</label>
-              <md-input v-model="editEstate.address" type="text"></md-input>
-            </md-field>
+          <div class="col-lg-6 col-sm-12">
+            <label for=""> ที่อยู่ </label>
+            <b-form-input
+              v-model="editEstate.address"
+              placeholder="กรอกที่อยู่"
+            ></b-form-input>
           </div>
-          <div class="md-layout-item md-small-size-25 md-size-25">
-            <md-field>
-              <label>ตารางเมตร</label>
-              <md-input v-model="editEstate.taragMeter" type="text"></md-input>
-            </md-field>
+        </div>
+        <div class="row mt-2">
+          <div class="col-lg-3 col-sm-12">
+            <label for=""> ตารางเมตร </label>
+            <b-form-input
+              v-model="editEstate.typeEstate"
+              placeholder="ประเภทอสังหาริมทรัพย์"
+            ></b-form-input>
           </div>
-          <div class="md-layout-item md-small-size-25 md-size-25">
-            <md-field>
-              <label>ตารางวา</label>
-              <md-input v-model="editEstate.taragVar" type="text"></md-input>
-            </md-field>
-          </div>
-          <div class="md-layout-item md-small-size-50 md-size-50">
-            <div>ปักหมุดอสังหาฯ</div>
-          </div>
-          <div class="md-layout-item md-small-size-25 md-size-25">
-            <md-field>
-              <label>ห้องนอน</label>
-              <md-input v-model="editEstate.bedroom" type="text"></md-input>
-            </md-field>
-          </div>
-          <div class="md-layout-item md-small-size-25 md-size-25">
-            <md-field>
-              <label>ห้องน้ำ</label>
-              <md-input v-model="editEstate.bathroom" type="text"></md-input>
-            </md-field>
-          </div>
-          <div class="md-layout-item md-small-size-50 md-size-25">
-            <md-field>
-              <label>โรงรถ</label>
-              <md-input v-model="editEstate.garage" type="text"></md-input>
-            </md-field>
-          </div>
-          <div class="md-layout-item md-small-size-100 md-size-100">
-            <md-field>
-              <label>รายละเอียดเพิ่มเติม</label>
-              <md-input v-model="editEstate.description" type="text"></md-input>
-            </md-field>
-          </div>
-          <div class="md-layout-item md-size-100 text-right">
-            <md-button class="md-raised md-success"
-              >เพิ่มอสังหาริมทรัพย์</md-button
+          <div class="col-3"></div>
+          <div class="col-lg-6 col-sm-12 align-self-end mt-4">
+            <b-button
+              block
+              variant="success"
+              @click="$bvModal.show('modal-gps')"
             >
-            <md-button class="md-raised md-danger">ยกเลิก</md-button>
+              <i
+                class="fa-solid fa-map-location-dot"
+                style="color: #ffffff"
+              ></i>
+              ปักหมุดอสังหาฯ
+            </b-button>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-lg-2 col-sm-12">
+            <label for=""> ห้องนอน </label>
+            <b-form-input
+              v-model="editEstate.bedroom"
+              placeholder=""
+            ></b-form-input>
+          </div>
+          <div class="col-lg-2 col-sm-12">
+            <label for=""> ห้องน้ำ </label>
+            <b-form-input
+              v-model="editEstate.bathroom"
+              placeholder=""
+            ></b-form-input>
+          </div>
+          <div class="col-lg-2 col-sm-12">
+            <label for=""> โรงรถ </label>
+            <b-form-input
+              v-model="editEstate.garage"
+              placeholder=""
+            ></b-form-input>
+          </div>
+          <div class="col-lg-6 col-sm-12 align-self-end">
+            <label for="">อัพโหลดรูปภาพ</label>
+            <b-form-file multiple>
+              <template slot="file-name" slot-scope="{ names }">
+                <b-badge variant="dark">{{ names[0] }}</b-badge>
+                <b-badge v-if="names.length > 1" variant="dark" class="ml-1">
+                  + {{ names.length - 1 }} More files
+                </b-badge>
+              </template>
+            </b-form-file>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-lg-6 col-sm-12">
+            <label for="">รายละเอียดเพิ่มเติ่ม</label>
+            <b-form-textarea
+              id="textarea"
+              v-model="editEstate.description"
+              placeholder="Enter something..."
+              rows="3"
+              max-rows="6"
+            ></b-form-textarea>
+          </div>
+          <div class="col-lg-6 mt-4 align-self-end">
+            <div class="d-flex align-items-end justify-content-end">
+              <div class="mr-2">
+                <b-button variant="primary"> ยืนยันแก้ไขอสังหา ฯ </b-button>
+              </div>
+              <div>
+                <b-button variant="danger"> รีเซ็ต </b-button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -428,33 +468,36 @@
             class="d-flex align-items-center flex-column justify-content-center mt-3"
           >
             <!-- <div class="position-relative" style="padding: 0"> -->
-              <GmapMap
-                ref="mymap"
-                :center="center"
-                :zoom="17"
-                style="width: 100%; height: 550px"
-                map-type-id="roadmap"
-                @center_changed="updateCenter"
-                :options="{
-                  zoomControl: true,
-                  fullscreenControl: false,
-                  disableDefaultUI: true,
-                }"
-              >
-              </GmapMap>
-              <div
-                class="position-absolute"
-                style="
-                  margin-left: auto;
-                  margin-right: auto;
-                  left: 0;
-                  right: 0;
-                  text-align: center;
-                  top: 50%;
-                "
-              >
-                <i class="fa-solid fa-location-dot" style="color: #ff0000; font-size: 30px;"></i>
-              </div>
+            <GmapMap
+              ref="mymap"
+              :center="center"
+              :zoom="17"
+              style="width: 100%; height: 550px"
+              map-type-id="roadmap"
+              @center_changed="updateCenter"
+              :options="{
+                zoomControl: true,
+                fullscreenControl: false,
+                disableDefaultUI: true,
+              }"
+            >
+            </GmapMap>
+            <div
+              class="position-absolute"
+              style="
+                margin-left: auto;
+                margin-right: auto;
+                left: 0;
+                right: 0;
+                text-align: center;
+                top: 50%;
+              "
+            >
+              <i
+                class="fa-solid fa-location-dot"
+                style="color: #ff0000; font-size: 30px"
+              ></i>
+            </div>
             <!-- </div> -->
           </div>
         </template>
@@ -464,7 +507,7 @@
 </template>
 
 <script>
-import { gmapApi } from 'vue2-google-maps'
+import { gmapApi } from "vue2-google-maps";
 export default {
   data() {
     return {
@@ -475,7 +518,7 @@ export default {
       },
       coordinates: {
         lat: 0,
-        lng: 0
+        lng: 0,
       },
       inputEstate: {
         email: "",
@@ -560,8 +603,8 @@ export default {
   },
   computed: {
     google() {
-        return gmapApi
-    }
+      return gmapApi;
+    },
   },
   methods: {
     openModal(key) {
@@ -583,11 +626,11 @@ export default {
     },
     updateCenter(location) {
       console.log("update center", location);
-        this.coordinates = {
-            lat: location.lat(),
-            lng: location.lng()
-        }
-    }
+      this.coordinates = {
+        lat: location.lat(),
+        lng: location.lng(),
+      };
+    },
   },
 };
 </script>

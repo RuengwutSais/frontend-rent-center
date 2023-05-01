@@ -1,5 +1,5 @@
 .detail-wrapper {
-  font-family: 'kanit' !important;
+  font-family: "kanit" !important;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,7 +30,7 @@
   text-align: center;
 }
 
-.detail-wrapper .detail-card .detail-header .estate-status{
+.detail-wrapper .detail-card .detail-header .estate-status {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,10 +40,10 @@
   border-radius: 2em;
   border: 1px solid #000;
   transition: 250ms;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 5px 5px 0px
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 5px 5px 0px;
 }
 
-.detail-wrapper .detail-card .detail-header .estate-status p{
+.detail-wrapper .detail-card .detail-header .estate-status p {
   margin: 0 !important;
   font-size: 14px;
   color: #fff;
@@ -101,7 +101,7 @@
   padding-bottom: 1rem;
 }
 
-.detail-wrapper .detail-card .estate-room p{
+.detail-wrapper .detail-card .estate-room p {
   color: #000 !important;
   font-size: 18px;
   margin: 0 !important;
@@ -113,7 +113,7 @@
   padding-bottom: 1rem;
 }
 
-.detail-wrapper .detail-card .estate-area p{
+.detail-wrapper .detail-card .estate-area p {
   color: #000 !important;
   font-size: 18px;
   margin: 0 !important;
@@ -131,7 +131,7 @@
   padding: 0px 0px 0px 3px !important;
 }
 
-.detail-wrapper .detail-card .detail-floor {
+.detail-wrapper .detail-card .detail-garage {
   display: flex;
   align-items: center;
   padding: 0px 0px 0px 3px !important;
@@ -143,12 +143,11 @@
   padding: 0px 0px 0px 3px !important;
 }
 
-.detail-wrapper .detail-card .detail-estate{
+.detail-wrapper .detail-card .detail-estate {
   padding: 5px;
   border-top: 1px solid #000;
   margin-bottom: 1rem;
 }
-
 
 .detail-wrapper .detail-card .detail-estate p {
   color: #000 !important;
@@ -156,7 +155,7 @@
   margin: 0 !important;
 }
 
-.detail-wrapper .detail-report{
+.detail-wrapper .detail-report {
   display: flex;
   justify-content: flex-end;
 }
@@ -180,17 +179,34 @@
   color: #df4759;
 }
 
-.owner-wrapper .owner-detail{
+.map-container{
+  position: relative;
+  width: 100%;
+  height: 300px;
+}
+
+.location-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.owner-wrapper {
+  margin-top: 20px;
+}
+
+.owner-wrapper .owner-detail {
   text-align: center;
 }
 
-.owner-wrapper .owner-detail .owner-pic{
+.owner-wrapper .owner-detail .owner-pic {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.owner-wrapper .owner-detail .owner-avatar{
+.owner-wrapper .owner-detail .owner-avatar {
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -208,50 +224,49 @@
   margin-bottom: 5px;
   color: #000;
 }
-.owner-wrapper .owner-detail p{
+.owner-wrapper .owner-detail p {
   color: #000;
 }
 
-.owner-wrapper .owner-detail .owner-contract .owner-phone{
+.owner-wrapper .owner-detail .owner-contract .owner-phone {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.owner-wrapper .owner-detail .owner-contract .owner-line{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 5px;
-}
-
-.owner-wrapper .owner-detail .owner-contract .owner-email{
+.owner-wrapper .owner-detail .owner-contract .owner-line {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 5px;
 }
 
+.owner-wrapper .owner-detail .owner-contract .owner-email {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+}
 
-.owner-wrapper .owner-detail .owner-contract p{
+.owner-wrapper .owner-detail .owner-contract p {
   color: #000 !important;
   font-size: 16px;
   margin: 0 !important;
 }
 
-.owner-wrapper .owner-detail .owner-contract i{
+.owner-wrapper .owner-detail .owner-contract i {
   color: #000 !important;
   font-size: 16px;
   margin-right: 8px !important;
 }
 
-.owner-wrapper .owner-detail .owner-contract .owner-line i{
+.owner-wrapper .owner-detail .owner-contract .owner-line i {
   color: #000 !important;
   font-size: 20px;
   margin-right: 8px !important;
 }
 
-.owner-wrapper .owner-detail .chat-owner{
+.owner-wrapper .owner-detail .chat-owner {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -267,7 +282,7 @@
   width: 100%;
 }
 
-.owner-wrapper .owner-detail .chat-owner .chat-input{
+.owner-wrapper .owner-detail .chat-owner .chat-input {
   flex: 1;
   padding: 10px;
   font-size: 16px;
@@ -277,7 +292,7 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.owner-wrapper .owner-detail .chat-owner .chat-button{
+.owner-wrapper .owner-detail .chat-owner .chat-button {
   padding: 10px;
   font-size: 16px;
   width: 4rem;
@@ -289,7 +304,7 @@
   cursor: pointer;
 }
 
-.owner-wrapper .owner-detail .chat-owner i{
+.owner-wrapper .owner-detail .chat-owner i {
   color: #fff !important;
   font-size: 16px;
   margin: 0 !important;
@@ -332,7 +347,7 @@
   margin-bottom: 10px;
 }
 
-.detail-review .review-rating i{
+.detail-review .review-rating i {
   font-size: 16px;
   color: #999 !important;
   margin-bottom: 10px;
@@ -342,38 +357,38 @@
   box-shadow: none;
 }
 
-.detail-review .review-rating .active i{
+.detail-review .review-rating .active i {
   color: #ffc107 !important;
 }
 
-.detail-card .review-input{
+.detail-card .review-input {
   width: 100%;
   flex: 1;
   padding: 10px;
   font-size: 16px;
-  border: none ;
+  border: none;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.detail-card .rating{
+.detail-card .rating {
   display: flex;
   margin-top: 10px;
   align-items: center;
   text-align: center;
 }
 
-.detail-card .rating p{
+.detail-card .rating p {
   margin: 0 !important;
 }
 
-.detail-card .rating .star-rating{
+.detail-card .rating .star-rating {
   width: 20%;
   border: none;
   color: #ffc107;
 }
 
-.detail-card .rating .review-button{
+.detail-card .rating .review-button {
   height: 2.5rem;
   width: 4.5rem;
   color: #fff;
@@ -384,56 +399,56 @@
   cursor: pointer;
 }
 
-.detail-card .rating .review-button:hover{
+.detail-card .rating .review-button:hover {
   color: #000;
   background-color: #fff;
   border: 1px solid #000;
 }
 
-.message_error{
+.message_error {
   color: #ea2d3f;
-  margin:.3em
+  margin: 0.3em;
 }
 
-@media only screen and (max-width: 767px){
-  .detail-wrapper{
+@media only screen and (max-width: 767px) {
+  .detail-wrapper {
     height: auto;
   }
-  .detail-card{
+  .detail-card {
     width: 90%;
     height: auto;
   }
-  
-  .detail-wrapper .detail-card .detail-header .estate-status{
+
+  .detail-wrapper .detail-card .detail-header .estate-status {
     width: 5rem;
     height: 2.3rem;
   }
   .detail-wrapper .detail-card p {
     font-size: 16px;
   }
-  .detail-wrapper .detail-card i{
+  .detail-wrapper .detail-card i {
     font-size: 16px;
   }
   .detail-wrapper .detail-card .detail-location p {
     font-size: 16px;
   }
-  .detail-wrapper .detail-card .estate-room p{
+  .detail-wrapper .detail-card .estate-room p {
     font-size: 15px;
   }
-  .detail-wrapper .detail-card .estate-room i{
+  .detail-wrapper .detail-card .estate-room i {
     font-size: 15px;
   }
-  .detail-wrapper .detail-card .estate-area p{
+  .detail-wrapper .detail-card .estate-area p {
     font-size: 15px;
   }
-  .detail-wrapper .detail-card .estate-area i{
+  .detail-wrapper .detail-card .estate-area i {
     font-size: 15px;
   }
-  .owner-wrapper .owner-detail .chat-owner form{
+  .owner-wrapper .owner-detail .chat-owner form {
     width: auto;
   }
 
-  .detail-card .rating .div-review-btn{
+  .detail-card .rating .div-review-btn {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -441,37 +456,37 @@
   }
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1023px){
-  .detail-wrapper{
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .detail-wrapper {
     height: auto;
   }
-  .detail-card{
+  .detail-card {
     width: 80%;
     height: auto;
   }
-  .detail-wrapper .detail-card .detail-header .estate-status{
+  .detail-wrapper .detail-card .detail-header .estate-status {
     width: 6rem;
     height: 3rem;
   }
-.detail-wrapper .detail-card p {
+  .detail-wrapper .detail-card p {
     font-size: 18px;
   }
-  .detail-wrapper .detail-card i{
+  .detail-wrapper .detail-card i {
     font-size: 18px;
   }
   .detail-wrapper .detail-card .detail-location p {
     font-size: 18px;
   }
-  .detail-wrapper .detail-card .estate-room p{
+  .detail-wrapper .detail-card .estate-room p {
     font-size: 16px;
   }
-  .detail-wrapper .detail-card .estate-room i{
+  .detail-wrapper .detail-card .estate-room i {
     font-size: 16px;
   }
-  .detail-wrapper .detail-card .estate-area p{
+  .detail-wrapper .detail-card .estate-area p {
     font-size: 16px;
   }
-  .detail-wrapper .detail-card .estate-area i{
+  .detail-wrapper .detail-card .estate-area i {
     font-size: 16px;
   }
 }

@@ -80,8 +80,12 @@
           <div
             class="d-flex align-items-center flex-column justify-content-center mt-3"
           >
-            <h4>กรุณายืนยันการระงับอสังหาริมทรพย์</h4>
+            <div>
+              <img src="@/assets/warning.svg" alt="" />
+            </div>
+            <h5>กรุณายืนยันการระงับอสังหาริมทรพย์</h5>
           </div>
+
           <div class="d-flex justify-content-center mt-3">
             <div>
               <b-button
