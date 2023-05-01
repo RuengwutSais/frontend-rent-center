@@ -21,7 +21,20 @@ import Chartist from "chartist";
 // eslint-disable-next-line
 import $ from 'jquery';
 import 'bootstrap/dist/js/bootstrap.js'
+import Vuemeta from 'vue-meta'
+import * as VueGoogleMaps from "vue2-google-maps";
 
+Vue.use(Vuemeta)
+Vue.use(
+  VueGoogleMaps,
+  {
+    load: {
+      key: 'AIzaSyD7hXZ6OFQK5xjcQnqml85KP5xq79ScSAE',
+      libraries: 'places'
+    },
+    installComponents: true
+  }
+);
 
 
 import VueCarousel from 'vue-carousel';

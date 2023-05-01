@@ -8,6 +8,10 @@
 
 export default {
   name: 'App',
+  metaInfo: {
+    title: 'RENT CENTRAL',
+    titleTemplate: '%s'
+  },
 }
 </script>
 
