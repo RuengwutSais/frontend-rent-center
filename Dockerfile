@@ -32,9 +32,7 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private
 
 # Copy nginx config and certificate files
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=build-stage /app/nginx-selfsigned.conf /etc/nginx/conf.d/default.conf
-COPY --from=build-stage /app/nginx-selfsigned.key /etc/ssl/private/nginx-selfsigned.key
-COPY --from=build-stage /app/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigned.crt
+COPY nginx-selfsigned.conf /etc/nginx/conf.d/default.conf
 
 # Expose ports 80 and 443
 EXPOSE 80
