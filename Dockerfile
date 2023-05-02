@@ -21,7 +21,7 @@ EXPOSE 80
 EXPOSE 443
 
 # Set up Certbot
-RUN certbot certonly --agree-tos --email your-email@example.com --webroot -w /usr/share/nginx/html -d rentcentral.online
+RUN certbot certonly --agree-tos --email panupong.kong@bumail.net --webroot -w /usr/share/nginx/html -d rentcentral.online
 
 # Set up Nginx to use Let's Encrypt SSL certificate
 RUN sed -i 's/# server {/server {/' /etc/nginx/nginx.conf \
