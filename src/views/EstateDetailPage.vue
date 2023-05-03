@@ -49,7 +49,7 @@
         <GmapMap
           ref="mymap"
           :center="center"
-          :zoom="17"
+          :zoom="14"
           style="width: 100%; height: 300px;"
           map-type-id="roadmap"
           :options="{
@@ -108,7 +108,7 @@
         <b-button
           v-b-modal.modal-1
           class="button-report"
-          @click="openModal('report')"
+          @click="checkuserModal()"
           variant="#df4759"
           >แจ้งรายงาน</b-button
         >
@@ -196,7 +196,7 @@
           <div class="d-flex justify-content-center mt-3">
             <div>
               <b-button
-                @click="close('canclereport')"
+                @click="closeReport('canclereport')"
                 style="
                   color: #fff;
                   background-color: #000;
@@ -223,6 +223,41 @@
                 "
               >
                 รายงาน
+              </b-button>
+            </div>
+          </div>
+        </template>
+      </b-modal>
+    </div>
+    <div class="modal-alert">
+      <b-modal
+        ref="modalalert"
+        id="modal-alert"
+        hide-header
+        centered
+        hide-footer
+      >
+        <template>
+          <div
+            class="d-flex align-items-center flex-column justify-content-center mt-3"
+          >
+            <h4>กรุณาเข้าสู่ระบบเพื่อรายงานอสังหาริมทรัพย์</h4>
+          </div>
+          <div class="d-flex justify-content-center mt-3">
+            <div>
+              <b-button
+                @click="closeAlert('canclealert')"
+                style="
+                  color: #fff;
+                  background-color: #000;
+                  border: 1px solid #000;
+                  height: 2.5em;
+                  width: 6em;
+                  margin-right: 20px;
+                  font-family: 'Kanit';
+                "
+              >
+                ตกลง
               </b-button>
             </div>
           </div>
@@ -311,19 +346,35 @@ export default {
         this.$router.push("/landingpage");
       }
     },
+    actionReport() {
+      this.validateReport();
+    },
     openModal(key) {
       if (key === "report") {
         this.$bvModal.show("modal-report");
       }
+      else{
+        this.$bvModal.show("modal-alert")
+      }
     },
-    actionReport() {
-      this.validateReport();
+    checkuserModal(){
+      if(this.isUser === true){
+        this.openModal('report');
+      }
+      else{
+        this.openModal('alert');
+      }
     },
-    close(key) {
+    closeReport(key) {
       if (key === "canclereport") {
         this.$bvModal.hide("modal-report");
         this.report.detail = "";
         this.report.detailError = "";
+      }
+    },
+    closeAlert(key) {
+      if (key === "canclealert") {
+        this.$bvModal.hide("modal-alert");
       }
     },
     validateReport() {

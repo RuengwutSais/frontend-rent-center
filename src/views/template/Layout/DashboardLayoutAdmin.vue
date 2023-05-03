@@ -13,8 +13,12 @@
         <p>รายงานอสังหาฯ</p>
       </sidebar-link>
       <sidebar-link to="/admin/holdestate">
-        <i class="fa-solid fa-flag" style="color: #000;"></i>
+        <i class="fa-solid fa-house-flag" style="color: #000;"></i>
         <p>ระงับอสังหาฯ</p>
+      </sidebar-link>
+      <sidebar-link to="/admin/canclehold">
+        <i class="fa-solid fa-house-circle-check" style="color: #000;"></i>
+        <p>ยกเลิกระงับอสังหาฯ</p>
       </sidebar-link>
       <div @click="logout" class="active-pro">
         <sidebar-link to="/landingpage" >

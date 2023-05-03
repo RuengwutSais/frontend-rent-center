@@ -426,7 +426,7 @@
             class="d-flex align-items-center flex-column justify-content-center mt-3"
           >
             <div>
-              <img src="@/assets/warning.svg" alt="" />
+              <i class="fa-solid fa-triangle-exclamation" style="color: #df4759; font-size: 40px;"></i>
             </div>
             <p>
               ท่านยืนยันที่จะลบ

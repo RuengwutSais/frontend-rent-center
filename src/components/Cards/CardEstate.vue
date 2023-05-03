@@ -27,9 +27,9 @@
         </div>
       </div>
       <div class="estate-area">
-        <div class="card-floor">
-          <i class="fa-solid fa-stairs"></i>
-          <p>{{ item.floor }}</p>
+        <div class="card-garage">
+          <i class="fa-solid fa-warehouse"></i>
+          <p>{{ item.garage }}</p>
         </div>
         <div class="card-area">
           <i class="fa-solid fa-chart-area"></i>
@@ -42,8 +42,8 @@
 
 <script>
 export default {
-    props: {
-        item: [Object, Array]
-    },
-}
+  props: {
+    item: [Object, Array],
+  },
+};
 </script>

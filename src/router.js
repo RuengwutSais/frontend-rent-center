@@ -49,6 +49,15 @@ let router = new Router({
           }
         },
         {
+          path: "canclehold",
+          name: "Cancle Hold",
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/admin/CancleHoldPage.vue"),
+          meta: {
+            requireAuth: true,
+          }
+        },
+        {
           path: "user",
           name: "User Profile",
           component: () =>

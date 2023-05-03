@@ -1,13 +1,13 @@
 <template>
-  <div>
+    <div>
     <div class="md-layout-item md-size-100">
       <md-card>
         <md-card-header :data-background-color="dataBackgroundColor">
           <div class="d-flex align-items-center justify-content-between row">
             <div class="col-12 col-lg-6">
               <div>
-                <h4 class="title">ระงับอสังหาริมทรัพย์</h4>
-                <p class="category">ข้อมูลรายละเอียดของอสังหาริมทรัพย์</p>
+                <h4 class="title">รายการอสังหาริมทรัพย์ที่ถูกระงับ</h4>
+                <p class="category">ข้อมูลรายละเอียดของอสังหาริมทรัพย์ที่ถูกระงับ</p>
               </div>
             </div>
             <div class="col-12 col-lg-6">
@@ -62,9 +62,9 @@
                   <div class="d-flex flex-row">
                     <div
                       class="w-100 mr-4 cursor-pointer"
-                      @click="openModal('hold')"
+                      @click="openModal('cancle-hold')"
                     >
-                      <i class="fa-solid fa-flag"></i>
+                    <i class="fa-solid fa-house-circle-check"></i>
                     </div>
                   </div>
                 </md-table-cell>
@@ -74,22 +74,22 @@
         </md-card-content>
       </md-card>
     </div>
-    <div class="modal-hold">
-      <b-modal ref="modalHold" id="modal-hold" hide-header centered hide-footer>
+    <div class="modal-cancle-hold">
+      <b-modal ref="ModalCancleHold" id="modal-cancle-hold" hide-header centered hide-footer>
         <template>
           <div
             class="d-flex align-items-center flex-column justify-content-center mt-3"
           >
             <div>
-              <i class="fa-solid fa-triangle-exclamation" style="color: #df4759; font-size: 40px;"></i>
+                <i class="fa-solid fa-triangle-exclamation" style="color: #df4759; font-size: 40px;"></i>
             </div>
-            <h5>กรุณายืนยันการระงับอสังหาริมทรพย์</h5>
+            <h5>กรุณายืนยันการยกเลิกระงับอสังหาริมทรพย์</h5>
           </div>
 
           <div class="d-flex justify-content-center mt-3">
             <div>
               <b-button
-                @click="close('canclehold')"
+                @click="close('close-cancle-hold')"
                 style="
                   color: #fff;
                   background-color: #000;
@@ -163,14 +163,14 @@ export default {
   },
   methods: {
     openModal(key) {
-      if (key === "hold") {
-        this.$bvModal.show("modal-hold");
+      if (key === "cancle-hold") {
+        this.$bvModal.show("modal-cancle-hold");
       }
     },
     actionHold() {},
     close(key) {
-      if (key === "canclehold") {
-        this.$bvModal.hide("modal-hold");
+      if (key === "close-cancle-hold") {
+        this.$bvModal.hide("modal-cancle-hold");
       }
     },
     getOverAllIndex(index) {
