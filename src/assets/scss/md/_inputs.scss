@@ -2,6 +2,10 @@
 
 @import '_inputs-size';
 
+.is-invalid{
+  border-color:red !important;
+}
+
 // label variations
 .label {
   border-radius: $border-radius-small;

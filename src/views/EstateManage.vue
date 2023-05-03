@@ -116,21 +116,24 @@
             <b-form-input
               v-model="addEstate.name"
               placeholder="กรุณาใส่ชื่ออสังหาฯ"
+              :class="{ 'is-invalid': $v.addEstate.name.$error }"
             ></b-form-input>
           </div>
           <div class="col-lg-3 col-sm-12">
-            <label for=""> จังหวัด </label>
-            <b-form-input
-              v-model="addEstate.province"
-              placeholder="เลือกจังหวัด"
-            ></b-form-input>
+            <label for=""> ตำบล/แขวง</label>
+            <thai-address-input type="subdistrict"
+            v-model="addEstate.state"
+            input-class="form-control"
+            placeholder="กรุณากรอกตำบล/แขวง"
+            @selected="onSelected"></thai-address-input>
           </div>
           <div class="col-lg-3 col-sm-12">
             <label for=""> อำเภอ/เขต </label>
-            <b-form-input
-              v-model="addEstate.state"
-              placeholder="เลือกอำเภอและเขต"
-            ></b-form-input>
+            <thai-address-input type="district"
+              v-model="addEstate.district"
+              input-class="form-control"
+              placeholder="กรุณากรอกอำเภอหรือเขต"
+              @selected="onSelected"></thai-address-input>
           </div>
         </div>
         <div class="row mt-2">
@@ -139,16 +142,27 @@
             <b-form-input
               v-model="addEstate.price"
               placeholder="กรุณาใส่ราคาอสังหาฯ"
+              @input="inputFormPrice($event, 'addEstate')"
+              :class="{ 'is-invalid': $v.addEstate.price.$error }"
             ></b-form-input>
+          </div>
+           <div class="col-lg-3 col-sm-12">
+            <label for=""> จังหวัด </label>
+            <thai-address-input
+              type="province"
+              v-model="addEstate.province"
+              input-class="form-control"
+              placeholder="กรุณาพิมจังหวัด"
+              @selected="onSelected"></thai-address-input>
           </div>
           <div class="col-lg-3 col-sm-12">
             <label for=""> รหัสไปรษณีย์ </label>
-            <b-form-input
-              v-model="addEstate.zipcode"
-              placeholder="กรุณากรอกรหัสไปรษณีย์"
-            ></b-form-input>
+            <thai-address-input type="district"
+            v-model="addEstate.zipcode"
+            input-class="form-control"
+            placeholder="กรุณารหัสไปรษณีย์"
+            @selected="onSelected"></thai-address-input>
           </div>
-          <div class="col-3" />
         </div>
         <div class="row mt-2">
           <div class="col-lg-6 col-sm-12">
@@ -163,6 +177,7 @@
             <b-form-input
               v-model="addEstate.address"
               placeholder="กรอกที่อยู่"
+              :class="{ 'is-invalid': $v.addEstate.address.$error }"
             ></b-form-input>
           </div>
         </div>
@@ -237,7 +252,7 @@
           <div class="col-lg-6 mt-4 align-self-end">
             <div class="d-flex align-items-end justify-content-end">
               <div class="mr-2">
-                <b-button variant="primary"> ยืนยันเพิ่มอสังหา ฯ </b-button>
+                <b-button variant="primary" @click="actionAddEstate"> ยืนยันเพิ่มอสังหา ฯ </b-button>
               </div>
               <div>
                 <b-button variant="danger"> รีเซ็ต </b-button>
@@ -508,6 +523,7 @@
 
 <script>
 import { gmapApi } from "vue2-google-maps";
+import { required } from "vuelidate/lib/validators"
 export default {
   data() {
     return {
@@ -563,8 +579,10 @@ export default {
         price: "",
         province: "",
         state: "",
+        district: "",
         zipcode: "",
         typeEstate: "",
+        maskprice: "",
         address: "",
         taragMeter: "",
         taragVar: "",
@@ -606,7 +624,76 @@ export default {
       return gmapApi;
     },
   },
+  validations: {
+    addEstate: {
+      name: { required },
+      price: { required },
+      province: { required },
+      state: { required },
+      district: { required },
+      zipcode: { required },
+      typeEstate: { required },
+      address: { required },
+      taragMeter: { required },
+      taragVar: { required },
+      bedroom: { required },
+      bathroom: { required },
+      garage: { required },
+    }
+  },
   methods: {
+    inputFormPrice($e, key) {
+      if(key === 'addEstate') {
+        // const price = Number($e);
+        // // Format the number as Thai Baht currency with a comma separator
+        // const formattedPrice = price.toLocaleString('th-TH', { style: 'currency', currency: 'THB' });
+        // Update the price property with the formatted value
+        this.addEstate.price = $e
+      }
+    },
+    onSelected(address) {
+      this.addEstate.province = address.province
+      this.addEstate.state = address.subdistrict
+      this.addEstate.district = address.district
+      this.addEstate.zipcode = address.postalCode
+      // this.province = address.province;
+      // this.postalCode = address.postalCode;
+    },
+    actionAddEstate() {
+      this.$v.addEstate.$touch();
+      if (this.$v.addEstate.$invalid) {
+        return false
+      }
+      const headers = {
+        headers: {
+          token: localStorage.getItem("token")
+        }
+      }
+
+      const bodyJson = {
+        estate_name: "",
+        estate_type: "",
+        estate_location: "",
+        estate_price: "",
+        estate_area: "",
+        estate_bedrooms: "",
+        estate_bathrooms: "",
+        estate_garage: "",
+        estate_description: "",
+        estate_image: "",
+        estate_status: "",
+        estate_user_id: "",
+        gps_latitude: "",
+        gps_longitude: "",
+        province_id: "",
+        geographies_id: "",
+        amphures_id: "",
+        districts_id: ""
+      }
+      this.$axios.post(this.$API_URL + '/create/estate', bodyJson, headers).then((res) => {
+        console.log('res: ', res)
+      })
+    },
     openModal(key) {
       if (key === "trash") {
         this.$bvModal.show("modal-yes-or-no");

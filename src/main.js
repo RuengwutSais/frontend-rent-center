@@ -35,7 +35,11 @@ Vue.use(
     installComponents: true
   }
 );
+import VueThaiAddressInput from 'vue-thai-address-input'
 
+import 'vue-thai-address-input/dist/vue-thai-address-input.css'
+
+Vue.use(VueThaiAddressInput);
 
 import VueCarousel from 'vue-carousel';
 Vue.use(Vuelidate);
