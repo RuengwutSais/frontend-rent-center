@@ -3,7 +3,7 @@
 .register-wrapper
 {
     font-family: 'kanit' !important;
-    background-image: url('../img/login_background.png');
+    background-image: url("../img/bangkok-background.png");
     background-color:#ebecf0;
     background-size: cover;
     background-repeat: no-repeat;
@@ -242,8 +242,8 @@
     }
     .box
     {
-        padding:2em;
-        margin: 2em;
+        padding: 1em;
+        margin: 1em;
         width:100%;
     }
     .box .log

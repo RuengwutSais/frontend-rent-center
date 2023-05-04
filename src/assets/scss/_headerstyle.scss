@@ -9,6 +9,7 @@
     position: fixed;
     z-index: 9999;
     top: 0;
+    font-family: 'Kanit' !important;
   }
 
   .margin-4rem {
@@ -23,7 +24,7 @@
     justify-items: center;
     padding-left: 60px;
     cursor: pointer;
-}
+  }
 
   .img-logo {
     height: 3.5rem !important;
@@ -54,7 +55,6 @@
 
     margin-right: 6px;
   }
-
 
   .fa-bars {
     color: #000 !important;
@@ -121,27 +121,9 @@
     background-color: #000;
     color: #fff;
   }
-
-  @media only screen and (max-width: 767px) {
-    .header .coniainer-fluid {
-      padding-right: 30px;
-    }
-
-    .navb-logo {
-      padding-left: 30px;
-    }
-
-    .button-nav {
-      display: none;
-    }
-    .modal {
-      padding-left: 30%;
-    }
-    .modal-open .modal {
-      overflow: hidden !important;
-    }
-  }
 }
+
+
 
 .navb-items .button-nav {
   height: 2.75rem;
@@ -161,3 +143,4 @@
   background-color: #000;
   color: #fff;
 }
+

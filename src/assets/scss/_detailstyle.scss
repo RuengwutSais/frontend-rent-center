@@ -5,7 +5,7 @@
   align-items: center;
   height: auto;
   flex-wrap: wrap;
-  background-image: url("../img/login_background.png");
+  background-image: url("../img/bangkok-background.png");
   background-color: #ebecf0;
   background-size: cover;
   background-repeat: no-repeat;
@@ -60,8 +60,18 @@
 }
 
 .detail-wrapper .detail-card .estate-rating i {
-  color: #ffc107 !important;
   font-size: 16px;
+  color: #999 !important;
+  margin-bottom: 10px;
+}
+
+.detail-wrapper .detail-card .estate-rating .active {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.detail-wrapper .detail-card .estate-rating .active i {
+  color: #ffc107 !important;
 }
 
 .detail-wrapper .detail-card .detail-price {
@@ -417,6 +427,8 @@
   .detail-card {
     width: 90%;
     height: auto;
+    padding: 1em;
+    margin: 1rem;
   }
 
   .detail-wrapper .detail-card .detail-header .estate-status {
@@ -454,6 +466,18 @@
     align-items: center;
     width: 35%;
   }
+  .map-container{
+    height: 200px;
+  }
+  .vue-map-container{
+    height: 200px !important;
+  }
+  #estate-carousel{
+    height: 200px;
+  }
+  #estate-carousel img{
+    height: 200px;
+  }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
@@ -461,7 +485,7 @@
     height: auto;
   }
   .detail-card {
-    width: 80%;
+    width: 90%;
     height: auto;
   }
   .detail-wrapper .detail-card .detail-header .estate-status {
@@ -489,4 +513,5 @@
   .detail-wrapper .detail-card .estate-area i {
     font-size: 16px;
   }
+
 }

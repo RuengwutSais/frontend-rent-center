@@ -8,15 +8,68 @@
         </div>
       </div>
       <div class="estate-rating">
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
+        <span
+          v-for="n in 5"
+          :key="n"
+          :class="{ active: n <= reviewRating.rating }"
+        >
+          <i class="fa-solid fa-star"></i>
+        </span>
       </div>
       <div class="detail-price">
         <i class="fa-solid fa-tag"></i>
         <p>Estate Price</p>
+      </div>
+      <div>
+        <b-carousel
+          id="estate-carousel"
+          v-model="slide"
+          :interval="4000"
+          controls
+          indicators
+          background="#ababab"
+          img-width="1024"
+          img-height="480"
+          style="text-shadow: 1px 1px 2px #333"
+          @sliding-start="onSlideStart"
+          @sliding-end="onSlideEnd"
+        >
+          <!-- Text slides with image -->
+          <b-carousel-slide
+            img-src="https://picsum.photos/1024/480/?image=52"
+          ></b-carousel-slide>
+
+          <!-- Slides with custom text -->
+          <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
+          </b-carousel-slide>
+
+          <!-- Slides with image only -->
+          <b-carousel-slide
+            img-src="https://picsum.photos/1024/480/?image=58"
+          ></b-carousel-slide>
+
+          <!-- Slides with img slot -->
+          <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
+          <b-carousel-slide>
+            <template #img>
+              <img
+                class="d-block img-fluid w-100"
+                width="1024"
+                height="480"
+                src="https://picsum.photos/1024/480/?image=55"
+                alt="image slot"
+              />
+            </template>
+          </b-carousel-slide>
+
+          <!-- Slide with blank fluid image to maintain slide aspect ratio -->
+          <b-carousel-slide
+            caption="Blank Image"
+            img-blank
+            img-alt="Blank image"
+          >
+          </b-carousel-slide>
+        </b-carousel>
       </div>
       <div class="detail-location">
         <i class="fa-solid fa-location-dot"></i>
@@ -50,7 +103,7 @@
           ref="mymap"
           :center="center"
           :zoom="14"
-          style="width: 100%; height: 300px;"
+          style="width: 100%; height: 300px"
           map-type-id="roadmap"
           :options="{
             zoomControl: true,
@@ -62,7 +115,7 @@
         <div class="location-dot">
           <i
             class="fa-solid fa-location-dot"
-            style="color: #ff0000 !important; font-size: 30px;"
+            style="color: #ff0000 !important; font-size: 30px"
           ></i>
         </div>
       </div>
@@ -309,6 +362,8 @@ export default {
         lat: 18.313244,
         lng: 99.421067,
       },
+      slide: 0,
+      sliding: null,
     };
   },
   watch: {
@@ -352,17 +407,15 @@ export default {
     openModal(key) {
       if (key === "report") {
         this.$bvModal.show("modal-report");
-      }
-      else{
-        this.$bvModal.show("modal-alert")
+      } else {
+        this.$bvModal.show("modal-alert");
       }
     },
-    checkuserModal(){
-      if(this.isUser === true){
-        this.openModal('report');
-      }
-      else{
-        this.openModal('alert');
+    checkuserModal() {
+      if (this.isUser === true) {
+        this.openModal("report");
+      } else {
+        this.openModal("alert");
       }
     },
     closeReport(key) {
@@ -384,9 +437,18 @@ export default {
         this.report.detailError = "";
       }
     },
+    onSlideStart() {
+      this.sliding = true;
+    },
+    onSlideEnd() {
+      this.sliding = false;
+    },
   },
+
   mounted() {
     this.isUserLogin();
   },
 };
 </script>
+
+<style scoped></style>

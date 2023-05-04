@@ -2,7 +2,7 @@
 
 .picture-search {
   font-family: 'kanit' !important;
-  background-image: url("../img/login_background.png");
+  background-image: url("../img/bangkok-background.png");
   background-color: #ebecf0;
   background-size: cover;
   background-repeat: no-repeat;
@@ -11,6 +11,7 @@
   align-items: center;
   justify-content: center;
   height: 60vh;
+  border-bottom:  15px solid #000;
 }
 
 .search-div{
@@ -301,9 +302,9 @@
 
 @media only screen and (max-width: 767px) {
   .picture-search {
-    height: 40vh;
+    height: 35vh;
+    border-bottom: 8px solid #000;
   }
-
   .picture-search .search-div {
     width: 90% !important;
   }

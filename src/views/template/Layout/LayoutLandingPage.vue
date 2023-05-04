@@ -174,6 +174,9 @@ export default {
         this.$router.push("/landingpage");
       }
     },
+    toggleSidebar() {
+      this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
+    },
   },
   mounted() {
     this.isUserLogin();
@@ -183,4 +186,14 @@ export default {
 <style lang="scss" scoped>
 @import url("@/assets/scss/_headerstyle.scss");
 @import url("@/assets/scss/_footerstyle.scss");
+
+@media only screen and (max-width: 767px) {
+  .header .coniainer-fluid {
+    padding-right: 10px;
+  }
+
+  .navb-logo {
+    padding-left: 10px !important;
+  }
+}
 </style>
