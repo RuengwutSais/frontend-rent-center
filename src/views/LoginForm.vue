@@ -68,7 +68,6 @@ export default {
         })
         .catch(error => {
           console.log('what error', error.response.data)
-          // TODO doing something if error
         });
         
       },

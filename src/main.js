@@ -41,6 +41,7 @@ import 'vue-thai-address-input/dist/vue-thai-address-input.css'
 
 Vue.use(VueThaiAddressInput);
 
+
 import VueCarousel from 'vue-carousel';
 Vue.use(Vuelidate);
 Vue.use(VueCarousel);
@@ -54,6 +55,7 @@ Vue.prototype.$API_URL = process.env.VUE_APP_API
 Vue.prototype.$Chartist = Chartist;
 Vue.use(MaterialDashboard);
 import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(GlobalComponents);
 Vue.use(GlobalDirectives);
 
