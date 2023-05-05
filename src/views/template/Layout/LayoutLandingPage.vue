@@ -38,6 +38,7 @@
                   >
                     <template #button-content>
                       <i class="fa-solid fa-user-tie"></i>
+                      <i class="fa-solid fa-sort-down" style="margin-left: 5px;"></i>
                     </template>
                     <b-dropdown-item href="/manage"
                       >ภาพรวมอสังหาริมทรัพย์</b-dropdown-item
@@ -195,5 +196,6 @@ export default {
   .navb-logo {
     padding-left: 10px !important;
   }
+
 }
 </style>

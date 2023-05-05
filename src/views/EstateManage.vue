@@ -80,15 +80,17 @@
                   {{ item.estate_status }}
                 </md-table-cell>
                 <md-table-cell md-label="รูปภาพ">
+                  <div class="w-100 mr-4 cursor-pointer">
+                    <i class="fa-regular fa-images"></i>
+                  </div>
                   <!-- // TODO: ทำ modal เพิ่ม -->
-                  <i class="fa-regular fa-images"></i>
                 </md-table-cell>
                 <md-table-cell md-label="จัดการ">
                   <div class="d-flex flex-row">
                     <div class="w-100 mr-4 cursor-pointer">
                       <i
                         class="fa-solid fa-pen-to-square"
-                        @click="goToListState('editEstate')"
+                        @click="goToListState('editEstate', item.estate_id)"
                       ></i>
                     </div>
                     <div class="w-100 cursor-pointer">
@@ -107,10 +109,10 @@
                 :total-rows="totalItems"
                 :per-page="perPage"
                 @change="changePage"
-                first-text="⏮"
-                prev-text="⏪"
-                next-text="⏩"
-                last-text="⏭"
+                prev-icon="prevIcon"
+                next-icon="nextIcon"
+                first-icon="firstIcon"
+                last-icon="lastIcon"
               ></b-pagination>
             </div>
           </div>
@@ -281,8 +283,36 @@
               :class="{ 'is-invalid': $v.addEstate.garage.$error }"
             ></b-form-input>
           </div>
+          <div class="col-lg-6 col-sm-12">
+            <label for="">รายละเอียดเพิ่มเติ่ม</label>
+            <span
+              class="cursor-pointer"
+              v-b-tooltip.hover.top
+              title="ในกรณีที่เลือกประเภทอสังหาริมทรัพย์ เป็นคอนโด กรุณากรอกรายละเอียดเพิ่มเติ่มเช่น เลขห้อง อาคารตึก ฯลฯ"
+            >
+              (โปรดอ่านรายละเอียด
+              <i class="ml-1 fa-solid fa-circle-exclamation"></i>)
+            </span>
+            <b-form-textarea
+              id="textarea"
+              v-model="addEstate.description"
+              placeholder="Enter something..."
+              rows="3"
+              max-rows="6"
+            ></b-form-textarea>
+          </div>
+        </div>
+        <div class="row mt-2">
           <div class="col-lg-6 col-sm-12 align-self-end">
             <label for="file-upload">อัพโหลดรูปภาพ</label>
+            <span
+              class="cursor-pointer"
+              v-b-tooltip.hover.top
+              title="สามารถอัพโหลดรูปภาพได้ไม่เกิน 5 ภาพ ขนาดไม่เกิน 10MB/ภาพ และอัพโหลดได้แค่สกุล(.pjg, .png, .jpeg)"
+            >
+              (โปรดอ่านรายละเอียด
+              <i class="ml-1 fa-solid fa-circle-exclamation"></i>)
+            </span>
             <b-form-file
               id="file-upload"
               v-model="files"
@@ -304,26 +334,6 @@
               </li>
             </ul>
           </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col-lg-6 col-sm-12">
-            <label for="">รายละเอียดเพิ่มเติ่ม</label>
-            <span
-              class="cursor-pointer"
-              v-b-tooltip.hover.top
-              title="ในกรณีที่เลือกประเภทอสังหาริมทรัพย์ เป็นคอนโด กรุณากรอกรายละเอียดเพิ่มเติ่มเช่น เลขห้อง อาคารตึก ฯลฯ"
-            >
-              (โปรดอ่านรายละเอียด
-              <i class="ml-1 fa-solid fa-circle-exclamation"></i>)
-            </span>
-            <b-form-textarea
-              id="textarea"
-              v-model="addEstate.description"
-              placeholder="Enter something..."
-              rows="3"
-              max-rows="6"
-            ></b-form-textarea>
-          </div>
           <div class="col-lg-6 mt-4 align-self-end">
             <div class="d-flex align-items-end justify-content-end">
               <div class="mr-2">
@@ -332,7 +342,9 @@
                 </b-button>
               </div>
               <div>
-                <b-button variant="danger"> รีเซ็ต </b-button>
+                <b-button variant="danger" @click="ResetInput('resetadd')">
+                  รีเซ็ต
+                </b-button>
               </div>
             </div>
           </div>
@@ -413,8 +425,8 @@
           <div class="col-lg-3 col-sm-12">
             <label for=""> ตารางเมตร </label>
             <b-form-input
-              v-model="editEstate.typeEstate"
-              placeholder="ประเภทอสังหาริมทรัพย์"
+              v-model="editEstate.taragMeter"
+              placeholder="กรุณากรอกขนาดพื้นที่ ตร.ม"
             ></b-form-input>
           </div>
           <div class="col-3"></div>
@@ -454,21 +466,16 @@
               placeholder=""
             ></b-form-input>
           </div>
-          <div class="col-lg-6 col-sm-12 align-self-end">
-            <label for="">อัพโหลดรูปภาพ</label>
-            <b-form-file multiple>
-              <template slot="file-name" slot-scope="{ names }">
-                <b-badge variant="dark">{{ names[0] }}</b-badge>
-                <b-badge v-if="names.length > 1" variant="dark" class="ml-1">
-                  + {{ names.length - 1 }} More files
-                </b-badge>
-              </template>
-            </b-form-file>
-          </div>
-        </div>
-        <div class="row mt-2">
           <div class="col-lg-6 col-sm-12">
             <label for="">รายละเอียดเพิ่มเติ่ม</label>
+            <span
+              class="cursor-pointer"
+              v-b-tooltip.hover.top
+              title="ในกรณีที่เลือกประเภทอสังหาริมทรัพย์ เป็นคอนโด กรุณากรอกรายละเอียดเพิ่มเติ่มเช่น เลขห้อง อาคารตึก ฯลฯ"
+            >
+              (โปรดอ่านรายละเอียด
+              <i class="ml-1 fa-solid fa-circle-exclamation"></i>)
+            </span>
             <b-form-textarea
               id="textarea"
               v-model="editEstate.description"
@@ -477,13 +484,49 @@
               max-rows="6"
             ></b-form-textarea>
           </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-lg-6 col-sm-12 align-self-end">
+            <label for="file-upload">อัพโหลดรูปภาพ</label>
+            <span
+              class="cursor-pointer"
+              v-b-tooltip.hover.top
+              title="สามารถอัพโหลดรูปภาพได้ไม่เกิน 5 ภาพ ขนาดไม่เกิน 10MB/ภาพ และอัพโหลดได้แค่สกุล(.pjg, .png, .jpeg)"
+            >
+              (โปรดอ่านรายละเอียด
+              <i class="ml-1 fa-solid fa-circle-exclamation"></i>)
+            </span>
+            <b-form-file
+              id="file-upload"
+              v-model="files"
+              @input="onFileSelected"
+              max-file-count="5"
+              multiple
+            >
+              <template slot="file-name" slot-scope="{ names }">
+                <b-badge variant="dark">{{ names[0] }}</b-badge>
+                <b-badge v-if="names.length > 1" variant="dark" class="ml-1">
+                  + {{ names.length - 1 }} More files
+                </b-badge>
+              </template>
+            </b-form-file>
+            <ul>
+              <li v-for="(file, index) in selectedFiles" :key="index">
+                {{ file.name }}
+                <button @click="deleteFile(index)">Delete</button>
+              </li>
+            </ul>
+          </div>
+
           <div class="col-lg-6 mt-4 align-self-end">
             <div class="d-flex align-items-end justify-content-end">
               <div class="mr-2">
-                <b-button variant="primary"> ยืนยันแก้ไขอสังหา ฯ </b-button>
+                <b-button variant="primary"> ยืนยัน </b-button>
               </div>
               <div>
-                <b-button variant="danger"> รีเซ็ต </b-button>
+                <b-button variant="danger" @click="ResetInput('resetedit')">
+                  รีเซ็ต
+                </b-button>
               </div>
             </div>
           </div>
@@ -503,7 +546,10 @@
             class="d-flex align-items-center flex-column justify-content-center mt-3"
           >
             <div>
-              <i class="fa-solid fa-triangle-exclamation" style="color: #df4759; font-size: 40px;"></i>
+              <i
+                class="fa-solid fa-triangle-exclamation"
+                style="color: #df4759; font-size: 40px"
+              ></i>
             </div>
             <p>
               ท่านยืนยันที่จะลบ
@@ -562,7 +608,7 @@
             <!-- <div class="position-relative" style="padding: 0"> -->
             <GmapMap
               ref="mymap"
-              :center="center"
+              :center="coordinates"
               :zoom="17"
               style="width: 100%; height: 550px"
               map-type-id="roadmap"
@@ -601,6 +647,7 @@
 <script>
 import { gmapApi } from "vue2-google-maps";
 import { required } from "vuelidate/lib/validators";
+import { showErrorModal } from "../helper/index";
 export default {
   data() {
     return {
@@ -611,8 +658,8 @@ export default {
         lng: 100.557259,
       },
       coordinates: {
-        lat: 0,
-        lng: 0,
+        lat: 13.759235,
+        lng: 100.557259,
       },
       inputEstate: {
         email: "",
@@ -670,7 +717,7 @@ export default {
         description: "",
         images: [],
         lat: "",
-        long: "",
+        lng: "",
       },
       myCurrentmaps: {
         lat: 0,
@@ -678,7 +725,8 @@ export default {
       },
       files: [],
       selectedFiles: [],
-      formSelect: new FormData()
+      formSelect: new FormData(),
+      timeoutId: null,
     };
   },
   computed: {
@@ -699,16 +747,30 @@ export default {
       taragMeter: { required },
       bedroom: { required },
       bathroom: { required },
-      garage: { required }
+      garage: { required },
+    },
+    editEstate: {
+      name: { required },
+      price: { required },
+      province: { required },
+      state: { required },
+      district: { required },
+      zipcode: { required },
+      typeEstate: { required },
+      address: { required },
+      taragMeter: { required },
+      bedroom: { required },
+      bathroom: { required },
+      garage: { required },
     },
   },
   methods: {
     onFileSelected(key) {
-      if(key.length >= 6) {
-        this.files = []
-        return false
-      }else {
-        this.selectedFiles = key
+      if (key.length >= 6) {
+        this.files = [];
+        return false;
+      } else {
+        this.selectedFiles = key;
       }
     },
     deleteFile(index) {
@@ -758,16 +820,18 @@ export default {
           token: localStorage.getItem("token"),
         },
       };
-      this.selectedFiles.forEach(file => {
-        this.formSelect.append('images', file)
-      })
-      let setNameFile = []
-      if(this.selectedFiles.length > 0) {
-        this.$axios.post(this.$API_URL + "/uploadimage", this.formSelect).then((res) => {
-          res.data.filepaths.map((res) => {
-            setNameFile.push(res)
-          })
-        })
+      this.selectedFiles.forEach((file) => {
+        this.formSelect.append("images", file);
+      });
+      let setNameFile = [];
+      if (this.selectedFiles.length > 0) {
+        this.$axios
+          .post(this.$API_URL + "/uploadimage", this.formSelect)
+          .then((res) => {
+            res.data.filepaths.map((res) => {
+              setNameFile.push(res);
+            });
+          });
       }
       const bodyJson = {
         estate_name: this.addEstate.name,
@@ -779,7 +843,7 @@ export default {
         estate_garage: this.addEstate.garage,
         estate_description: this.addEstate.description,
         estate_image: setNameFile,
-        estate_verify: 'verify',
+        estate_verify: "verify",
         lat: this.coordinates.lat,
         lng: this.coordinates.lng,
         province: this.addEstate.province,
@@ -791,16 +855,45 @@ export default {
         .post(this.$API_URL + "/create/estate", bodyJson, headers)
         .then((res) => {
           console.log("res: ", res);
+          if (res.data.status) {
+            this.goToListState("listEstate");
+            this.getListMyEstate();
+            this.ResetInput("resetadd");
+          } else {
+            showErrorModal("ขออภัย,เกิดข้อผิดพลาด");
+          }
         });
     },
     openModal(key) {
       if (key === "trash") {
         this.$bvModal.show("modal-yes-or-no");
       } else if (key === "addEstate-gps") {
-        this.$bvModal.show('modal-gps')
+        this.$bvModal.show("modal-gps");
       }
     },
-    goToListState(key) {
+    goToListState(key, formParam = null) {
+      if (key === "editEstate") {
+        const editvalue = this.products.find(
+          (res) => res.estate_id === formParam
+        );
+        console.log("This edit value :", editvalue);
+        this.editEstate.estate_id = editvalue.estate_id;
+        this.editEstate.name = editvalue.estate_name;
+        this.editEstate.price = editvalue.estate_price;
+        this.editEstate.state = editvalue.state;
+        this.editEstate.zipcode = editvalue.postcode;
+        this.editEstate.province = editvalue.province;
+        this.editEstate.typeEstate = editvalue.estate_type;
+        this.editEstate.address = editvalue.estate_description;
+        this.editEstate.price = editvalue.estate_price;
+        this.editEstate.taragMeter = editvalue.estate_area;
+        this.editEstate.bedroom = editvalue.estate_bedrooms;
+        this.editEstate.bathroom = editvalue.estate_bathrooms;
+        this.editEstate.garage = editvalue.estate_garage;
+        this.editEstate.images = editvalue.estate_image;
+        this.editEstate.lat = editvalue.lat;
+        this.editEstate.lng = editvalue.lng;
+      }
       this.stepPage = key;
     },
     actionYesOrNo() {},
@@ -813,11 +906,47 @@ export default {
       return this.currentPage * 8 - 8 + index + 1;
     },
     updateCenter(location) {
+      if (this.timeoutId) {
+        clearTimeout(this.timeoutId);
+      }
       console.log("update center", location);
-      this.coordinates = {
-        lat: location.lat(),
-        lng: location.lng(),
-      };
+      this.timeoutId = setTimeout(() => {
+        this.coordinates = {
+          lat: location.lat(),
+          lng: location.lng(),
+        };
+      }, 500); // 500ms delay
+    },
+    ResetInput(key) {
+      if (key === "resetadd") {
+        this.addEstate.name = "";
+        this.addEstate.state = "";
+        this.addEstate.district = "";
+        this.addEstate.price = "";
+        this.addEstate.province = "";
+        this.addEstate.zipcode = "";
+        this.addEstate.typeEstate = null;
+        this.addEstate.address = "";
+        this.addEstate.taragMeter = "";
+        this.addEstate.bedroom = 0;
+        this.addEstate.bathroom = 0;
+        this.addEstate.garage = 0;
+        this.addEstate.description = "";
+      } else if (key === "resetedit") {
+        this.editEstate.name = "";
+        this.editEstate.state = "";
+        this.editEstate.district = "";
+        this.editEstate.price = "";
+        this.editEstate.province = "";
+        this.editEstate.zipcode = "";
+        this.editEstate.typeEstate = null;
+        this.editEstate.address = "";
+        this.editEstate.taragMeter = "";
+        this.editEstate.bedroom = 0;
+        this.editEstate.bathroom = 0;
+        this.editEstate.garage = 0;
+        this.editEstate.description = "";
+      }
     },
   },
   async mounted() {
