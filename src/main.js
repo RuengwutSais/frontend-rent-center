@@ -38,7 +38,9 @@ Vue.use(
 import VueThaiAddressInput from 'vue-thai-address-input'
 
 import 'vue-thai-address-input/dist/vue-thai-address-input.css'
+import BlockUI from "vue-blockui";
 
+Vue.use(BlockUI);
 Vue.use(VueThaiAddressInput);
 
 
@@ -50,6 +52,7 @@ Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 Vue.prototype.$axios = Axios;
 Vue.prototype.$API_URL = process.env.VUE_APP_API
+Vue.prototype.$URL_IMG = process.env.VUE_APP_URL_IMG
 // Vue.prototype.$socket = socket
 
 Vue.prototype.$Chartist = Chartist;

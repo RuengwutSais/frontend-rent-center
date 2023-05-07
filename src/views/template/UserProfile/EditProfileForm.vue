@@ -9,7 +9,7 @@
           <div class="md-layout-item md-small-size-100 md-size-100">
             <md-field>
               <label>อีเมล</label>
-              <md-input v-model="inputUser.email" type="email"></md-input>
+              <md-input v-model="inputUser.email" type="email" disabled></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-50">
@@ -37,7 +37,7 @@
             </md-field>
           </div>
           <div class="md-layout-item md-size-100 text-right">
-            <md-button class="md-raised md-success">Update Profile</md-button>
+            <md-button class="md-raised md-success" @click="updateProfile">Update Profile</md-button>
           </div>
         </div>
       </md-card-content>
@@ -54,6 +54,29 @@ export default {
     },
     inputUser: {
       type: Object
+    },
+    getProfile: {
+      type: Function
+    }
+  },
+  methods: {
+    updateProfile() {
+      const headers = {
+        headers: {
+          token: localStorage.getItem("token")
+        }
+      }
+      const bodyJson = {
+        email: this.inputUser.email,
+        first_name: this.inputUser.firstname,
+        last_name: this.inputUser.lastname,
+        phone: this.inputUser.phone,
+        Line_id: this.inputUser.lineid
+      }
+      this.$axios.post(this.$API_URL + "/edit/profile", bodyJson, headers).then((res) => {
+        console.log('res: ', res)
+        this.getProfile()
+      })
     }
   }
 };

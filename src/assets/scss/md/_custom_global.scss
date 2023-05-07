@@ -13,3 +13,35 @@
 .body{
     font-family: 'kanit' !important;
 }
+.kanit {
+    font-family: 'Kanit', sans-serif;
+}
+
+.loader-spinner {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    
+    &:before {
+      content: "";
+      box-sizing: border-box;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50px;
+      height: 50px;
+      margin: 5px;
+      border-radius: 50%;
+      border: 5px solid #fff;
+      border-top-color: #3498db;
+      animation: spin 1s linear infinite;
+    }
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .w-250px {
+    width: 250px;
+  }

@@ -25,7 +25,8 @@ let router = new Router({
         {
           path: "dashboard",
           name: "DashboardView",
-          component: Dashboard,
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/admin/Dashboard.vue"),
           meta: {
             requireAuth: true,
           }

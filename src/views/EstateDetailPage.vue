@@ -2,23 +2,28 @@
   <div class="detail-wrapper">
     <div class="detail-card">
       <div class="detail-header">
-        <h1>Estate Name</h1>
+        <h1>{{ estate.estate_name }}</h1>
         <div class="estate-status">
-          <p>ว่าง/ไม่ว่าง</p>
+          <p v-if="estate.estate_status === 'available'">
+            <strong>ว่าง</strong>
+          </p>
+          <p v-else>
+            <strong>ไม่ว่าง</strong>
+          </p>
         </div>
       </div>
       <div class="estate-rating">
         <span
           v-for="n in 5"
           :key="n"
-          :class="{ active: n <= reviewRating.rating }"
+          :class="{ active: n <= average_rate }"
         >
           <i class="fa-solid fa-star"></i>
         </span>
       </div>
       <div class="detail-price">
         <i class="fa-solid fa-tag"></i>
-        <p>Estate Price</p>
+        <p>{{ formatMoney(estate.estate_price) }} บาท</p>
       </div>
       <div>
         <b-carousel
@@ -73,30 +78,33 @@
       </div>
       <div class="detail-location">
         <i class="fa-solid fa-location-dot"></i>
-        <p>Estate location</p>
+        <p>
+          {{ returnLocation() }}
+        </p>
       </div>
       <div class="estate-room">
         <div class="detail-bedroom">
           <i class="fa-solid fa-bed"></i>
-          <p>N/A</p>
+          <p>{{ estate.estate_bedrooms }}</p>
         </div>
         <div class="detail-bathroom">
           <i class="fa-solid fa-bath"></i>
-          <p>N/A</p>
+          <p>{{ estate.estate_bathrooms }}</p>
         </div>
       </div>
       <div class="estate-area">
         <div class="detail-garage">
           <i class="fa-solid fa-warehouse"></i>
-          <p>N/A</p>
+          <p>{{ estate.estate_garage }}</p>
         </div>
         <div class="detail-area">
           <i class="fa-solid fa-chart-area"></i>
-          <p>N/A</p>
+          <p>{{ estate.estate_area }} ตร.ม</p>
         </div>
       </div>
       <div class="detail-estate">
-        <p>Estate Detail</p>
+        <!-- todo ใส่รายละเอียดเพิ่มเติ่ม หัวข้อแต่งตรงนี้ด้วย -->
+        <p>{{ estate.estate_description }}</p>
       </div>
       <div class="map-container">
         <GmapMap
@@ -111,13 +119,8 @@
             disableDefaultUI: true,
           }"
         >
+          <GmapMarker :position="markerPosition" @click="handleMarkerClick" />
         </GmapMap>
-        <div class="location-dot">
-          <i
-            class="fa-solid fa-location-dot"
-            style="color: #ff0000 !important; font-size: 30px"
-          ></i>
-        </div>
       </div>
       <div class="owner-wrapper">
         <div class="owner-detail">
@@ -126,22 +129,22 @@
               <img src="../assets/img/user_avatar.png" alt="Profile picture" />
             </div>
           </div>
-          <h2>Owner Name</h2>
-          <p>ลงประกาศ : N/A</p>
+          <h2>{{ profile.first_name }} {{ profile.last_name }}</h2>
+          <p>ลงประกาศ : {{ formatDateThai(estate.created_at) }}</p>
           <div class="owner-contract">
             <div class="owner-phone">
               <i class="fa-solid fa-phone"></i>
-              <p>เบอร์โทร : N/A</p>
+              <p>เบอร์โทร : {{ profile.phone }}</p>
             </div>
-            <div class="owner-line">
+            <div class="owner-line" v-if="profile.Line_id">
               <i class="fa-brands fa-line"></i>
-              <p>Line : N/A</p>
+              <p>Line : {{ profile.Line_id }}</p>
             </div>
             <div class="owner-email">
               <i class="fa-solid fa-envelope"></i>
-              <p>Email : N/A</p>
+              <p>Email : {{ profile.email }}</p>
             </div>
-            <div class="chat-owner">
+            <div v-if="!isUserProfileEqual" class="chat-owner">
               <form>
                 <input
                   class="chat-input"
@@ -157,7 +160,7 @@
           </div>
         </div>
       </div>
-      <div class="detail-report">
+      <div v-if="!isUserProfileEqual" class="detail-report">
         <b-button
           v-b-modal.modal-1
           class="button-report"
@@ -166,33 +169,45 @@
           >แจ้งรายงาน</b-button
         >
       </div>
-      <div class="detail-review">
-        <div class="review-header">
-          <img
-            class="reviewer-img"
-            :src="reviewerImg.image"
-            alt="reviewerImage"
-          />
-          <h2 class="reviewer-name">{{ reviewerName.name }}</h2>
-          <div class="review-date">{{ reviewDate.date }}</div>
+      <div>
+        <div
+          v-for="item in visibleReviews"
+          :key="item.review_id"
+          class="detail-review mt-2"
+        >
+          <div class="review-header">
+            <img
+              class="reviewer-img"
+              :src="reviewerImg.image"
+              alt="reviewerImage"
+            />
+            <h2 class="reviewer-name">
+              {{ item.user.first_name }} {{ item.user.last_name }}
+            </h2>
+            <div class="review-date">{{ formatDateThai(item.created_at) }}</div>
+          </div>
+          <div class="review-text">{{ item.description }}</div>
+          <div class="review-rating">
+            <span
+              v-for="n in 5"
+              :key="n"
+              :class="{ active: n <= item.rate_score }"
+            >
+              <i class="fa-solid fa-star"></i>
+            </span>
+          </div>
         </div>
-        <div class="review-text">{{ reviewText.detail }}</div>
-        <div class="review-rating">
-          <span
-            v-for="n in 5"
-            :key="n"
-            :class="{ active: n <= reviewRating.rating }"
-          >
-            <i class="fa-solid fa-star"></i>
-          </span>
+        <div v-if="visibleReviews.length < review.length">
+          <b-button variant="primary" block @click="showMore">อ่านเพิ่มเติ่ม</b-button>
         </div>
       </div>
-      <div class="review-estate" v-if="isUser">
-        <input
-          class="review-input"
+      <div class="review-estate mt-3" v-if="isUser && !isUserProfileEqual">
+        <b-form-input
           type="text"
+          v-model="comment.text"
           placeholder="รีวิวอสังหาริมทรัพย์..."
-        />
+          :class="{ 'is-invalid': $v.comment.text.$error }"
+        ></b-form-input>
         <div class="rating">
           <p>ให้คะแนน</p>
           <b-form-rating
@@ -200,9 +215,11 @@
             class="star-rating"
             inline
             value="0"
+            v-model="comment.star"
           ></b-form-rating>
-          <div class="div-review-btn"></div>
-          <button class="review-button" type="submit">รีวิว</button>
+        </div>
+        <div class="div-review-btn">
+          <b-button block type="submit" @click="actionReview">รีวิว</b-button>
         </div>
       </div>
     </div>
@@ -322,9 +339,14 @@
 
 <script>
 import { gmapApi } from "vue2-google-maps";
+import { required } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
+      comment: {
+        text: "",
+        star: 5,
+      },
       reviewerImg: {
         image: "https://via.placeholder.com/350x200?text=User",
         type: String,
@@ -364,7 +386,22 @@ export default {
       },
       slide: 0,
       sliding: null,
+      markerPosition: {
+        lat: 18.313244,
+        lng: 99.421067,
+      },
+      estate: {},
+      profile: {},
+      review: [],
+      visibleReviews: [],
+      numToShow: 3,
+      average_rate: null,
     };
+  },
+  validations: {
+    comment: {
+      text: { required },
+    },
   },
   watch: {
     $route: function () {
@@ -375,8 +412,62 @@ export default {
     google() {
       return gmapApi;
     },
+    isUserProfileEqual() {
+      const user = JSON.parse(localStorage.getItem("profiles"));
+      return this.profile.user_id === user.user_id;
+    },
   },
   methods: {
+    actionReview() {
+      this.$v.comment.$touch();
+      if (this.$v.comment.$invalid) {
+        return false;
+      }
+
+      const headers = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+      const bodyJson = {
+        description: this.comment.text,
+        rate_score: this.comment.star,
+      };
+      this.$axios
+        .post(
+          this.$API_URL + `/review/${this.estate.estate_id}`,
+          bodyJson,
+          headers
+        )
+        .then((res) => {
+          console.log("res create: ", res);
+        });
+    },
+    formatDateThai(datenow) {
+      let date = new Date(datenow);
+      return date.toLocaleDateString("th-TH", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    },
+    returnLocation() {
+      return `${this.estate.address} ${this.estate.state} ${this.estate.districts} ${this.estate.province} ${this.estate.postcode}`;
+    },
+    formatMoney(num) {
+      num = parseFloat(num);
+      if (typeof num !== "number" || isNaN(num)) {
+        return "";
+      }
+
+      let parts = num.toFixed(0).toString().split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join(".");
+    },
+    handleMarkerClick() {
+      const mapsUrl = `https://www.google.com/maps?q=${this.markerPosition.lat},${this.markerPosition.lng}`;
+      window.open(mapsUrl, "_blank");
+    },
     onPush() {
       this.$router.push("/");
     },
@@ -391,18 +482,29 @@ export default {
     redirectPath(path) {
       return this.$router.push(path);
     },
-    async logout() {
-      this.$axios.post(this.$API_URL + "/logout");
-      await localStorage.removeItem("profiles");
-      if (this.$router.currentRoute.path === "/landingpage") {
-        window.location.reload();
-      }
-      if (!JSON.parse(localStorage.getItem("profiles"))) {
-        this.$router.push("/landingpage");
-      }
-    },
     actionReport() {
-      this.validateReport();
+      if (!this.report.detail) {
+        this.report.detailError = "กรุณากรอกรายละเอียดการรายงาน";
+        return false;
+      }
+      const headers = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+      const bodyJson = {
+        description: this.report.detail,
+      };
+      this.$axios
+        .post(
+          this.$API_URL + `/report/${this.estate.estate_id}`,
+          bodyJson,
+          headers
+        )
+        .then(() => {})
+        .finally(() => {
+          this.$bvModal.hide("modal-report");
+        });
     },
     openModal(key) {
       if (key === "report") {
@@ -443,10 +545,43 @@ export default {
     onSlideEnd() {
       this.sliding = false;
     },
+    async getEstateId() {
+      console.log("estateId: ", this.$route.params.estateId);
+      await this.$axios
+        .get(this.$API_URL + `/estate/${this.$route.params.estateId}`)
+        .then((res) => {
+          this.estate = res.data.estate;
+          console.log("this.estate: ", this.estate);
+        });
+    },
+    async getReviewByEstateId() {
+      await this.$axios
+        .get(this.$API_URL + `/review/${this.estate.estate_id}`)
+        .then((res) => {
+          this.review = res.data.review;
+          this.average_rate = res.data.average_rate
+        });
+    },
+    async getProfile() {
+      await this.$axios
+        .get(this.$API_URL + `/user/${this.estate.estate_user_id}`)
+        .then((res) => {
+          this.profile = res.data.user;
+        });
+    },
+    showMore() {
+      const newNumToShow = this.visibleReviews.length + this.numToShow;
+      this.visibleReviews = this.review.slice(0, newNumToShow);
+    },
   },
 
-  mounted() {
+  async mounted() {
     this.isUserLogin();
+    await this.getEstateId();
+    await this.getProfile();
+    await this.getReviewByEstateId();
+    this.visibleReviews = this.review.slice(0, this.numToShow);
+    // this.isUserProfileEqual()
   },
 };
 </script>

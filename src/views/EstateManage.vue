@@ -1,5 +1,8 @@
 <template>
   <div>
+    <BlockUI v-if="busy">
+      <div class="loader-spinner"></div>
+    </BlockUI>
     <div class="md-layout-item md-size-100" v-if="stepPage === 'listEstate'">
       <md-card>
         <md-card-header :data-background-color="dataBackgroundColor">
@@ -20,7 +23,7 @@
                   v-model="filter_text"
                   placeholder="ค้นหาอสังหาริมทรัพย์"
                 />
-                <div class="input-group-append cursor-pointer">
+                <div class="input-group-append cursor-pointer" @click="getListMyEstate(currentPage)">
                   <span class="input-group-text"
                     ><i class="fa-solid fa-magnifying-glass"></i
                   ></span>
@@ -47,7 +50,8 @@
         </md-card-header>
         <md-card-content>
           <div>
-            <md-table
+            <div v-if="products.length > 0">
+              <md-table
               v-model="products"
               :table-header-color="dataBackgroundColor"
             >
@@ -96,13 +100,26 @@
                     <div class="w-100 cursor-pointer">
                       <i
                         class="fa-solid fa-trash-can"
-                        @click="openModal('trash')"
+                        @click="openModal('trash', item.estate_id)"
                       ></i>
                     </div>
                   </div>
                 </md-table-cell>
               </md-table-row>
-            </md-table>
+              </md-table>
+            </div>
+            <div v-else class="d-flex flex-column justify-content-center align-items-center">
+              <div class="w-250px">
+                <img class="w-100" src="../assets/img/estate/emptyproduct.png" alt="">
+              </div>
+              <div>
+                <p class="kanit m-0">
+                  <strong>
+                    ไม่พบอสังหาริมทรัพย์ของคุณ
+                  </strong>
+                </p>
+              </div>
+            </div>
             <div class="d-flex justify-content-center mt-3">
               <b-pagination
                 v-model="currentPage"
@@ -137,9 +154,9 @@
           <div class="col-lg-6 col-sm-12">
             <label for=""> ชื่ออสังหา ฯ </label>
             <b-form-input
-              v-model="addEstate.name"
+              v-model="addEstate.estate_name"
               placeholder="กรุณาใส่ชื่ออสังหาฯ"
-              :class="{ 'is-invalid': $v.addEstate.name.$error }"
+              :class="{ 'is-invalid': $v.addEstate.estate_name.$error }"
             ></b-form-input>
           </div>
           <div class="col-lg-3 col-sm-12">
@@ -160,9 +177,9 @@
             <label for=""> อำเภอ/เขต </label>
             <thai-address-input
               type="district"
-              v-model="addEstate.district"
+              v-model="addEstate.districts"
               :input-class="
-                $v.addEstate.district.$error
+                $v.addEstate.districts.$error
                   ? 'form-control is-invalid'
                   : 'form-control'
               "
@@ -175,10 +192,10 @@
           <div class="col-lg-6 col-sm-12">
             <label for=""> ราคา </label>
             <b-form-input
-              v-model="addEstate.price"
+              v-model="addEstate.estate_price"
               placeholder="กรุณาใส่ราคาอสังหาฯ"
               @input="inputFormPrice($event, 'addEstate')"
-              :class="{ 'is-invalid': $v.addEstate.price.$error }"
+              :class="{ 'is-invalid': $v.addEstate.estate_price.$error }"
             ></b-form-input>
           </div>
           <div class="col-lg-3 col-sm-12">
@@ -200,9 +217,9 @@
             <label for=""> รหัสไปรษณีย์ </label>
             <thai-address-input
               type="district"
-              v-model="addEstate.zipcode"
+              v-model="addEstate.postcode"
               :input-class="
-                $v.addEstate.zipcode.$error
+                $v.addEstate.postcode.$error
                   ? 'form-control is-invalid'
                   : 'form-control'
               "
@@ -216,10 +233,10 @@
           <div class="col-lg-6 col-sm-12">
             <label for=""> ประเภทอสังหาฯ </label>
             <b-form-select
-              v-model="addEstate.typeEstate"
+              v-model="addEstate.estate_type"
               :options="optionstypeEstate"
               placeholder="กรุณาเลือกประเภทอสังหาริมทรัพย์"
-              :class="{ 'is-invalid': $v.addEstate.typeEstate.$error }"
+              :class="{ 'is-invalid': $v.addEstate.estate_type.$error }"
             ></b-form-select>
           </div>
           <div class="col-lg-6 col-sm-12">
@@ -235,9 +252,9 @@
           <div class="col-lg-3 col-sm-12">
             <label for=""> ตารางเมตร </label>
             <b-form-input
-              v-model="addEstate.taragMeter"
+              v-model="addEstate.estate_area"
               placeholder="กรุณากรอกขนาดพื้นที่ ตร.ม"
-              :class="{ 'is-invalid': $v.addEstate.taragMeter.$error }"
+              :class="{ 'is-invalid': $v.addEstate.estate_area.$error }"
             ></b-form-input>
           </div>
           <div class="col-3"></div>
@@ -260,27 +277,27 @@
             <label for=""> ห้องนอน </label>
             <b-form-input
               type="number"
-              v-model="addEstate.bedroom"
+              v-model="addEstate.estate_bedrooms"
               placeholder="กรุณากรอกจำนวนห้องนอน"
-              :class="{ 'is-invalid': $v.addEstate.bedroom.$error }"
+              :class="{ 'is-invalid': $v.addEstate.estate_bedrooms.$error }"
             ></b-form-input>
           </div>
           <div class="col-lg-2 col-sm-12">
             <label for=""> ห้องน้ำ </label>
             <b-form-input
               type="number"
-              v-model="addEstate.bathroom"
+              v-model="addEstate.estate_bathrooms"
               placeholder="กรุณากรอกจำนวนห้องน้ำ"
-              :class="{ 'is-invalid': $v.addEstate.bathroom.$error }"
+              :class="{ 'is-invalid': $v.addEstate.estate_bathrooms.$error }"
             ></b-form-input>
           </div>
           <div class="col-lg-2 col-sm-12">
             <label for=""> โรงรถ </label>
             <b-form-input
               type="number"
-              v-model="addEstate.garage"
+              v-model="addEstate.estate_garage"
               placeholder="กรุณากรอกจำนวนของโรงรถ"
-              :class="{ 'is-invalid': $v.addEstate.garage.$error }"
+              :class="{ 'is-invalid': $v.addEstate.estate_garage.$error }"
             ></b-form-input>
           </div>
           <div class="col-lg-6 col-sm-12">
@@ -295,8 +312,8 @@
             </span>
             <b-form-textarea
               id="textarea"
-              v-model="addEstate.description"
-              placeholder="Enter something..."
+              v-model="addEstate.estate_description"
+              placeholder="กรุณากรอกรายละเอียดเพิ่มเติ่ม"
               rows="3"
               max-rows="6"
             ></b-form-textarea>
@@ -317,6 +334,7 @@
               id="file-upload"
               v-model="files"
               @input="onFileSelected"
+              accept=".jpg, .png, .jpeg"
               max-file-count="5"
               multiple
             >
@@ -369,55 +387,97 @@
           <div class="col-lg-6 col-sm-12">
             <label for=""> ชื่ออสังหา ฯ </label>
             <b-form-input
-              v-model="editEstate.name"
+              v-model="editEstate.estate_name"
               placeholder="กรุณาใส่ชื่ออสังหาฯ"
+              :class="{ 'is-invalid': $v.editEstate.estate_name.$error }"
             ></b-form-input>
           </div>
           <div class="col-lg-3 col-sm-12">
-            <label for=""> จังหวัด </label>
-            <b-form-input
-              v-model="editEstate.province"
-              placeholder="เลือกจังหวัด"
-            ></b-form-input>
+            <label for=""> ตำบล/แขวง</label>
+            <thai-address-input
+              type="subdistrict"
+              v-model="editEstate.state"
+              placeholder="กรุณากรอกตำบล/แขวง"
+              :input-class="
+                $v.editEstate.state.$error
+                  ? 'form-control is-invalid'
+                  : 'form-control'
+              "
+              @selected="onEditSelected"
+            ></thai-address-input>
           </div>
           <div class="col-lg-3 col-sm-12">
             <label for=""> อำเภอ/เขต </label>
-            <b-form-input
-              v-model="editEstate.state"
-              placeholder="เลือกอำเภอและเขต"
-            ></b-form-input>
+            <thai-address-input
+              type="district"
+              v-model="editEstate.districts"
+              :input-class="
+                $v.editEstate.districts.$error
+                  ? 'form-control is-invalid'
+                  : 'form-control'
+              "
+              placeholder="กรุณากรอกอำเภอหรือเขต"
+              @selected="onEditSelected"
+            ></thai-address-input>
           </div>
         </div>
         <div class="row mt-2">
           <div class="col-lg-6 col-sm-12">
             <label for=""> ราคา </label>
             <b-form-input
-              v-model="editEstate.price"
+              v-model="editEstate.estate_price"
               placeholder="กรุณาใส่ราคาอสังหาฯ"
+              @input="inputFormPrice($event, 'editEstate')"
+              :class="{ 'is-invalid': $v.editEstate.estate_price.$error }"
             ></b-form-input>
           </div>
           <div class="col-lg-3 col-sm-12">
-            <label for=""> รหัสไปรษณีย์ </label>
-            <b-form-input
-              v-model="editEstate.zipcode"
-              placeholder="กรุณากรอกรหัสไปรษณีย์"
-            ></b-form-input>
+            <label for=""> จังหวัด </label>
+            <thai-address-input
+              type="province"
+              v-model="editEstate.province"
+              :input-class="
+                $v.editEstate.province.$error
+                  ? 'form-control is-invalid'
+                  : 'form-control'
+              "
+              placeholder="กรุณากรอกจังหวัด"
+              @selected="onEditSelected"
+            >
+            </thai-address-input>
           </div>
-          <div class="col-3" />
+          <div class="col-lg-3 col-sm-12">
+            <label for=""> รหัสไปรษณีย์ </label>
+            <thai-address-input
+              type="district"
+              v-model="editEstate.postcode"
+              :input-class="
+                $v.editEstate.postcode.$error
+                  ? 'form-control is-invalid'
+                  : 'form-control'
+              "
+              placeholder="กรุณารหัสไปรษณีย์"
+              @selected="onEditSelected"
+            >
+            </thai-address-input>
+          </div>
         </div>
         <div class="row mt-2">
           <div class="col-lg-6 col-sm-12">
             <label for=""> ประเภทอสังหาฯ </label>
-            <b-form-input
-              v-model="editEstate.typeEstate"
-              placeholder="ประเภทอสังหาริมทรัพย์"
-            ></b-form-input>
+            <b-form-select
+              v-model="editEstate.estate_type"
+              :options="optionstypeEstate"
+              placeholder="กรุณาเลือกประเภทอสังหาริมทรัพย์"
+              :class="{ 'is-invalid': $v.editEstate.estate_type.$error }"
+            ></b-form-select>
           </div>
           <div class="col-lg-6 col-sm-12">
             <label for=""> ที่อยู่ </label>
             <b-form-input
               v-model="editEstate.address"
               placeholder="กรอกที่อยู่"
+              :class="{ 'is-invalid': $v.editEstate.address.$error }"
             ></b-form-input>
           </div>
         </div>
@@ -425,7 +485,7 @@
           <div class="col-lg-3 col-sm-12">
             <label for=""> ตารางเมตร </label>
             <b-form-input
-              v-model="editEstate.taragMeter"
+              v-model="editEstate.estate_area"
               placeholder="กรุณากรอกขนาดพื้นที่ ตร.ม"
             ></b-form-input>
           </div>
@@ -434,7 +494,7 @@
             <b-button
               block
               variant="success"
-              @click="$bvModal.show('modal-gps')"
+              @click="openModal('editEstate-gps')"
             >
               <i
                 class="fa-solid fa-map-location-dot"
@@ -448,22 +508,28 @@
           <div class="col-lg-2 col-sm-12">
             <label for=""> ห้องนอน </label>
             <b-form-input
-              v-model="editEstate.bedroom"
-              placeholder=""
+              type="number"
+              v-model="editEstate.estate_bedrooms"
+              placeholder="กรุณากรอกจำนวนห้องนอน"
+              :class="{ 'is-invalid': $v.editEstate.estate_bedrooms.$error }"
             ></b-form-input>
           </div>
           <div class="col-lg-2 col-sm-12">
             <label for=""> ห้องน้ำ </label>
             <b-form-input
-              v-model="editEstate.bathroom"
-              placeholder=""
+              type="number"
+              v-model="editEstate.estate_bathrooms"
+              placeholder="กรุณากรอกจำนวนห้องน้ำ"
+              :class="{ 'is-invalid': $v.editEstate.estate_bathrooms.$error }"
             ></b-form-input>
           </div>
           <div class="col-lg-2 col-sm-12">
             <label for=""> โรงรถ </label>
             <b-form-input
-              v-model="editEstate.garage"
-              placeholder=""
+              type="number"
+              v-model="editEstate.estate_garage"
+              placeholder="กรุณากรอกจำนวนของโรงรถ"
+              :class="{ 'is-invalid': $v.editEstate.estate_garage.$error }"
             ></b-form-input>
           </div>
           <div class="col-lg-6 col-sm-12">
@@ -478,8 +544,8 @@
             </span>
             <b-form-textarea
               id="textarea"
-              v-model="editEstate.description"
-              placeholder="Enter something..."
+              v-model="editEstate.estate_description"
+              placeholder="กรุณากรอกรายละเอียดเพิ่มเติ่ม"
               rows="3"
               max-rows="6"
             ></b-form-textarea>
@@ -501,6 +567,7 @@
               v-model="files"
               @input="onFileSelected"
               max-file-count="5"
+              accept=".jpg, .png, .jpeg"
               multiple
             >
               <template slot="file-name" slot-scope="{ names }">
@@ -521,7 +588,7 @@
           <div class="col-lg-6 mt-4 align-self-end">
             <div class="d-flex align-items-end justify-content-end">
               <div class="mr-2">
-                <b-button variant="primary"> ยืนยัน </b-button>
+                <b-button variant="primary" @click="actionEditEstate"> ยืนยัน </b-button>
               </div>
               <div>
                 <b-button variant="danger" @click="ResetInput('resetedit')">
@@ -553,7 +620,7 @@
             </div>
             <p>
               ท่านยืนยันที่จะลบ
-              <span class="text-primary"> ddd </span>
+              <span class="text-primary">{{ tempEstateDelete.estate_name }}</span>
               หรือไม่ ?
             </p>
           </div>
@@ -651,6 +718,8 @@ import { showErrorModal } from "../helper/index";
 export default {
   data() {
     return {
+      busy: false,
+      tempEstateDelete: {},
       filter_text: "",
       dataBackgroundColor: "blue",
       center: {
@@ -682,39 +751,39 @@ export default {
       perPage: 8,
       products: [],
       addEstate: {
-        name: "",
-        price: "",
+        estate_name: "",
+        estate_price: "",
         province: "",
         state: "",
-        district: "",
-        zipcode: "",
-        typeEstate: null,
-        maskprice: "",
+        districts: "",
+        postcode: "",
+        estate_type: null,
         address: "",
-        taragMeter: "",
-        bedroom: 0,
-        bathroom: 0,
-        garage: 0,
-        description: "",
+        estate_area: "",
+        estate_bedrooms: 0,
+        estate_bathrooms: 0,
+        estate_garage: 0,
+        estate_description: "",
         images: [],
         lat: "",
         lng: "",
       },
       editEstate: {
         estate_id: "",
-        name: "",
-        price: "",
+        estate_name: "",
+        estate_price: "",
         province: "",
         state: "",
-        zipcode: "",
-        typeEstate: "",
+        postcode: "",
+        districts: "",
+        estate_type: "",
         address: "",
-        taragMeter: "",
+        estate_area: "",
         taragVar: "",
-        bedroom: "",
-        bathroom: "",
-        garage: "",
-        description: "",
+        estate_bedrooms: "",
+        estate_bathrooms: "",
+        estate_garage: "",
+        estate_description: "",
         images: [],
         lat: "",
         lng: "",
@@ -736,32 +805,32 @@ export default {
   },
   validations: {
     addEstate: {
-      name: { required },
-      price: { required },
+      estate_name: { required },
+      estate_price: { required },
       province: { required },
       state: { required },
-      district: { required },
-      zipcode: { required },
-      typeEstate: { required },
+      districts: { required },
+      postcode: { required },
+      estate_type: { required },
       address: { required },
-      taragMeter: { required },
-      bedroom: { required },
-      bathroom: { required },
-      garage: { required },
+      estate_area: { required },
+      estate_bedrooms: { required },
+      estate_bathrooms: { required },
+      estate_garage: { required },
     },
     editEstate: {
-      name: { required },
-      price: { required },
+      estate_name: { required },
+      estate_price: { required },
       province: { required },
       state: { required },
-      district: { required },
-      zipcode: { required },
-      typeEstate: { required },
+      districts: { required },
+      postcode: { required },
+      estate_type: { required },
       address: { required },
-      taragMeter: { required },
-      bedroom: { required },
-      bathroom: { required },
-      garage: { required },
+      estate_area: { required },
+      estate_bedrooms: { required },
+      estate_bathrooms: { required },
+      estate_garage: { required },
     },
   },
   methods: {
@@ -789,26 +858,37 @@ export default {
         filter_text: this.filter_text,
         page: page ? page : this.currentPage,
       };
+      this.busy = true
       await this.$axios
         .post(this.$API_URL + "/get/list/estate", bodyJson, headers)
         .then((res) => {
           console.log("res", res);
-          this.products = res.data.estate.estates;
+          this.products = res.data.estate.estates ;
           this.currentPage = res.data.estate.currentPage;
           this.totalItems = res.data.estate.totalItems;
           this.totalPages = res.data.estate.totalPages;
-        });
+        }).finally(() => {
+          this.busy = false
+        })
     },
     inputFormPrice($e, key) {
       if (key === "addEstate") {
-        this.addEstate.price = $e;
+        this.addEstate.estate_price = $e;
+      }else if(key === "editEstate") {
+        this.editEstate.estate_price = $e;
       }
+    },
+    onEditSelected(address) {
+      this.editEstate.province = address.province;
+      this.editEstate.state = address.subdistrict;
+      this.editEstate.districts = address.district;
+      this.editEstate.postcode = address.postalCode;
     },
     onSelected(address) {
       this.addEstate.province = address.province;
       this.addEstate.state = address.subdistrict;
-      this.addEstate.district = address.district;
-      this.addEstate.zipcode = address.postalCode;
+      this.addEstate.districts = address.district;
+      this.addEstate.postcode = address.postalCode;
     },
     actionAddEstate() {
       this.$v.addEstate.$touch();
@@ -834,40 +914,82 @@ export default {
           });
       }
       const bodyJson = {
-        estate_name: this.addEstate.name,
-        estate_type: this.addEstate.typeEstate,
-        estate_price: this.addEstate.price,
-        estate_area: this.addEstate.taragMeter,
-        estate_bedrooms: this.addEstate.bedroom,
-        estate_bathrooms: this.addEstate.bathroom,
-        estate_garage: this.addEstate.garage,
-        estate_description: this.addEstate.description,
+        estate_name: this.addEstate.estate_name,
+        estate_type: this.addEstate.estate_type,
+        estate_price: this.addEstate.estate_price,
+        estate_area: this.addEstate.estate_area,
+        estate_bedrooms: this.addEstate.estate_bedrooms,
+        estate_bathrooms: this.addEstate.estate_bathrooms,
+        estate_garage: this.addEstate.estate_garage,
+        estate_description: this.addEstate.estate_description,
         estate_image: setNameFile,
         estate_verify: "verify",
+        address: this.addEstate.address, 
         lat: this.coordinates.lat,
         lng: this.coordinates.lng,
         province: this.addEstate.province,
         state: this.addEstate.state,
-        districts: this.addEstate.district,
-        postcode: this.addEstate.zipcode,
+        districts: this.addEstate.districts,
+        postcode: this.addEstate.postcode,
       };
       this.$axios
         .post(this.$API_URL + "/create/estate", bodyJson, headers)
-        .then((res) => {
+        .then(async (res) => {
           console.log("res: ", res);
           if (res.data.status) {
             this.goToListState("listEstate");
-            this.getListMyEstate();
+            await this.getListMyEstate();
             this.ResetInput("resetadd");
           } else {
             showErrorModal("ขออภัย,เกิดข้อผิดพลาด");
           }
         });
     },
-    openModal(key) {
+    actionEditEstate() {
+      this.$v.editEstate.$touch();
+      if (this.$v.editEstate.$invalid) {
+        return false;
+      }
+      // this.selectedFiles.forEach((file) => {
+      //   this.formSelect.append("images", file);
+      // });
+      // let setNameFile = [];
+      // if (this.selectedFiles.length > 0) {
+      //   this.$axios
+      //     .post(this.$API_URL + "/uploadimage", this.formSelect)
+      //     .then((res) => {
+      //       res.data.filepaths.map((res) => {
+      //         setNameFile.push(res);
+      //       });
+      //     });
+      // }
+      // const bodyJson = {
+      //   estate_name: this.addEstate.estate_name,
+      //   estate_type: this.addEstate.estate_type,
+      //   estate_price: this.addEstate.estate_price,
+      //   estate_area: this.addEstate.estate_area,
+      //   estate_bedrooms: this.addEstate.estate_bedrooms,
+      //   estate_bathrooms: this.addEstate.estate_bathrooms,
+      //   estate_garage: this.addEstate.estate_garage,
+      //   estate_description: this.addEstate.estate_description,
+      //   estate_image: setNameFile,
+      //   estate_verify: "verify",
+      //   address: this.addEstate.address, 
+      //   lat: this.coordinates.lat,
+      //   lng: this.coordinates.lng,
+      //   province: this.addEstate.province,
+      //   state: this.addEstate.state,
+      //   districts: this.addEstate.districts,
+      //   postcode: this.addEstate.postcode,
+      // };
+    },
+    openModal(key, estateId = null) {
       if (key === "trash") {
         this.$bvModal.show("modal-yes-or-no");
+        this.tempEstateDelete = this.products.find(res => res.estate_id === estateId)
       } else if (key === "addEstate-gps") {
+        this.$bvModal.show("modal-gps");
+      } else if (key === "editEstate-gps") {
         this.$bvModal.show("modal-gps");
       }
     },
@@ -879,27 +1001,42 @@ export default {
         console.log("This edit value :", editvalue);
         this.editEstate.estate_id = editvalue.estate_id;
         this.editEstate.name = editvalue.estate_name;
-        this.editEstate.price = editvalue.estate_price;
+        this.editEstate.estate_price = editvalue.estate_price;
         this.editEstate.state = editvalue.state;
-        this.editEstate.zipcode = editvalue.postcode;
+        this.editEstate.postcode = editvalue.postcode;
         this.editEstate.province = editvalue.province;
-        this.editEstate.typeEstate = editvalue.estate_type;
-        this.editEstate.address = editvalue.estate_description;
-        this.editEstate.price = editvalue.estate_price;
-        this.editEstate.taragMeter = editvalue.estate_area;
-        this.editEstate.bedroom = editvalue.estate_bedrooms;
-        this.editEstate.bathroom = editvalue.estate_bathrooms;
-        this.editEstate.garage = editvalue.estate_garage;
+        this.editEstate.estate_type = editvalue.estate_type;
+        this.editEstate.estate_description = editvalue.estate_description;
+        this.editEstate.estate_area = editvalue.estate_area;
+        this.editEstate.estate_bedrooms = editvalue.estate_bedrooms;
+        this.editEstate.estate_bathrooms = editvalue.estate_bathrooms;
+        this.editEstate.estate_garage = editvalue.estate_garage;
         this.editEstate.images = editvalue.estate_image;
         this.editEstate.lat = editvalue.lat;
         this.editEstate.lng = editvalue.lng;
       }
       this.stepPage = key;
     },
-    actionYesOrNo() {},
+    actionYesOrNo() {
+      const headers = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
+      this.$axios.delete(this.$API_URL + `/delete/estate/${this.tempEstateDelete.estate_id}`, headers).then(async (res) => {
+        if(res.data.status) {
+          this.$bvModal.hide("modal-yes-or-no")
+          await this.getListMyEstate();
+        }else {
+          this.$bvModal.hide("modal-yes-or-no")
+          showErrorModal("ขออภัย,เกิดข้อผิดพลาด");
+        }
+      })
+    },
     close(key) {
       if (key === "yesorno") {
         this.$bvModal.hide("modal-yes-or-no");
+        this.tempEstateDelete = null
       }
     },
     getOverAllIndex(index) {
@@ -919,33 +1056,39 @@ export default {
     },
     ResetInput(key) {
       if (key === "resetadd") {
-        this.addEstate.name = "";
+        this.addEstate.estate_name = "";
         this.addEstate.state = "";
-        this.addEstate.district = "";
-        this.addEstate.price = "";
+        this.addEstate.districts = "";
+        this.addEstate.estate_price = "";
         this.addEstate.province = "";
-        this.addEstate.zipcode = "";
-        this.addEstate.typeEstate = null;
+        this.addEstate.postcode = "";
         this.addEstate.address = "";
-        this.addEstate.taragMeter = "";
-        this.addEstate.bedroom = 0;
-        this.addEstate.bathroom = 0;
-        this.addEstate.garage = 0;
-        this.addEstate.description = "";
+        this.addEstate.estate_area = "";
+        this.addEstate.estate_bedrooms = 0;
+        this.addEstate.estate_bathrooms = 0;
+        this.addEstate.estate_garage = 0;
+        this.addEstate.estate_description = "";
+        this.addEstate.estate_type = null
+        this.files = []
+        this.selectedFiles = []
+        this.formSelect = new FormData()
       } else if (key === "resetedit") {
-        this.editEstate.name = "";
+        this.editEstate.estate_name = "";
         this.editEstate.state = "";
-        this.editEstate.district = "";
-        this.editEstate.price = "";
+        this.editEstate.districts = "";
+        this.editEstate.estate_price = "";
         this.editEstate.province = "";
-        this.editEstate.zipcode = "";
-        this.editEstate.typeEstate = null;
+        this.editEstate.postcode = "";
+        this.editEstate.estate_type = null;
         this.editEstate.address = "";
-        this.editEstate.taragMeter = "";
-        this.editEstate.bedroom = 0;
-        this.editEstate.bathroom = 0;
-        this.editEstate.garage = 0;
-        this.editEstate.description = "";
+        this.editEstate.estate_area = "";
+        this.editEstate.estate_bedrooms = 0;
+        this.editEstate.estate_bathrooms = 0;
+        this.editEstate.estate_garage = 0;
+        this.editEstate.estate_description = "";
+        this.files = []
+        this.selectedFiles = []
+        this.formSelect = new FormData()
       }
     },
   },

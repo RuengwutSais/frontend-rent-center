@@ -5,35 +5,35 @@
     </div>
     <div class="card-info">
       <div class="card-name">
-        <p>{{ item.name }}</p>
+        <p>{{ item.estate_name }}</p>
         <i class="fa-solid fa-circle-check"></i>
       </div>
       <div class="card-price">
         <i class="fa-solid fa-tag"></i>
-        <p>{{ item.price }}</p>
+        <p>{{ formatMoney(item.estate_price) }}</p>
       </div>
       <div class="card-location">
         <i class="fa-solid fa-location-dot"></i>
-        <p>{{ item.location }}</p>
+        <p>{{ item.province }}</p>
       </div>
       <div class="estate-room">
         <div class="card-bedroom">
           <i class="fa-solid fa-bed"></i>
-          <p>{{ item.bedroom }}</p>
+          <p>{{ item.estate_bedrooms }}</p>
         </div>
         <div class="card-bathroom">
           <i class="fa-solid fa-bath"></i>
-          <p>{{ item.bathroom }}</p>
+          <p>{{ item.estate_bathrooms }}</p>
         </div>
       </div>
       <div class="estate-area">
         <div class="card-garage">
           <i class="fa-solid fa-warehouse"></i>
-          <p>{{ item.garage }}</p>
+          <p>{{ item.estate_garage }}</p>
         </div>
         <div class="card-area">
           <i class="fa-solid fa-chart-area"></i>
-          <p>{{ item.area }}</p>
+          <p>{{ item.estate_area }}</p>
         </div>
       </div>
     </div>
@@ -45,5 +45,17 @@ export default {
   props: {
     item: [Object, Array],
   },
+  methods: {
+    formatMoney(num) {
+      num = parseFloat(num);
+      if (typeof num !== 'number' || isNaN(num)) {
+        return '';
+      }
+      
+      let parts = num.toFixed(0).toString().split('.');
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join('.');
+    },
+  }
 };
 </script>

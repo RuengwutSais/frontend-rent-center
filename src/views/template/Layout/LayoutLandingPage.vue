@@ -166,8 +166,16 @@ export default {
       return this.$router.push(path);
     },
     async logout() {
-      this.$axios.post(this.$API_URL + "/logout");
-      await localStorage.removeItem("profiles");
+      // const headers = {
+      //   headers: {
+      //     token: localStorage.getItem("token")
+      //   }
+      // }
+      // await this.$axios.post(this.$API_URL + "/logout", headers).then((res) => {
+      //     console.log('res:', res)
+      // });
+      await localStorage.removeItem('profiles');
+      await localStorage.removeItem('token');
       if (this.$router.currentRoute.path === "/landingpage") {
         window.location.reload();
       }

@@ -6,12 +6,9 @@
 
     <md-card-content>
       <h4 class="card-title">{{ user.firstname }}  {{ user.lastname }}</h4>
-      <p class="card-description">
-        Don't be scared of the truth because we need to restart the human
-        foundation in truth And I love you like Kanye loves Kanye I love Rick
-        Owens’ bed design but the back is...
-      </p>
-      <md-button class="md-round md-success">Follow</md-button>
+      <b-button variant="primary">
+        อัพโหลดรูปภาพ
+      </b-button>
     </md-card-content>
   </md-card>
 </template>

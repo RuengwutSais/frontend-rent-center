@@ -7,9 +7,10 @@
             type="text"
             class="form-control"
             placeholder="ค้นหาอสังหาริมทรัพย์"
+            v-model="filter_text"
             @keydown.enter="findEstate()"
           />
-          <div class="input-group-append cursor-pointer">
+          <div class="input-group-append cursor-pointer" @click="findEstate">
             <span class="input-group-text"
               ><i class="fa-solid fa-magnifying-glass"></i
             ></span>
@@ -58,6 +59,7 @@ export default {
   },
   data() {
     return {
+      filter_text: "",
       condos: [
         {
           price: "Condo price",
@@ -219,6 +221,9 @@ export default {
     };
   },
   methods: {
+    findEstate() {
+      return this.$router.push({ path: '/listestate', query: { filter_text: this.filter_text}})
+    },
     slideCondoLeft() {
       if (this.translateValue !== 0) {
         this.translateValue += 100;
