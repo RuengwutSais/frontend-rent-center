@@ -414,7 +414,7 @@ export default {
     },
     isUserProfileEqual() {
       const user = JSON.parse(localStorage.getItem("profiles"));
-      return this.profile.user_id === user.user_id;
+      return user ? this.profile.user_id === user.user_id : true; 
     },
   },
   methods: {
