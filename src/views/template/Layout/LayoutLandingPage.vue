@@ -159,6 +159,12 @@ export default {
       this.isUserLogin();
     },
   },
+  computed: {
+    isRoleAdmin() {
+      const adminRole = JSON.parse(localStorage.getItem("profiles"))
+      return adminRole.role === "ADMIN" ? true : false
+    }
+  },
   methods: {
     onPush() {
       this.$router.push("/");
@@ -174,10 +180,6 @@ export default {
     },
     redirectPath(path) {
       return this.$router.push(path);
-    },
-    isRoleAdmin() {
-      const adminRole = JSON.parse(localStorage.getItem("profiles"))
-      return adminRole.role === "ADMIN" ? true : false
     },
     async logout() {
       // const headers = {
@@ -209,6 +211,7 @@ export default {
   },
   mounted() {
     this.isUserLogin();
+    console.log('admin : ', this.isRoleAdmin())
   },
 };
 </script>
