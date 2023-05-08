@@ -901,7 +901,7 @@ export default {
       this.addEstate.districts = address.district;
       this.addEstate.postcode = address.postalCode;
     },
-    actionAddEstate() {
+    async actionAddEstate() {
       this.$v.addEstate.$touch();
       if (this.$v.addEstate.$invalid) {
         return false;
@@ -916,7 +916,7 @@ export default {
       });
       let setNameFile = [];
       if (this.selectedFiles.length > 0) {
-        this.$axios
+       await this.$axios
           .post(this.$API_URL + "/uploadimage", this.formSelect)
           .then((res) => {
             res.data.filepaths.map((res) => {
