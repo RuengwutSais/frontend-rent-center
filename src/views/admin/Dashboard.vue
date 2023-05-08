@@ -13,7 +13,7 @@
           </template>
 
           <template slot="content">
-            <p class="category">อสังหาฯ ปล่อยเช่า</p>
+            <p class="category">อสังหาฯ ที่ปล่อยเช่า</p>
             <h3 class="title">
               {{ filterAvailable() }}
               <small>หลัง</small>
@@ -43,11 +43,11 @@
       >
         <stats-card data-background-color="blue">
           <template slot="header">
-            <i class="fa-solid fa-chalkboard"></i>
+            <i class="fa-solid fa-flag"></i>
           </template>
 
           <template slot="content">
-            <p class="category">อสังหาฯ ถูกระงับ</p>
+            <p class="category">อสังหาฯ ที่ถูกระงับ</p>
             <h3 class="title">
               {{ filterSuspended() }}
               <small>หลัง</small>

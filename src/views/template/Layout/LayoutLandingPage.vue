@@ -48,7 +48,7 @@
                       >ภาพรวมอสังหาริมทรัพย์</b-dropdown-item
                     >
                     <b-dropdown-item v-if="isRoleAdmin" href="/admin">
-                      เมนู admin
+                      หน้าต่างผู้ดูแลระบบ
                     </b-dropdown-item>
                     <b-dropdown-item href="/manage/user"
                       >ตั้งค่าโปรไฟล์</b-dropdown-item

@@ -1,5 +1,8 @@
 <template>
   <div class="content content-padding">
+    <BlockUI v-if="busy">
+      <div class="loader-spinner"></div>
+    </BlockUI>
     <div class="md-layout">
       <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33"
@@ -10,19 +13,12 @@
           </template>
 
           <template slot="content">
-            <p class="category">อสังหาฯ ปล่อยเช่า</p>
+            <p class="category">อสังหาฯ ที่ปล่อยเช่า</p>
             <h3 class="title">
-              25
+              {{ filterAvailable() }}
               <small>หลัง</small>
             </h3>
           </template>
-
-          <!-- <template slot="footer">
-            <div class="stats">
-              <md-icon>date_range</md-icon>
-              Last 24 Hours
-            </div>
-          </template> -->
         </stats-card>
       </div>
       <div
@@ -36,7 +32,7 @@
           <template slot="content">
             <p class="category">อสังหาฯ ที่ถูกเช่า</p>
             <h3 class="title">
-              12
+              {{ filterRented() }}
               <small>หลัง</small>
             </h3>
           </template>
@@ -54,12 +50,15 @@
       >
         <stats-card data-background-color="blue">
           <template slot="header">
-            <i class="fa-solid fa-chalkboard"></i>
+            <i class="fa-solid fa-flag"></i>
           </template>
 
           <template slot="content">
-            <p class="category">อสังหาฯ ถูกคอมเม้นต์</p>
-            <h3 class="title">2 หลัง</h3>
+            <p class="category">อสังหาฯ ที่ถูกระงับ</p>
+            <h3 class="title">
+              {{ filterSuspended() }}
+              <small>หลัง</small>
+            </h3>
           </template>
 
           <!-- <template slot="footer">
@@ -85,9 +84,10 @@
                   <input
                     type="text"
                     class="form-control"
+                    v-model="filter_text"
                     placeholder="ค้นหาอสังหาริมทรัพย์"
                   />
-                  <div class="input-group-append cursor-pointer">
+                  <div class="input-group-append cursor-pointer" @click="getListMyEstate(currentPage)">
                     <span class="input-group-text"
                       ><i class="fa-solid fa-magnifying-glass"></i
                     ></span>
@@ -97,41 +97,86 @@
             </div>
           </md-card-header>
           <md-card-content>
-            <div>
+          <div>
+            <div v-if="products.length > 0">
               <md-table
-                v-model="users"
-                :table-header-color="dataBackgroundColor"
-              >
-                <md-table-row slot="md-table-row" slot-scope="{ item, index }">
-                  <md-table-cell md-label="ลำดับ">{{ index }}</md-table-cell>
-                  <md-table-cell md-label="ชื่ออสังหาฯ">{{
-                    item.estate_name
-                  }}</md-table-cell>
-                  <md-table-cell md-label="ประเภทอสังหาฯ">{{
-                    item.estate_type
-                  }}</md-table-cell>
-                  <md-table-cell md-label="ราคา">{{
-                    item.estate_price
-                  }}</md-table-cell>
-                  <md-table-cell md-label="พื้นที่/ตร.ม">{{
-                    item.estate_area
-                  }}</md-table-cell>
-                  <md-table-cell md-label="ห้องนอน">{{
-                    item.estate_bedrooms
-                  }}</md-table-cell>
-                  <md-table-cell md-label="ห้องนำ้">{{
-                    item.estate_bathrooms
-                  }}</md-table-cell>
-                  <md-table-cell md-label="โรงรถ">{{
-                    item.estate_garage
-                  }}</md-table-cell>
-                  <md-table-cell md-label="สถานะ">{{
-                    item.estate_status
-                  }}</md-table-cell>
-                </md-table-row>
+              v-model="products"
+              :table-header-color="dataBackgroundColor"
+            >
+              <md-table-row slot="md-table-row" slot-scope="{ item, index }">
+                <md-table-cell md-label="ลำดับ">{{
+                  getOverAllIndex(index)
+                }}</md-table-cell>
+                <md-table-cell md-label="ชื่ออสังหาริมทรัพย์">{{
+                  item.estate_name
+                }}</md-table-cell>
+                <md-table-cell md-label="ประเภทอสังหาฯ">{{
+                  item.estate_type
+                }}</md-table-cell>
+                <md-table-cell md-label="ราคา">{{
+                  formatPrice(item.estate_price)
+                }}</md-table-cell>
+                <md-table-cell md-label="พื้นที่">{{
+                  item.estate_area
+                }}</md-table-cell>
+                <md-table-cell md-label="ห้องน้ำ">{{
+                  item.estate_bathrooms
+                }}</md-table-cell>
+                <md-table-cell md-label="ห้องนอน">{{
+                  item.estate_bedrooms
+                }}</md-table-cell>
+                <md-table-cell md-label="โรงรถ">{{
+                  item.estate_garage
+                }}</md-table-cell>
+                <md-table-cell md-label="สถานะ">
+                  <div v-if="item.estate_status === 'available'">
+                      ว่าง
+                  </div>
+                  <div v-else-if="item.estate_status === 'sold'">
+                      ขายแล้ว
+                  </div>
+                  <div v-else-if="item.estate_status === 'suspended'">
+                      ถูกระงับ
+                  </div>
+                  <div v-else-if="item.estate_status === 'rented'">
+                      ไม่ว่าง
+                  </div>
+                </md-table-cell>
+                <md-table-cell md-label="รูปภาพ">
+                  <div class="w-100 mr-4 cursor-pointer">
+                    <i class="fa-regular fa-images"></i>
+                  </div>
+                  <!-- // TODO: ทำ modal เพิ่ม -->
+                </md-table-cell>
+              </md-table-row>
               </md-table>
             </div>
-          </md-card-content>
+            <div v-else class="d-flex flex-column justify-content-center align-items-center">
+              <div class="w-250px">
+                <img class="w-100" src="@/assets/img/estate/emptyproduct.png" alt="">
+              </div>
+              <div>
+                <p class="kanit m-0">
+                  <strong>
+                    ไม่พบอสังหาริมทรัพย์ของคุณ
+                  </strong>
+                </p>
+              </div>
+            </div>
+            <div class="d-flex justify-content-center mt-3">
+              <b-pagination
+                v-model="currentPage"
+                :total-rows="totalItems"
+                :per-page="perPage"
+                @change="changePage"
+                prev-icon="prevIcon"
+                next-icon="nextIcon"
+                first-icon="firstIcon"
+                last-icon="lastIcon"
+              ></b-pagination>
+            </div>
+          </div>
+        </md-card-content>
         </md-card>
       </div>
     </div>
@@ -149,121 +194,76 @@ export default {
   data() {
     return {
       dataBackgroundColor: "blue",
-      users: [
-        {
-          estate_id: 1,
-          estate_name: "สิรินคอนโด",
-          estate_type: "คอนโด",
-          estate_location: "",
-          estate_price: "1,500,000",
-          estate_area: "60",
-          estate_bedrooms: "2",
-          estate_bathrooms: "4",
-          estate_garage: "1",
-          estate_description: "",
-          estate_image: "",
-          estate_status: "ไม่ว่าง",
-          estate_user_id: "",
-          gps_latitude: "",
-          gps_longitude: "",
-          province_id: "",
-          geographies_id: "",
-          amphures_id: "",
-          districts_id: "",
-        },
-      ],
-      dailySalesChart: {
-        data: {
-          labels: ["M", "T", "W", "T", "F", "S", "S"],
-          series: [[12, 17, 7, 17, 23, 18, 38]],
-        },
-        options: {
-          lineSmooth: this.$Chartist.Interpolation.cardinal({
-            tension: 0,
-          }),
-          low: 0,
-          high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: {
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-          },
-        },
-      },
-      dataCompletedTasksChart: {
-        data: {
-          labels: ["12am", "3pm", "6pm", "9pm", "12pm", "3am", "6am", "9am"],
-          series: [[230, 750, 450, 300, 280, 240, 200, 190]],
-        },
-
-        options: {
-          lineSmooth: this.$Chartist.Interpolation.cardinal({
-            tension: 0,
-          }),
-          low: 0,
-          high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: {
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-          },
-        },
-      },
-      emailsSubscriptionChart: {
-        data: {
-          labels: [
-            "Ja",
-            "Fe",
-            "Ma",
-            "Ap",
-            "Mai",
-            "Ju",
-            "Jul",
-            "Au",
-            "Se",
-            "Oc",
-            "No",
-            "De",
-          ],
-          series: [
-            [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
-          ],
-        },
-        options: {
-          axisX: {
-            showGrid: false,
-          },
-          low: 0,
-          high: 1000,
-          chartPadding: {
-            top: 0,
-            right: 5,
-            bottom: 0,
-            left: 0,
-          },
-        },
-        responsiveOptions: [
-          [
-            "screen and (max-width: 640px)",
-            {
-              seriesBarDistance: 5,
-              axisX: {
-                labelInterpolationFnc: function (value) {
-                  return value[0];
-                },
-              },
-            },
-          ],
-        ],
-      },
+      busy: false,
+      products: [],
+      totalItems: null,
+      totalPages: null,
+      currentPage: 1,
+      perPage: 8,
+      filter_text: "",
     };
   },
   methods: {
-    getOverAllIndex(index) {
-      return this.search.page * 25 - 25 + index + 1;
+    changePage(key) {
+      this.getListMyEstate(key);
     },
+    async getListMyEstate(page = null) {
+      const headers = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+      const bodyJson = {
+        filter_text: this.filter_text,
+        page: page ? page : this.currentPage,
+      };
+      this.busy = true
+      await this.$axios
+        .post(this.$API_URL + "/get/list/estate", bodyJson, headers)
+        .then((res) => {
+          console.log("res", res);
+          this.products = res.data.estate.estates ;
+          this.currentPage = res.data.estate.currentPage;
+          this.totalItems = res.data.estate.totalItems;
+          this.totalPages = res.data.estate.totalPages;
+        }).finally(() => {
+          this.busy = false
+        })
+    },
+    filterAvailable() {
+      const filterlength = this.products.filter(
+        (product) => product.estate_status === "available"
+      );
+      return filterlength.length;
+    },
+    filterRented() {
+      const filterlength = this.products.filter(
+        (product) => product.estate_status === "rented"
+      );
+      return filterlength.length;
+    },
+    filterReview() {
+      const filterlength = this.products.filter(
+        (product) => product.estate_status === "rented"
+      );
+      return filterlength.length;
+    },
+    filterSuspended() {
+      const filterlength = this.products.filter(
+        (product) => product.estate_status === "suspended"
+      );
+      return filterlength.length;
+    },
+    getOverAllIndex(index) {
+      return this.currentPage * 8 - 8 + index + 1;
+    },
+    formatPrice(num){
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
+  },
+  async mounted() {
+    await this.getListMyEstate();
+    console.log("this.products: ", this.products);
   },
 };
 </script>

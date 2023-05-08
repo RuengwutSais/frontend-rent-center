@@ -91,7 +91,7 @@
                       ถูกระงับ
                   </div>
                   <div v-else-if="item.estate_status === 'rented'">
-                      ถูกเช่า
+                      ไม่ว่าง
                   </div>
                 </md-table-cell>
                 <md-table-cell md-label="รูปภาพ">
