@@ -45,3 +45,9 @@
   .w-250px {
     width: 250px;
   }
+  .full-cell {
+    padding: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

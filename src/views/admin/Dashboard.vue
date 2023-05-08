@@ -47,8 +47,11 @@
           </template>
 
           <template slot="content">
-            <p class="category">อสังหาฯ ถูกคอมเม้นต์</p>
-            <h3 class="title">ฐฐ หลัง</h3>
+            <p class="category">อสังหาฯ ถูกระงับ</p>
+            <h3 class="title">
+              {{ filterSuspended() }}
+              <small>หลัง</small>
+            </h3>
           </template>
         </stats-card>
       </div>
@@ -70,7 +73,10 @@
                     placeholder="ค้นหาอสังหาริมทรัพย์"
                     v-model="filter_text"
                   />
-                  <div class="input-group-append cursor-pointer" @click="filterEstate">
+                  <div
+                    class="input-group-append cursor-pointer"
+                    @click="filterEstate"
+                  >
                     <span class="input-group-text"
                       ><i class="fa-solid fa-magnifying-glass"></i
                     ></span>
@@ -86,7 +92,9 @@
                 :table-header-color="dataBackgroundColor"
               >
                 <md-table-row slot="md-table-row" slot-scope="{ item, index }">
-                  <md-table-cell md-label="ลำดับ">{{ getOverAllIndex(index) }}</md-table-cell>
+                  <md-table-cell md-label="ลำดับ">{{
+                    getOverAllIndex(index)
+                  }}</md-table-cell>
                   <md-table-cell md-label="ชื่ออสังหาฯ">{{
                     item.estate_name
                   }}</md-table-cell>
@@ -108,21 +116,31 @@
                   <md-table-cell md-label="โรงรถ">{{
                     item.estate_garage
                   }}</md-table-cell>
-                  <md-table-cell md-label="สถานะ">{{
-                    item.estate_status
-                  }}</md-table-cell>
+                  <md-table-cell md-label="สถานะ" class="full-cell">
+                    <div v-if="item.estate_status === 'available'">ว่าง</div>
+                    <div v-else-if="item.estate_status === 'sold'">ขายแล้ว</div>
+                    <div v-else-if="item.estate_status === 'suspended'">
+                      ถูกระงับ
+                    </div>
+                    <div v-else-if="item.estate_status === 'rented'">เช่า</div>
+                  </md-table-cell>
                 </md-table-row>
               </md-table>
             </div>
-            <div v-else class="d-flex flex-column justify-content-center align-items-center">
+            <div
+              v-else
+              class="d-flex flex-column justify-content-center align-items-center"
+            >
               <div class="w-250px">
-                <img class="w-100" src="../../assets/img/estate/emptyproduct.png" alt="">
+                <img
+                  class="w-100"
+                  src="../../assets/img/estate/emptyproduct.png"
+                  alt=""
+                />
               </div>
               <div>
                 <p class="kanit m-0">
-                  <strong>
-                    ไม่พบอสังหาริมทรัพย์ของคุณ
-                  </strong>
+                  <strong> ไม่พบอสังหาริมทรัพย์ของคุณ </strong>
                 </p>
               </div>
             </div>
@@ -162,15 +180,15 @@ export default {
       totalItems: null,
       totalPages: null,
       currentPage: 1,
-      perPage: 8
+      perPage: 8,
     };
   },
   methods: {
     filterEstate() {
-      this.getListEstateAdmin()
+      this.getListEstateAdmin();
     },
     changePage(numPage) {
-      this.getListEstateAdmin(numPage)
+      this.getListEstateAdmin(numPage);
     },
     getOverAllIndex(index) {
       return this.currentPage * 8 - 8 + index + 1;
@@ -178,38 +196,51 @@ export default {
     getListEstateAdmin(page = null) {
       const headers = {
         headers: {
-          token: localStorage.getItem("token")
-        }
-      }
+          token: localStorage.getItem("token"),
+        },
+      };
       const bodyJson = {
         filter_text: this.filter_text,
-        page: page ? page : this.currentPage
-      }
-      this.busy = true
-      this.$axios.post(this.$API_URL + "/admin/list/estate", bodyJson, headers).then((res) => {
-        console.log('res: ', res)
-        this.products = res.data.estate.estates
-        this.totalItems = res.data.estate.totalItems
-        this.currentPage = res.data.estate.currentPage
-        this.totalPages = res.data.estate.totalPages
-        console.log('this.products: ', this.products)
-      }).finally(() => {
-        this.busy = false
-      })
+        page: page ? page : this.currentPage,
+      };
+      this.busy = true;
+      this.$axios
+        .post(this.$API_URL + "/admin/list/estate", bodyJson, headers)
+        .then((res) => {
+          console.log("res: ", res);
+          this.products = res.data.estate.estates;
+          this.totalItems = res.data.estate.totalItems;
+          this.currentPage = res.data.estate.currentPage;
+          this.totalPages = res.data.estate.totalPages;
+          console.log("this.products: ", this.products);
+        })
+        .finally(() => {
+          this.busy = false;
+        });
     },
     filterAvailable() {
-      const filterlength = this.products.filter(product => product.estate_status === 'available')
-      return filterlength.length
+      const filterlength = this.products.filter(
+        (product) => product.estate_status === "available"
+      );
+      return filterlength.length;
     },
     filterRented() {
-      const filterlength = this.products.filter(product => product.estate_status === 'rented')
-      return filterlength.length
-    }
+      const filterlength = this.products.filter(
+        (product) => product.estate_status === "rented"
+      );
+      return filterlength.length;
+    },
+    filterSuspended() {
+      const filterlength = this.products.filter(
+        (product) => product.estate_status === "suspended"
+      );
+      return filterlength.length;
+    },
   },
   mounted() {
-    this.getListEstateAdmin()
-    console.log('available: ', this.filterAvailable())
-  }
+    this.getListEstateAdmin();
+    console.log("available: ", this.filterAvailable());
+  },
 };
 </script>
 

@@ -43,6 +43,9 @@
                     <b-dropdown-item href="/manage"
                       >ภาพรวมอสังหาริมทรัพย์</b-dropdown-item
                     >
+                    <b-dropdown-item v-if="isRoleAdmin" href="/admin">
+                      เมนู admin
+                    </b-dropdown-item>
                     <b-dropdown-item href="/manage/user"
                       >ตั้งค่าโปรไฟล์</b-dropdown-item
                     >
@@ -164,6 +167,10 @@ export default {
     },
     redirectPath(path) {
       return this.$router.push(path);
+    },
+    isRoleAdmin() {
+      const adminRole = JSON.parse(localStorage.getItem("profiles"))
+      return adminRole.role === "ADMIN" ? true : false
     },
     async logout() {
       // const headers = {

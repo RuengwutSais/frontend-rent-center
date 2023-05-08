@@ -4,7 +4,7 @@
       <md-card>
         <md-card-header :data-background-color="dataBackgroundColor">
           <div class="d-flex align-items-center justify-content-between row">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-12">
               <div>
                 <h4 class="title">อสังหาริมทรัพย์ที่ถูกรายงาน</h4>
                 <p class="category">
@@ -12,7 +12,7 @@
                 </p>
               </div>
             </div>
-            <div class="col-12 col-lg-6">
+            <!-- <div class="col-12 col-lg-6">
               <div class="input-group mt-4 w-100">
                 <input
                   type="text"
@@ -25,15 +25,26 @@
                   ></span>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </md-card-header>
         <md-card-content>
-          <div>
+          <div v-if="users.length > 0">
             <md-table v-model="users" :table-header-color="dataBackgroundColor">
               <md-table-row slot="md-table-row" slot-scope="{ item, index }">
                 <md-table-cell md-label="ลำดับรายงาน">{{
-                  index
+                  getOverAllIndex(index)
+                }}</md-table-cell>
+                <md-table-cell
+                  md-label="วันที่รายงาน"
+                  class="created-at-cell"
+                  >{{ formatDateThai(item.created_at) }}</md-table-cell
+                >
+                <md-table-cell md-label="ชื่อ-สกุล (ผู้รายงาน)">{{
+                  item.user.first_name + " " + item.user.last_name
+                }}</md-table-cell>
+                <md-table-cell md-label="เบอร์โทรศัพท์ (ผู้รายงาน)">{{
+                  item.user.phone
                 }}</md-table-cell>
                 <md-table-cell md-label="ชื่ออสังหาฯ">{{
                   item.estate.estate_name
@@ -41,17 +52,60 @@
                 <md-table-cell md-label="ประเภทอสังหาฯ">{{
                   item.estate.estate_type
                 }}</md-table-cell>
-                <md-table-cell md-label="สถานะ">{{
-                  item.estate.estate_status
+                <md-table-cell md-label="สถานะ">
+                  <div v-if="item.estate.estate_status === 'available'">
+                    ว่าง
+                  </div>
+                  <div v-else-if="item.estate.estate_status === 'sold'">
+                    ขายแล้ว
+                  </div>
+                  <div v-else-if="item.estate.estate_status === 'suspended'">
+                    ถูกระงับ
+                  </div>
+                  <div v-else-if="item.estate.estate_status === 'rented'">
+                    เช่า
+                  </div>
+                </md-table-cell>
+                <md-table-cell md-label="ชื่อ-นามสกุล (เจ้าของอสังหาฯ)">{{
+                  item.estate.user.first_name + " " + item.estate.user.last_name
                 }}</md-table-cell>
-                <md-table-cell md-label="ชื่อ-นามสกุล">{{
-                  item.user.first_name + " " + item.user.last_name
+                <md-table-cell md-label="เบอร์โทรศัพท์ (เจ้าของอสังหาฯ)">{{
+                  item.estate.user.phone
                 }}</md-table-cell>
                 <md-table-cell md-label="รายละเอียด">{{
                   item.description
                 }}</md-table-cell>
               </md-table-row>
             </md-table>
+          </div>
+          <div
+            v-else
+            class="d-flex flex-column justify-content-center align-items-center"
+          >
+            <div class="w-250px">
+              <img
+                class="w-100"
+                src="../../assets/img/estate/emptyproduct.png"
+                alt=""
+              />
+            </div>
+            <div>
+              <p class="kanit m-0">
+                <strong> ไม่พบอสังหาริมทรัพย์ของคุณ </strong>
+              </p>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center mt-3">
+            <b-pagination
+              v-model="currentPage"
+              :total-rows="totalItems"
+              :per-page="perPage"
+              @change="changePage"
+              prev-icon="prevIcon"
+              next-icon="nextIcon"
+              first-icon="firstIcon"
+              last-icon="lastIcon"
+            ></b-pagination>
           </div>
         </md-card-content>
       </md-card>
@@ -64,50 +118,59 @@ export default {
   data() {
     return {
       dataBackgroundColor: "orange",
-      users: [
-        {
-          report_id: 1,
-          estate: {
-            estate_id: 1,
-            estate_name: "สิรินคอนโด",
-            estate_type: "คอนโด",
-            estate_location: "",
-            estate_price: "",
-            estate_area: "",
-            estate_bedrooms: "",
-            estate_bathrooms: "",
-            estate_garage: "",
-            estate_description: "",
-            estate_image: "",
-            estate_status: "ไม่ว่าง",
-            estate_user_id: "",
-            gps_latitude: "",
-            gps_longitude: "",
-            province_id: "",
-            geographies_id: "",
-            amphures_id: "",
-            districts_id: "",
-          },
-          user: {
-            user_id: "",
-            phone: "0988482480",
-            first_name: "พิธา",
-            last_name: "ก้าวไกล",
-          },
-          description: "ไม่สะอาดเลย 8 ปีแล้ว",
-        },
-      ],
+      users: [],
+      totalItems: null,
+      totalPages: null,
+      currentPage: 1,
+      perPage: 8
     };
   },
   methods: {
-    getOverAllIndex(index) {
-      return this.search.page * 25 - 25 + index + 1;
+    changePage(key) {
+      this.getAllReport(key)
     },
+    getOverAllIndex(index) {
+      return this.currentPage * 8 - 8 + index + 1;
+    },
+    async getAllReport(page = null) {
+      const headers = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+      const bodyJson = {
+        currentPage: page ? page : this.currentPage
+      }
+      await this.$axios.post(this.$API_URL + "/all/report", bodyJson, headers).then((res) => {
+        console.log("res: ", res);
+        this.users = res.data.report.reports;
+        this.totalItems = res.data.report.totalItems;
+        this.totalPages = res.data.report.totalPages;
+        this.currentPage = res.data.report.currentPage;
+      });
+    },
+    formatDateThai(datenow) {
+      let date = new Date(datenow);
+      return date.toLocaleDateString("th-TH", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    },
+  },
+  mounted() {
+    this.getAllReport();
   },
 };
 </script>
 
 <style lang="scss">
+.created-at-cell {
+  padding: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .drop-box-shadow {
   border-radius: 1em;
   box-shadow: rgba(100, 100, 111, 0.2) 0 12px 20px -10px;
