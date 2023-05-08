@@ -16,8 +16,9 @@
                   type="text"
                   class="form-control"
                   placeholder="ค้นหาอสังหาริมทรัพย์"
+                  v-model="filter_text"
                 />
-                <div class="input-group-append cursor-pointer">
+                <div class="input-group-append cursor-pointer" @click="findEstate">
                   <span class="input-group-text"
                     ><i class="fa-solid fa-magnifying-glass"></i
                   ></span>
@@ -27,13 +28,10 @@
           </div>
         </md-card-header>
         <md-card-content>
-          <div>
+          <div v-if="users.length > 0">
             <md-table v-model="users" :table-header-color="dataBackgroundColor">
               <md-table-row slot="md-table-row" slot-scope="{ item, index }">
-                <md-table-cell md-label="ลำดับ">{{ index }}</md-table-cell>
-                <md-table-cell md-label="ชื่อ-นามสกุล">{{
-                  item.user.first_name + " " + item.user.last_name
-                }}</md-table-cell>
+                <md-table-cell md-label="ลำดับ">{{ getOverAllIndex(index) }}</md-table-cell>
                 <md-table-cell md-label="ชื่ออสังหาฯ">{{
                   item.estate_name
                 }}</md-table-cell>
@@ -55,14 +53,25 @@
                 <md-table-cell md-label="โรงรถ">{{
                   item.estate_garage
                 }}</md-table-cell>
-                <md-table-cell md-label="สถานะ">{{
-                  item.estate_status
-                }}</md-table-cell>
+                <md-table-cell md-label="สถานะ">
+                  <div v-if="item.estate_status === 'available'">
+                    ว่าง
+                  </div>
+                  <div v-else-if="item.estate_status === 'sold'">
+                    ขายแล้ว
+                  </div>
+                  <div v-else-if="item.estate_status === 'suspended'">
+                    ถูกระงับ
+                  </div>
+                  <div v-else-if="item.estate_status === 'rented'">
+                    เช่า
+                  </div>
+                </md-table-cell>
                 <md-table-cell md-label="จัดการ">
                   <div class="d-flex flex-row">
                     <div
                       class="w-100 mr-4 cursor-pointer"
-                      @click="openModal('hold')"
+                      @click="openModal('hold', item.estate_id)"
                     >
                       <i class="fa-solid fa-flag"></i>
                     </div>
@@ -70,6 +79,35 @@
                 </md-table-cell>
               </md-table-row>
             </md-table>
+          </div>
+          <div
+            v-else
+            class="d-flex flex-column justify-content-center align-items-center"
+          >
+            <div class="w-250px">
+              <img
+                class="w-100"
+                src="../../assets/img/estate/emptyproduct.png"
+                alt=""
+              />
+            </div>
+            <div>
+              <p class="kanit m-0">
+                <strong> ไม่พบอสังหาริมทรัพย์ </strong>
+              </p>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center mt-3">
+            <b-pagination
+              v-model="currentPage"
+              :total-rows="totalItems"
+              :per-page="perPage"
+              @change="changePage"
+              prev-icon="prevIcon"
+              next-icon="nextIcon"
+              first-icon="firstIcon"
+              last-icon="lastIcon"
+            ></b-pagination>
           </div>
         </md-card-content>
       </md-card>
@@ -130,53 +168,71 @@ export default {
   data() {
     return {
       dataBackgroundColor: "orange",
-      users: [
-        {
-          estate_id: 1,
-          estate_name: "สิรินคอนโด",
-          estate_type: "คอนโด",
-          estate_location: "",
-          estate_price: "1,500,000",
-          estate_area: "60",
-          estate_bedrooms: "2",
-          estate_bathrooms: "4",
-          estate_garage: "1",
-          estate_description: "",
-          estate_image: "",
-          estate_status: "ไม่ว่าง",
-          estate_user_id: "",
-          gps_latitude: "",
-          gps_longitude: "",
-          province_id: "",
-          geographies_id: "",
-          amphures_id: "",
-          districts_id: "",
-          user: {
-            user_id: "",
-            phone: "0988482480",
-            first_name: "พิธา",
-            last_name: "ก้าวไกล",
-          },
-        },
-      ],
+      users: [],
+      currentPage: 1,
+      totalItems: null,
+      totalPages: null,
+      filter_text: "",
+      tempSuspended: null,
+      perPage: 8
     };
   },
   methods: {
-    openModal(key) {
+    changePage(key) {
+      this.getListSuspended(key)
+    },
+    openModal(key, estate_id) {
       if (key === "hold") {
         this.$bvModal.show("modal-hold");
+        this.tempSuspended = estate_id
       }
     },
-    actionHold() {},
+    findEstate() {
+      this.getListSuspended()
+    },
+    actionHold() {
+      const headers = {
+        headers: {
+          token: localStorage.getItem("token")
+        }
+      }
+      
+      this.$axios.post(this.$API_URL + `/suspended/${this.tempSuspended}`, {}, headers).then((res) => {
+        console.log('res status: ', res)
+      }).finally(() => {
+        this.$bvModal.hide("modal-hold");
+        this.getListSuspended()
+      })
+    },
     close(key) {
       if (key === "canclehold") {
         this.$bvModal.hide("modal-hold");
       }
     },
     getOverAllIndex(index) {
-      return this.search.page * 25 - 25 + index + 1;
+      return this.currentPage * 8 - 8 + index + 1;
     },
+    getListSuspended(page = null) {
+      const headers = {
+        headers: {
+          token: localStorage.getItem("token")
+        }
+      }
+      const bodyJson = {
+        filter_text: this.filter_text,
+        page: page ? page : this.currentPage
+      }
+      this.$axios.post(this.$API_URL + '/admin/list/unsuspended', bodyJson, headers).then((res) => {
+        console.log('res: ', res)
+        this.totalItems = res.data.estate.totalItems
+        this.totalPages = res.data.estate.totalPages
+        this.users = res.data.estate.estates
+      })
+    }
   },
+  mounted() {
+    this.getListSuspended()
+  }
 };
 </script>
 

@@ -16,8 +16,9 @@
                   type="text"
                   class="form-control"
                   placeholder="ค้นหาอสังหาริมทรัพย์"
+                  v-model="filter_text"
                 />
-                <div class="input-group-append cursor-pointer">
+                <div class="input-group-append cursor-pointer" @click="findEstateSuspended">
                   <span class="input-group-text"
                     ><i class="fa-solid fa-magnifying-glass"></i
                   ></span>
@@ -27,13 +28,10 @@
           </div>
         </md-card-header>
         <md-card-content>
-          <div>
+          <div v-if="users.length > 0">
             <md-table v-model="users" :table-header-color="dataBackgroundColor">
               <md-table-row slot="md-table-row" slot-scope="{ item, index }">
-                <md-table-cell md-label="ลำดับ">{{ index }}</md-table-cell>
-                <md-table-cell md-label="ชื่อ-นามสกุล">{{
-                  item.user.first_name + " " + item.user.last_name
-                }}</md-table-cell>
+                <md-table-cell md-label="ลำดับ">{{ getOverAllIndex(index) }}</md-table-cell>
                 <md-table-cell md-label="ชื่ออสังหาฯ">{{
                   item.estate_name
                 }}</md-table-cell>
@@ -55,14 +53,25 @@
                 <md-table-cell md-label="โรงรถ">{{
                   item.estate_garage
                 }}</md-table-cell>
-                <md-table-cell md-label="สถานะ">{{
-                  item.estate_status
-                }}</md-table-cell>
+                <md-table-cell md-label="สถานะ" class="full-cell">
+                  <div v-if="item.estate_status === 'available'">
+                    ว่าง
+                  </div>
+                  <div v-else-if="item.estate_status === 'sold'">
+                    ขายแล้ว
+                  </div>
+                  <div v-else-if="item.estate_status === 'suspended'">
+                    ถูกระงับ
+                  </div>
+                  <div v-else-if="item.estate_status === 'rented'">
+                    เช่า
+                  </div>
+                </md-table-cell>
                 <md-table-cell md-label="จัดการ">
                   <div class="d-flex flex-row">
                     <div
                       class="w-100 mr-4 cursor-pointer"
-                      @click="openModal('cancle-hold')"
+                      @click="openModal('cancle-hold', item.estate_id)"
                     >
                     <i class="fa-solid fa-house-circle-check"></i>
                     </div>
@@ -70,6 +79,35 @@
                 </md-table-cell>
               </md-table-row>
             </md-table>
+          </div>
+          <div
+            v-else
+            class="d-flex flex-column justify-content-center align-items-center"
+          >
+            <div class="w-250px">
+              <img
+                class="w-100"
+                src="../../assets/img/estate/emptyproduct.png"
+                alt=""
+              />
+            </div>
+            <div>
+              <p class="kanit m-0">
+                <strong> ไม่พบอสังหาริมทรัพย์ </strong>
+              </p>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center mt-3">
+            <b-pagination
+              v-model="currentPage"
+              :total-rows="totalItems"
+              :per-page="perPage"
+              @change="changePage"
+              prev-icon="prevIcon"
+              next-icon="nextIcon"
+              first-icon="firstIcon"
+              last-icon="lastIcon"
+            ></b-pagination>
           </div>
         </md-card-content>
       </md-card>
@@ -159,24 +197,70 @@ export default {
           },
         },
       ],
+      perPage: 8,
+      totalItems: null,
+      totalPages: null,
+      currentPage: 1,
+      filter_text: "",
+      tempCancelId: null,
     };
   },
   methods: {
-    openModal(key) {
+    openModal(key, estateId) {
       if (key === "cancle-hold") {
         this.$bvModal.show("modal-cancle-hold");
+        this.tempCancelId = estateId
       }
     },
-    actionHold() {},
+    findEstateSuspended() {
+      this.getsuspendedList()
+    },
+    changePage(numPage) {
+      this.getsuspendedList(numPage)
+    },
+    getsuspendedList(page = null) {
+      const headers = {
+        headers: {
+          token: localStorage.getItem("token")
+        }
+      }
+      const bodyJson = {
+        filter_text: this.filter_text,
+        page: page ? page : this.currentPage
+      }
+      this.$axios.post(this.$API_URL + '/admin/list/onlysuspended', bodyJson, headers).then((res) => {
+        console.log('res: ', res)
+        this.users = res.data.estate.estates
+        this.currentPage = res.data.estate.currentPage
+        this.totalItems = res.data.estate.totalItems
+        this.totalPages = res.data.estate.totalPages
+      })
+    },
+    actionHold() {
+      const headers = {
+        headers: {
+          token: localStorage.getItem("token")
+        }
+      }
+      this.$axios.post(this.$API_URL + `/admin/cancel/suspended/${this.tempCancelId}`, {}, headers).then((res) => {
+        console.log('res cancel: ', res)
+      }).finally(() => {
+        this.$bvModal.hide("modal-cancle-hold");
+        this.getsuspendedList()
+      })
+    },
     close(key) {
       if (key === "close-cancle-hold") {
         this.$bvModal.hide("modal-cancle-hold");
       }
     },
     getOverAllIndex(index) {
-      return this.search.page * 25 - 25 + index + 1;
+      return this.currentPage * this.perPage - this.perPage + index + 1;
     },
   },
+  mounted() {
+    this.getsuspendedList()
+  }
 };
 </script>
 

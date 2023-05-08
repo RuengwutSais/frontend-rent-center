@@ -4,11 +4,11 @@ import Router from "vue-router";
 import DashboardLayoutAdmin from "@/views/template/Layout/DashboardLayoutAdmin.vue";
 import DashboardLayoutUser from "@/views/template/Layout/DashboardLayoutUser.vue";
 import Dashboard from "@/views/template/Dashboard.vue";
-import TableList from "@/views/template/TableList.vue";
-import Typography from "@/views/template/Typography.vue";
-import Icons from "@/views/template/Icons.vue";
-import Maps from "@/views/template/Maps.vue";
-import UpgradeToPRO from "@/views/template/UpgradeToPRO.vue";
+// import TableList from "@/views/template/TableList.vue";
+// import Typography from "@/views/template/Typography.vue";
+// import Icons from "@/views/template/Icons.vue";
+// import Maps from "@/views/template/Maps.vue";
+// import UpgradeToPRO from "@/views/template/UpgradeToPRO.vue";
 import LayoutLandingPage from "@/views/template/Layout/LayoutLandingPage.vue";
 
 Vue.use(Router);
@@ -28,7 +28,7 @@ let router = new Router({
           component: () =>
             import(/* webpackChunkName: "demo" */ "./views/admin/Dashboard.vue"),
           meta: {
-            requireAuth: true,
+            admin: true,
           }
         },
         {
@@ -37,7 +37,7 @@ let router = new Router({
           component: () =>
             import(/* webpackChunkName: "demo" */ "./views/admin/ReportEstatePage.vue"),
           meta: {
-            requireAuth: true,
+            admin: true,
           }
         },
         {
@@ -46,7 +46,7 @@ let router = new Router({
           component: () =>
             import(/* webpackChunkName: "demo" */ "./views/admin/HoldEstatePage.vue"),
           meta: {
-            requireAuth: true,
+            admin: true,
           }
         },
         {
@@ -55,47 +55,44 @@ let router = new Router({
           component: () =>
             import(/* webpackChunkName: "demo" */ "./views/admin/CancleHoldPage.vue"),
           meta: {
-            requireAuth: true,
+            admin: true,
           }
         },
-        {
-          path: "user",
-          name: "User Profile",
-          component: () =>
-            import(/* webpackChunkName: "demo" */ "./views/template/UserProfile.vue"),
-        },
-        {
-          path: "table",
-          name: "Table List",
-          component: TableList,
-        },
-        {
-          path: "typography",
-          name: "Typography",
-          component: Typography,
-        },
-        {
-          path: "icons",
-          name: "Icons",
-          component: Icons,
-        },
-        {
-          path: "maps",
-          name: "Maps",
-          meta: {
-            hideFooter: true,
-          },
-          component: Maps,
-        },
-        {
-          path: "upgrade",
-          name: "Upgrade to PRO",
-          component: UpgradeToPRO,
-        },
-      ],
-      meta: {
-        guest: true,
-      },
+        // {
+        //   path: "user",
+        //   name: "User Profile",
+        //   component: () =>
+        //     import(/* webpackChunkName: "demo" */ "./views/template/UserProfile.vue"),
+        // },
+        // {
+        //   path: "table",
+        //   name: "Table List",
+        //   component: TableList,
+        // },
+        // {
+        //   path: "typography",
+        //   name: "Typography",
+        //   component: Typography,
+        // },
+        // {
+        //   path: "icons",
+        //   name: "Icons",
+        //   component: Icons,
+        // },
+        // {
+        //   path: "maps",
+        //   name: "Maps",
+        //   meta: {
+        //     hideFooter: true,
+        //   },
+        //   component: Maps,
+        // },
+        // {
+        //   path: "upgrade",
+        //   name: "Upgrade to PRO",
+        //   component: UpgradeToPRO,
+        // },
+      ]
     },
     {
       path: "/manage",
@@ -137,7 +134,7 @@ let router = new Router({
           component: () =>
             import(/* webpackChunkName: "demo" */ "./views/ChatTemplate.vue"),
           meta: {
-            guest: true,
+            requireAuth: true,
           }
         },
       ]
@@ -208,7 +205,8 @@ let router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.admin)) {
-    if (localStorage.getItem("admin_token") !== null) {
+    const adminRole = JSON.parse(localStorage.getItem("profiles"))
+    if (localStorage.getItem("token") !== null && adminRole.role === "ADMIN") {
       next();
     } else {
       next({
