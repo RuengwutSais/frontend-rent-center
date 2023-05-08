@@ -19,21 +19,21 @@
       <div class="estate-room">
         <div class="card-bedroom">
           <i class="fa-solid fa-bed"></i>
-          <p>{{ item.estate_bedrooms }}</p>
+          <p>{{ item.estate_bedrooms }} ห้องนอน</p>
         </div>
         <div class="card-bathroom">
           <i class="fa-solid fa-bath"></i>
-          <p>{{ item.estate_bathrooms }}</p>
+          <p>{{ item.estate_bathrooms }} ห้องนำ้</p>
         </div>
       </div>
       <div class="estate-area">
         <div class="card-garage">
           <i class="fa-solid fa-warehouse"></i>
-          <p>{{ item.estate_garage }}</p>
+          <p>{{ item.estate_garage }} โรงรถ</p>
         </div>
         <div class="card-area">
           <i class="fa-solid fa-chart-area"></i>
-          <p>{{ item.estate_area }}</p>
+          <p>{{ item.estate_area }} ตร.ม</p>
         </div>
       </div>
     </div>

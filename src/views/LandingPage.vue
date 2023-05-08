@@ -22,7 +22,7 @@
       <div class="estate-pop">
         <h1>คอนโดแนะนำ</h1>
         <div class="more-estate">
-          <a href="">ดูคอนโดเพิ่มเติม ></a>
+          <a @click="FindMore('คอนโด')">ดูคอนโดเพิ่มเติม ></a>
         </div>
         <div class="">
           <global-carousel :condos="condos" />
@@ -31,7 +31,7 @@
       <div class="estate-pop">
         <h1>บ้านเดี่ยวแนะนำ</h1>
         <div class="more-estate">
-          <a href="">ดูบ้านเดี่ยวเพิ่มเติม ></a>
+          <a @click="FindMore('บ้านเดี่ยว')">ดูบ้านเดี่ยวเพิ่มเติม ></a>
         </div>
         <div class="">
           <global-carousel :condos="estates" />
@@ -40,7 +40,7 @@
       <div class="estate-pop">
         <h1>ทาวน์เฮ้าส์แนะนำ</h1>
         <div class="more-estate">
-          <a href="">ดูทาวน์เฮ้าส์เพิ่มเติม ></a>
+          <a @click="FindMore('ทาวน์เฮ้าส์')">ดูทาวน์เฮ้าส์เพิ่มเติม ></a>
         </div>
         <div class="">
           <global-carousel :condos="townhouses" />
@@ -60,6 +60,7 @@ export default {
   data() {
     return {
       filter_text: "",
+      estate_type: "",
       condos: [
         {
           price: "Condo price",
@@ -223,6 +224,10 @@ export default {
   methods: {
     findEstate() {
       return this.$router.push({ path: '/listestate', query: { filter_text: this.filter_text}})
+    },
+    FindMore(key) {
+      return this.$router.push({ path: '/listestate', query: { estate_type: key}})
+      
     },
     slideCondoLeft() {
       if (this.translateValue !== 0) {

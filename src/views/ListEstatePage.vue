@@ -262,6 +262,7 @@ export default {
   },
   mounted() {
     this.filter_text = this.$route.query.filter_text ? this.$route.query.filter_text : ""  
+    this.search.estate_type = this.$route.query.estate_type ? this.$route.query.estate_type : null
     this.getListEstateAll()
   }
 };

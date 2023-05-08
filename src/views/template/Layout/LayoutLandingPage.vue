@@ -25,11 +25,12 @@
               </div>
             </div>
             <div v-else>
-              <div v-if="user.image" class="">
-                <img class="img" :src="user.image" />
-              </div>
-              <div v-else>
-                <div>
+              <div>
+                <div style="display: flex; justify-content: center; align-items: center;">
+                  <div v-if="user.first_name" style="display: flex; align-items: center;">
+                    <img class="img" :src="user.image" />
+                    <div style="margin-right: 5px; color: #000;">{{ user.first_name }} {{ user.last_name }}</div>
+                  </div>
                   <b-dropdown
                     size="lg"
                     variant="link"
@@ -38,7 +39,10 @@
                   >
                     <template #button-content>
                       <i class="fa-solid fa-user-tie"></i>
-                      <i class="fa-solid fa-sort-down" style="margin-left: 5px;"></i>
+                      <i
+                        class="fa-solid fa-sort-down"
+                        style="margin-left: 5px"
+                      ></i>
                     </template>
                     <b-dropdown-item href="/manage"
                       >ภาพรวมอสังหาริมทรัพย์</b-dropdown-item
@@ -141,6 +145,8 @@ export default {
     return {
       user: {
         image: "",
+        first_name: "",
+        last_name: "",
       },
       isUser: false,
     };
@@ -158,6 +164,7 @@ export default {
       const profiles = await JSON.parse(localStorage.getItem("profiles"));
       if (profiles) {
         this.isUser = true;
+        this.getProfileName()
       } else {
         this.isUser = false;
       }
@@ -174,8 +181,8 @@ export default {
       // await this.$axios.post(this.$API_URL + "/logout", headers).then((res) => {
       //     console.log('res:', res)
       // });
-      await localStorage.removeItem('profiles');
-      await localStorage.removeItem('token');
+      await localStorage.removeItem("profiles");
+      await localStorage.removeItem("token");
       if (this.$router.currentRoute.path === "/landingpage") {
         window.location.reload();
       }
@@ -186,6 +193,12 @@ export default {
     toggleSidebar() {
       this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
     },
+    getProfileName(){
+      const getProfileName = window.localStorage.getItem("profiles");
+      const formatToString = JSON.parse(getProfileName);
+      this.user.first_name = formatToString.first_name;
+      this.user.last_name = formatToString.last_name;
+    }
   },
   mounted() {
     this.isUserLogin();
@@ -204,6 +217,5 @@ export default {
   .navb-logo {
     padding-left: 10px !important;
   }
-
 }
 </style>

@@ -66,7 +66,7 @@
                   item.estate_type
                 }}</md-table-cell>
                 <md-table-cell md-label="ราคา">{{
-                  item.estate_price
+                  formatPrice(item.estate_price)
                 }}</md-table-cell>
                 <md-table-cell md-label="พื้นที่">{{
                   item.estate_area
@@ -81,7 +81,18 @@
                   item.estate_garage
                 }}</md-table-cell>
                 <md-table-cell md-label="สถานะ">
-                  {{ item.estate_status }}
+                  <div v-if="item.estate_status === 'available'">
+                      ว่าง
+                  </div>
+                  <div v-else-if="item.estate_status === 'sold'">
+                      ขายแล้ว
+                  </div>
+                  <div v-else-if="item.estate_status === 'suspended'">
+                      ถูกระงับ
+                  </div>
+                  <div v-else-if="item.estate_status === 'rented'">
+                      ถูกเช่า
+                  </div>
                 </md-table-cell>
                 <md-table-cell md-label="รูปภาพ">
                   <div class="w-100 mr-4 cursor-pointer">
@@ -1091,6 +1102,9 @@ export default {
         this.formSelect = new FormData()
       }
     },
+    formatPrice(num){
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
   },
   async mounted() {
     await this.getListMyEstate();

@@ -85,17 +85,17 @@
       <div class="estate-room">
         <div class="detail-bedroom">
           <i class="fa-solid fa-bed"></i>
-          <p>{{ estate.estate_bedrooms }}</p>
+          <p>{{ estate.estate_bedrooms }} ห้องนอน</p>
         </div>
         <div class="detail-bathroom">
           <i class="fa-solid fa-bath"></i>
-          <p>{{ estate.estate_bathrooms }}</p>
+          <p>{{ estate.estate_bathrooms }} ห้องนำ้</p>
         </div>
       </div>
       <div class="estate-area">
         <div class="detail-garage">
           <i class="fa-solid fa-warehouse"></i>
-          <p>{{ estate.estate_garage }}</p>
+          <p>{{ estate.estate_garage }} โรงรถ</p>
         </div>
         <div class="detail-area">
           <i class="fa-solid fa-chart-area"></i>
