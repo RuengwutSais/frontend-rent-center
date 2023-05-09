@@ -102,7 +102,7 @@
                     item.estate_type
                   }}</md-table-cell>
                   <md-table-cell md-label="ราคา">{{
-                    item.estate_price
+                    formatPrice(item.estate_price)
                   }}</md-table-cell>
                   <md-table-cell md-label="พื้นที่/ตร.ม">{{
                     item.estate_area
@@ -236,6 +236,9 @@ export default {
       );
       return filterlength.length;
     },
+    formatPrice(num){
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
   },
   mounted() {
     this.getListEstateAdmin();

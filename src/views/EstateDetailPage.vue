@@ -3,12 +3,24 @@
     <div class="detail-card">
       <div class="detail-header">
         <h1>{{ estate.estate_name }}</h1>
-        <div class="estate-status">
-          <p v-if="estate.estate_status === 'available'">
+        <div class="estate-status"  v-if="estate.estate_status === 'available'" style="background: linear-gradient(60deg, #66bb6a, #43a047); border-color: #43a047;">
+          <p>
             <strong>ว่าง</strong>
           </p>
-          <p v-else>
+        </div>
+        <div v-else-if="estate.estate_status === 'rented'" class="estate-status"  style="background: linear-gradient(60deg, #df4759, #CC0000 ); border-color: #CC0000;">
+          <p>
             <strong>ไม่ว่าง</strong>
+          </p>
+        </div>
+        <div v-else-if="estate.estate_status === 'suspended'" class="estate-status"  style="background: linear-gradient(60deg, #ffa726, #fb8c00); border-color: #fb8c00;">
+          <p>
+            <strong>ถูกระงับ</strong>
+          </p>
+        </div>
+        <div v-else-if="estate.estate_status === 'sold'" class="estate-status"  style="background: linear-gradient(60deg, #26c6da, #00acc1); border-color: #00acc1;">
+          <p>
+            <strong>ขายแล้ว</strong>
           </p>
         </div>
       </div>

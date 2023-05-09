@@ -2,7 +2,7 @@
   <form>
     <md-card>
       <md-card-header :data-background-color="dataBackgroundColor">
-        <h4 class="title">โปรไฟล์</h4>
+        <h4 class="title">ข้อมูลบัญชีของคุณ</h4>
       </md-card-header>
       <md-card-content>
         <div class="md-layout">
@@ -37,7 +37,7 @@
             </md-field>
           </div>
           <div class="md-layout-item md-size-100 text-right">
-            <md-button class="md-raised md-success" @click="updateProfile">Update Profile</md-button>
+            <md-button class="md-raised md-success" @click="updateProfile">แก้ไขบัญชี</md-button>
           </div>
         </div>
       </md-card-content>

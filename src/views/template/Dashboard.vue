@@ -116,7 +116,7 @@
                 <md-table-cell md-label="ราคา">{{
                   formatPrice(item.estate_price)
                 }}</md-table-cell>
-                <md-table-cell md-label="พื้นที่">{{
+                <md-table-cell md-label="พื้นที่/ตร.ม">{{
                   item.estate_area
                 }}</md-table-cell>
                 <md-table-cell md-label="ห้องน้ำ">{{
@@ -144,7 +144,7 @@
                 </md-table-cell>
                 <md-table-cell md-label="รูปภาพ">
                   <div class="w-100 mr-4 cursor-pointer">
-                    <i class="fa-regular fa-images"></i>
+                    <i class="fa-regular fa-images" style="font-size: 16px;"></i>
                   </div>
                   <!-- // TODO: ทำ modal เพิ่ม -->
                 </md-table-cell>

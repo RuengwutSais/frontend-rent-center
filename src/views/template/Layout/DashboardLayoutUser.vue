@@ -14,7 +14,7 @@
       </sidebar-link>
       <sidebar-link to="/manage/estate">
         <md-icon>content_paste</md-icon>
-        <p>จัดการอสังหาฯ</p>
+        <p>จัดการอสังหาริมทรัพย์</p>
       </sidebar-link>
       <sidebar-link to="/manage/chatuser">
         <md-icon>library_books</md-icon>

@@ -1,5 +1,8 @@
 <template>
   <div>
+    <BlockUI v-if="busy">
+      <div class="loader-spinner"></div>
+    </BlockUI>
     <div class="md-layout-item md-size-100">
       <md-card>
         <md-card-header :data-background-color="dataBackgroundColor">
@@ -122,12 +125,13 @@ export default {
       totalItems: null,
       totalPages: null,
       currentPage: 1,
-      perPage: 8
+      perPage: 8,
+      busy: false,
     };
   },
   methods: {
     changePage(key) {
-      this.getAllReport(key)
+      this.getAllReport(key);
     },
     getOverAllIndex(index) {
       return this.currentPage * 8 - 8 + index + 1;
@@ -139,15 +143,19 @@ export default {
         },
       };
       const bodyJson = {
-        currentPage: page ? page : this.currentPage
-      }
-      await this.$axios.post(this.$API_URL + "/all/report", bodyJson, headers).then((res) => {
-        console.log("res: ", res);
-        this.users = res.data.report.reports;
-        this.totalItems = res.data.report.totalItems;
-        this.totalPages = res.data.report.totalPages;
-        this.currentPage = res.data.report.currentPage;
-      });
+        currentPage: page ? page : this.currentPage,
+      };
+      this.busy = true;
+      await this.$axios
+        .post(this.$API_URL + "/all/report", bodyJson, headers)
+        .then((res) => {
+          console.log("res: ", res);
+          this.users = res.data.report.reports;
+          this.totalItems = res.data.report.totalItems;
+          this.totalPages = res.data.report.totalPages;
+          this.currentPage = res.data.report.currentPage;
+          this.busy = false;
+        });
     },
     formatDateThai(datenow) {
       let date = new Date(datenow);
@@ -156,6 +164,9 @@ export default {
         month: "long",
         day: "numeric",
       });
+    },
+    formatPrice(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
   },
   mounted() {

@@ -1,12 +1,15 @@
 <template>
     <div>
+      <BlockUI v-if="busy">
+      <div class="loader-spinner"></div>
+    </BlockUI>
     <div class="md-layout-item md-size-100">
       <md-card>
         <md-card-header :data-background-color="dataBackgroundColor">
           <div class="d-flex align-items-center justify-content-between row">
             <div class="col-12 col-lg-6">
               <div>
-                <h4 class="title">รายการอสังหาริมทรัพย์ที่ถูกระงับ</h4>
+                <h4 class="title">ยกเลิกการระงับอสังหาริมทรัพย์</h4>
                 <p class="category">ข้อมูลรายละเอียดของอสังหาริมทรัพย์ที่ถูกระงับ</p>
               </div>
             </div>
@@ -39,7 +42,7 @@
                   item.estate_type
                 }}</md-table-cell>
                 <md-table-cell md-label="ราคา">{{
-                  item.estate_price
+                  formatPrice(item.estate_price)
                 }}</md-table-cell>
                 <md-table-cell md-label="พื้นที่/ตร.ม">{{
                   item.estate_area
@@ -73,7 +76,7 @@
                       class="w-100 mr-4 cursor-pointer"
                       @click="openModal('cancle-hold', item.estate_id)"
                     >
-                    <i class="fa-solid fa-house-circle-check"></i>
+                    <i class="fa-solid fa-house-circle-check" style="font-size: 16px;"></i>
                     </div>
                   </div>
                 </md-table-cell>
@@ -153,7 +156,7 @@
                   font-family: 'Kanit';
                 "
               >
-                ระงับ
+                ถอนระงับ
               </b-button>
             </div>
           </div>
@@ -167,7 +170,7 @@
 export default {
   data() {
     return {
-      dataBackgroundColor: "orange",
+      dataBackgroundColor: "green",
       users: [
         {
           estate_id: 1,
@@ -203,6 +206,7 @@ export default {
       currentPage: 1,
       filter_text: "",
       tempCancelId: null,
+      busy: false,
     };
   },
   methods: {
@@ -228,12 +232,14 @@ export default {
         filter_text: this.filter_text,
         page: page ? page : this.currentPage
       }
+      this.busy = true;
       this.$axios.post(this.$API_URL + '/admin/list/onlysuspended', bodyJson, headers).then((res) => {
         console.log('res: ', res)
         this.users = res.data.estate.estates
         this.currentPage = res.data.estate.currentPage
         this.totalItems = res.data.estate.totalItems
         this.totalPages = res.data.estate.totalPages
+        this.busy = false;
       })
     },
     actionHold() {
@@ -257,6 +263,9 @@ export default {
     getOverAllIndex(index) {
       return this.currentPage * this.perPage - this.perPage + index + 1;
     },
+    formatPrice(num){
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
   },
   mounted() {
     this.getsuspendedList()

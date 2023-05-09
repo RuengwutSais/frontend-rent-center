@@ -139,7 +139,7 @@
                 :key="index"
                 class="col-lg-4 col-md-6 col-sm-6 mt-2"
               >
-                <CardEstate class="cursor-pointer" :item="item" @click.native="pushDetailEstate(item.estate_id)" />
+                <CardEstate class="cursor-pointer" :item="item" @click.native="pushDetailEstate(item.estate_id)" style="width: 100%; height: 100%;" />
               </div>
             </div>
           </div>

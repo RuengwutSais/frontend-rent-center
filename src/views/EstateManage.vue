@@ -62,13 +62,13 @@
                 <md-table-cell md-label="ชื่ออสังหาริมทรัพย์">{{
                   item.estate_name
                 }}</md-table-cell>
-                <md-table-cell md-label="ประเภทอสังหาฯ">{{
+                <md-table-cell md-label="ประเภทอสังหาริมทรัพย์">{{
                   item.estate_type
                 }}</md-table-cell>
                 <md-table-cell md-label="ราคา">{{
                   formatPrice(item.estate_price)
                 }}</md-table-cell>
-                <md-table-cell md-label="พื้นที่">{{
+                <md-table-cell md-label="พื้นที่/ตร.ม">{{
                   item.estate_area
                 }}</md-table-cell>
                 <md-table-cell md-label="ห้องน้ำ">{{
@@ -96,7 +96,7 @@
                 </md-table-cell>
                 <md-table-cell md-label="รูปภาพ">
                   <div class="w-100 mr-4 cursor-pointer">
-                    <i class="fa-regular fa-images"></i>
+                    <i class="fa-regular fa-images" style="font-size: 16px;"></i>
                   </div>
                   <!-- // TODO: ทำ modal เพิ่ม -->
                 </md-table-cell>
@@ -106,12 +106,14 @@
                       <i
                         class="fa-solid fa-pen-to-square"
                         @click="goToListState('editEstate', item.estate_id)"
+                        style="font-size: 16px;"
                       ></i>
                     </div>
                     <div class="w-100 cursor-pointer">
                       <i
                         class="fa-solid fa-trash-can"
                         @click="openModal('trash', item.estate_id)"
+                        style="font-size: 16px; color: #CC0000;"
                       ></i>
                     </div>
                   </div>
@@ -163,7 +165,7 @@
         </div>
         <div class="row">
           <div class="col-lg-6 col-sm-12">
-            <label for=""> ชื่ออสังหา ฯ </label>
+            <label for=""> ชื่ออสังหาริมทรัพย์ </label>
             <b-form-input
               v-model="addEstate.estate_name"
               placeholder="กรุณาใส่ชื่ออสังหาฯ"
@@ -242,7 +244,7 @@
         </div>
         <div class="row mt-2">
           <div class="col-lg-6 col-sm-12">
-            <label for=""> ประเภทอสังหาฯ </label>
+            <label for=""> ประเภทอสังหาริมทรัพย์ </label>
             <b-form-select
               v-model="addEstate.estate_type"
               :options="optionstypeEstate"
@@ -359,7 +361,7 @@
             <ul>
               <li v-for="(file, index) in selectedFiles" :key="index">
                 {{ file.name }}
-                <button @click="deleteFile(index)">Delete</button>
+                <i class="fa-solid fa-circle-xmark" style="color: #df4759; cursor: pointer; margin-top: 5px;" @click="deleteFile(index)"></i>
               </li>
             </ul>
           </div>
@@ -396,7 +398,7 @@
         </div>
         <div class="row">
           <div class="col-lg-6 col-sm-12">
-            <label for=""> ชื่ออสังหา ฯ </label>
+            <label for=""> อสังหาริมทรัพย์ </label>
             <b-form-input
               v-model="editEstate.estate_name"
               placeholder="กรุณาใส่ชื่ออสังหาฯ"
@@ -475,7 +477,7 @@
         </div>
         <div class="row mt-2">
           <div class="col-lg-6 col-sm-12">
-            <label for=""> ประเภทอสังหาฯ </label>
+            <label for=""> ประเภทออสังหาริมทรัพย์ </label>
             <b-form-select
               v-model="editEstate.estate_type"
               :options="optionstypeEstate"

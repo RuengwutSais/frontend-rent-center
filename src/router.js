@@ -207,7 +207,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.admin)) {
     const adminRole = JSON.parse(localStorage.getItem("profiles"))
     if (localStorage.getItem("token") !== null && adminRole.role === "ADMIN") {
-      next();
+    next();
     } else {
       next({
         path: "/404FOUND",

@@ -1,5 +1,8 @@
 <template>
   <div>
+    <BlockUI v-if="busy">
+      <div class="loader-spinner"></div>
+    </BlockUI>
     <div class="md-layout-item md-size-100">
       <md-card>
         <md-card-header :data-background-color="dataBackgroundColor">
@@ -39,7 +42,7 @@
                   item.estate_type
                 }}</md-table-cell>
                 <md-table-cell md-label="ราคา">{{
-                  item.estate_price
+                  formatPrice(item.estate_price)
                 }}</md-table-cell>
                 <md-table-cell md-label="พื้นที่/ตร.ม">{{
                   item.estate_area
@@ -73,7 +76,7 @@
                       class="w-100 mr-4 cursor-pointer"
                       @click="openModal('hold', item.estate_id)"
                     >
-                      <i class="fa-solid fa-flag"></i>
+                      <i class="fa-solid fa-flag" style="font-size: 16px;"></i>
                     </div>
                   </div>
                 </md-table-cell>
@@ -174,7 +177,8 @@ export default {
       totalPages: null,
       filter_text: "",
       tempSuspended: null,
-      perPage: 8
+      perPage: 8,
+      busy: false,
     };
   },
   methods: {
@@ -222,12 +226,17 @@ export default {
         filter_text: this.filter_text,
         page: page ? page : this.currentPage
       }
+      this.busy = true;
       this.$axios.post(this.$API_URL + '/admin/list/unsuspended', bodyJson, headers).then((res) => {
         console.log('res: ', res)
         this.totalItems = res.data.estate.totalItems
         this.totalPages = res.data.estate.totalPages
         this.users = res.data.estate.estates
+        this.busy = false;
       })
+    },
+    formatPrice(num){
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     }
   },
   mounted() {
