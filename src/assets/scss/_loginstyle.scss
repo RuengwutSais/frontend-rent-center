@@ -13,6 +13,19 @@
   height: 61rem;
 }
 
+.toggle-password {
+  position: absolute;
+  top: 49.5%;
+  right: 50px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.toggle-password i{
+  color: #7f7f7f;
+
+}
+
 h1 {
   font-weight: bold;
 }

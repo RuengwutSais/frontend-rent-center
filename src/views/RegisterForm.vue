@@ -56,8 +56,9 @@
       </div>
       <div class="in">
         <label for="name">*กรอกรหัสผ่าน</label>
-        <div>
+        <div class="password-container">
           <input
+            class="passwordInput"
             v-model="user.password"
             type="password"
             placeholder="รหัสผ่าน"
@@ -65,6 +66,9 @@
             @blur="validatePassword"
             :class="{ input_error: user.passwordError }"
           />
+          <span class="toggle-password" @click="togglePassword()">
+            <i class="far fa-eye"></i>
+          </span>
         </div>
         <div v-if="user.passwordError">
           <i class="fa-solid fa-circle-xmark error-icon"></i>
@@ -208,6 +212,18 @@ export default {
       } else {
         this.user.checkedError = "";
       }
+    },
+    togglePassword() {
+      const passwordInput = document.querySelector('.passwordInput');
+      const togglePassword = document.querySelector('.toggle-password');
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        togglePassword.innerHTML = '<i class="far fa-eye-slash"></i>';
+      } else {
+        passwordInput.type = "password";
+        togglePassword.innerHTML = '<i class="far fa-eye"></i>';
+      }
+      console.log('Click Eye')
     },
     async registerUser() {
       if (

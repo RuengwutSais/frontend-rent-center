@@ -38,7 +38,7 @@
                 <md-table-cell md-label="ชื่ออสังหาฯ">{{
                   item.estate_name
                 }}</md-table-cell>
-                <md-table-cell md-label="ประเภทอสังหาฯ">{{
+                <md-table-cell md-label="ประเภทอสังหาริมทรัพย์">{{
                   item.estate_type
                 }}</md-table-cell>
                 <md-table-cell md-label="ราคา">{{

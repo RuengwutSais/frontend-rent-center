@@ -22,6 +22,12 @@
 //     }
 // }
 .modal-open {
+    .modal-dialog{
+        .modal-content{
+            border: 1px solid rgb(200 200 200);
+            font-family: "Kanit", sans-serif;
+        }
+    }
     .modal-backdrop {
         background-color: rgba(0, 0, 0, 0.5);
     }

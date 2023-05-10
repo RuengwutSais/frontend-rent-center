@@ -4,7 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&family=Mitr:wght@200&display=swap');
 
 // Typography elements
-$mdb-font-family: 'Kanit' !default;
+$mdb-font-family: "Kanit", sans-serif !default;
 $mdb-text-color-light:  $white !default;
 $mdb-text-color-light-hex: $white !default; // for contrast function in inverse
 $mdb-text-color-primary: unquote("rgba(#{$rgb-black}, 0.87)") !default;
@@ -105,8 +105,8 @@ $link-hover-decoration: underline !default;
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-$font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
+$font-family-sans-serif:  "Kanit", sans-serif !default;
+$font-family-serif:       "Kanit", sans-serif !default;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
 $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-sans-serif !default;
@@ -121,9 +121,9 @@ $font-size-h3:                 1.5625rem;
 $font-size-h4:                 1.125rem !default;
 $font-size-h5:                 1.0625rem !default;
 $font-size-h6:                 0.75rem !default;
-$font-paragraph:               14px !default;
-$font-size-navbar:             16px !default;
-$font-size-small:              12px !default;
+$font-paragraph:               0.875rem !default;
+$font-size-navbar:             1rem !default;
+$font-size-small:              0.75rem !default;
 
 //** Unit-less `line-height` for use in components like buttons.
 $line-height-base:        1.428571429 !default; // 20/14
@@ -1048,7 +1048,7 @@ $mdb-popover-background: rgba(101, 101, 101, 0.9) !default;
 $mdb-popover-color: #ececec !default;
 
 // Dropdown Menu
-$mdb-dropdown-font-size: 13px !default;
+$mdb-dropdown-font-size: 14px !default;
 
 // Toggle
 $mdb-toggle-label-color: $mdb-label-color !default;

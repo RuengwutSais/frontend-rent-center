@@ -68,7 +68,7 @@
         z-index: 4;
         background-color: #FFFFFF !important;
         overflow: hidden;
-        font-family: 'Kanit' !important;
+        font-family: "Kanit", sans-serif;
 
         .dropdown .dropdown-backdrop{
             display: none !important;
@@ -201,7 +201,6 @@
             margin: 10px 10px;
             color: $white-color;
             line-height: 20px;
-            font-family: 'Kanit' !important;
         }
 
         .logo-mini{

@@ -152,6 +152,7 @@
     <div
       class="md-layout-item md-size-100 py-3"
       v-if="stepPage === 'addEstate'"
+      style="font-family: 'Kanit';"
     >
       <div class="d-flex justify-content-start">
         <div class="cursor-pointer" @click="goToListState('listEstate')">
@@ -385,6 +386,7 @@
     <div
       class="md-layout-item md-size-100 py-3"
       v-if="stepPage === 'editEstate'"
+      style="font-family: 'Kanit';"
     >
       <div class="d-flex justify-content-start">
         <div class="cursor-pointer" @click="goToListState('listEstate')">
