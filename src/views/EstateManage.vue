@@ -848,6 +848,7 @@ export default {
     onFileSelected(key) {
       if (key.length >= 6) {
         this.files = [];
+        this.selectedFiles = []
         return false;
       } else {
         this.selectedFiles = key;
