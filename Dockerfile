@@ -9,6 +9,7 @@ RUN npm run build
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 COPY --from=build-stage /app/dist/ .
+COPY --from=build-stage /app/keyaccess/ /app/keyaccess/
 
 
 # Copy nginx config file
