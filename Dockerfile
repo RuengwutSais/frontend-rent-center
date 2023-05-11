@@ -5,8 +5,8 @@ COPY . .
 RUN npm install 
 RUN npm run build
 
-COPY ./keyaccess/fullchain.pem /etc/letsencrypt/live/rentcentral.online/fullchain.pem
-COPY ./keyaccess/privkey.pem /etc/letsencrypt/live/rentcentral.online/privkey.pem;
+COPY keyaccess/fullchain.pem /etc/nginx/fullchain.pem
+COPY keyaccess/privkey.pem /etc/nginx/privkey.pem;
 
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
