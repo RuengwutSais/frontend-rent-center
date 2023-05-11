@@ -20,11 +20,11 @@
         <i class="fa-solid fa-house-circle-check" style="color: #000;"></i>
         <p>ยกเลิกระงับอสังหาฯ</p>
       </sidebar-link>
-      <div @click="logout" class="active-pro">
-        <sidebar-link to="/landingpage" >
+      <div class="active-pro px-3">
+        <b-button @click="logout" block variant="danger">
         <md-icon>unarchive</md-icon>
         <p>ออกจากระบบ</p>
-        </sidebar-link>
+        </b-button>
       </div>
      
     </side-bar>
