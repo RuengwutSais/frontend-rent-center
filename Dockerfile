@@ -11,12 +11,12 @@ WORKDIR /usr/share/nginx/html
 
 COPY --from=build-stage /app/dist/ .
 
-RUN mkdir /etc/keyaccess/
-RUN chown -R root:root /etc/keyaccess/
-RUN chmod -R 600 /etc/keyaccess/
+# RUN mkdir /etc/keyaccess/
+# RUN chown -R root:root /etc/keyaccess/
+# RUN chmod -R 600 /etc/keyaccess/
 
-COPY --from=build-stage /app/keyaccess/fullchain.pem /etc/keyaccess/
-COPY --from=build-stage /app/keyaccess/privkey.pem /etc/keyaccess/
+# COPY --from=build-stage /app/keyaccess/fullchain.pem /etc/keyaccess/
+# COPY --from=build-stage /app/keyaccess/privkey.pem /etc/keyaccess/
 
 # Copy nginx config file
 COPY nginx.conf /etc/nginx/nginx.conf
