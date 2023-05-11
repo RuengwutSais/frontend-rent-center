@@ -8,6 +8,9 @@ RUN npm run build
 
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
+
+RUN chmod 644 /app/keyaccess/*.pem
+
 COPY --from=build-stage /app/dist/ .
 COPY --from=build-stage /app/keyaccess/ /app/keyaccess/
 
