@@ -86,7 +86,6 @@
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 1em !important;
   overflow: hidden;
-  position: relative;
   background-color: #fff;
   cursor: pointer;
   font-family: 'Kanit' !important;
@@ -105,15 +104,16 @@
 }
 
 .card-info {
+  height: 100%;
   padding: 10px;
   text-align: start;
-  align-items: center;
 }
 
 .card-info .card-name{
   display: flex;
   align-items: center;
   padding: 0px 0px 0px 3px !important;
+  height: 40%;
 }
 
 .card-info .card-price {

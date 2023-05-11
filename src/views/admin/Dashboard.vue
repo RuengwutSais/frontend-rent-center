@@ -95,7 +95,7 @@
                   <md-table-cell md-label="ลำดับ">{{
                     getOverAllIndex(index)
                   }}</md-table-cell>
-                  <md-table-cell md-label="ชื่ออสังหาฯ">{{
+                  <md-table-cell md-label="ชื่ออสังหาริมทรัพย์">{{
                     item.estate_name
                   }}</md-table-cell>
                   <md-table-cell md-label="ประเภทอสังหาริมทรัพย์">{{

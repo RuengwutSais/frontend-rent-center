@@ -142,12 +142,6 @@
                       ไม่ว่าง
                   </div>
                 </md-table-cell>
-                <md-table-cell md-label="รูปภาพ">
-                  <div class="w-100 mr-4 cursor-pointer">
-                    <i class="fa-regular fa-images" style="font-size: 16px;"></i>
-                  </div>
-                  <!-- // TODO: ทำ modal เพิ่ม -->
-                </md-table-cell>
               </md-table-row>
               </md-table>
             </div>

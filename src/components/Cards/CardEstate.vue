@@ -16,7 +16,8 @@
         <i class="fa-solid fa-location-dot"></i>
         <p>{{ item.province }}</p>
       </div>
-      <div class="estate-room">
+      <div class="card-bottom">
+        <div class="estate-room">
         <div class="card-bedroom">
           <i class="fa-solid fa-bed"></i>
           <p>{{ item.estate_bedrooms }} ห้องนอน</p>
@@ -35,6 +36,7 @@
           <i class="fa-solid fa-chart-area"></i>
           <p>{{ item.estate_area }} ตร.ม</p>
         </div>
+      </div>
       </div>
     </div>
   </div>

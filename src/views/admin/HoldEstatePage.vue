@@ -35,7 +35,7 @@
             <md-table v-model="users" :table-header-color="dataBackgroundColor">
               <md-table-row slot="md-table-row" slot-scope="{ item, index }">
                 <md-table-cell md-label="ลำดับ">{{ getOverAllIndex(index) }}</md-table-cell>
-                <md-table-cell md-label="ชื่ออสังหาฯ">{{
+                <md-table-cell md-label="ชื่ออสังหาริมทรัพย์">{{
                   item.estate_name
                 }}</md-table-cell>
                 <md-table-cell md-label="ประเภทอสังหาริมทรัพย์">{{

@@ -49,7 +49,7 @@
                 <md-table-cell md-label="เบอร์โทรศัพท์ (ผู้รายงาน)">{{
                   item.user.phone
                 }}</md-table-cell>
-                <md-table-cell md-label="ชื่ออสังหาฯ">{{
+                <md-table-cell md-label="ชื่ออสังหาริมทรัพย์">{{
                   item.estate.estate_name
                 }}</md-table-cell>
                 <md-table-cell md-label="ประเภทอสังหาริมทรัพย์">{{
@@ -69,10 +69,10 @@
                     เช่า
                   </div>
                 </md-table-cell>
-                <md-table-cell md-label="ชื่อ-นามสกุล (เจ้าของอสังหาฯ)">{{
+                <md-table-cell md-label="ชื่อ-นามสกุล (ผู้ประกาศ)">{{
                   item.estate.user.first_name + " " + item.estate.user.last_name
                 }}</md-table-cell>
-                <md-table-cell md-label="เบอร์โทรศัพท์ (เจ้าของอสังหาฯ)">{{
+                <md-table-cell md-label="เบอร์โทรศัพท์ (ผู้ประกาศ)">{{
                   item.estate.user.phone
                 }}</md-table-cell>
                 <md-table-cell md-label="รายละเอียด">{{
