@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div class="row mt-3">
+    <div class="row mt-3 height-1350px">
       <div class="col-12 col-lg-4">
         <div class="select-type-estate">
           <label for="">ประเภทอสังหาฯ</label>
@@ -139,7 +139,7 @@
                 :key="index"
                 class="col-lg-4 col-md-6 col-sm-6 mt-2"
               >
-                <CardEstate class="cursor-pointer" :item="item" @click.native="pushDetailEstate(item.estate_id)" style="width: 100%; height: 100%;" />
+                <CardEstate class="cursor-pointer w-100 height-fixed-350px" :item="item" @click.native="pushDetailEstate(item.estate_id)" />
               </div>
             </div>
           </div>
@@ -268,6 +268,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.height-1350px {
+  height: 1350px;
+}
+.height-fixed-350px {
+  height: 400px;
+}
 .mt-2 {
   margin-top: 2rem;
 }

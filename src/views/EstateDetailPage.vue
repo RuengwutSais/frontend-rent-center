@@ -45,46 +45,18 @@
           controls
           indicators
           background="#ababab"
-          img-width="1024"
-          img-height="480"
           style="text-shadow: 1px 1px 2px #333"
           @sliding-start="onSlideStart"
           @sliding-end="onSlideEnd"
         >
-          <!-- Text slides with image -->
-          <b-carousel-slide
-            img-src="https://picsum.photos/1024/480/?image=52"
-          ></b-carousel-slide>
-
-          <!-- Slides with custom text -->
-          <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
-          </b-carousel-slide>
-
-          <!-- Slides with image only -->
-          <b-carousel-slide
-            img-src="https://picsum.photos/1024/480/?image=58"
-          ></b-carousel-slide>
-
-          <!-- Slides with img slot -->
-          <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
-          <b-carousel-slide>
+          <b-carousel-slide v-for="(item,index) in estate.estate_image" :key="index" class="w-100 height-650px">
             <template #img>
               <img
-                class="d-block img-fluid w-100"
-                width="1024"
-                height="480"
-                src="https://picsum.photos/1024/480/?image=55"
+                class="img-fluid w-100 contain-image"
+                :src="linkImage(item)"
                 alt="image slot"
               />
             </template>
-          </b-carousel-slide>
-
-          <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-          <b-carousel-slide
-            caption="Blank Image"
-            img-blank
-            img-alt="Blank image"
-          >
           </b-carousel-slide>
         </b-carousel>
       </div>
@@ -430,6 +402,9 @@ export default {
     },
   },
   methods: {
+    linkImage(img) {
+      return this.$API_URL + '/' + img
+    },
     actionReview() {
       this.$v.comment.$touch();
       if (this.$v.comment.$invalid) {
@@ -563,6 +538,9 @@ export default {
         .get(this.$API_URL + `/estate/${this.$route.params.estateId}`)
         .then((res) => {
           this.estate = res.data.estate;
+          const jsonData = JSON.parse(this.estate.estate_image);
+          const updatedData = jsonData.map(image => image.replace(/\\/g, "/"));
+          this.estate.estate_image = updatedData
           console.log("this.estate: ", this.estate);
         });
     },
@@ -598,4 +576,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.contain-image {
+  object-fit: cover;
+}
+// .height-650px {
+//   height: 650px;
+// }
+</style>

@@ -211,7 +211,6 @@ export default {
   },
   mounted() {
     this.isUserLogin();
-    console.log('admin : ', this.isRoleAdmin())
   },
 };
 </script>

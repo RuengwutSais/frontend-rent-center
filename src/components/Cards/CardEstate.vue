@@ -1,11 +1,11 @@
 <template>
   <div class="card">
     <div class="card-img">
-      <img :src="item.image" alt="estate image" />
+      <img :src="linkImage(item.estate_image)" alt="estate image" />
     </div>
     <div class="card-info">
       <div class="card-name">
-        <p>{{ item.estate_name }}</p>
+        <p>{{ truncatedText(item.estate_name) }}</p>
         <i class="fa-solid fa-circle-check"></i>
       </div>
       <div class="card-price">
@@ -46,6 +46,18 @@ export default {
     item: [Object, Array],
   },
   methods: {
+    linkImage(images) {
+      const jsonData = JSON.parse(images);
+      const updatedData = jsonData.map(image => image.replace(/\\/g, "/"));
+      return this.$API_URL +  '/' + updatedData[0]
+    },
+    truncatedText(text) {
+      if (text.length > 50) {
+        return text.slice(0, 50) + "...";
+      } else {
+        return text;
+      }
+    },
     formatMoney(num) {
       num = parseFloat(num);
       if (typeof num !== 'number' || isNaN(num)) {
