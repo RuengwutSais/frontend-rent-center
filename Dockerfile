@@ -9,11 +9,14 @@ RUN npm run build
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 
-RUN chmod 644 /app/keyaccess/*.pem
-
 COPY --from=build-stage /app/dist/ .
-COPY --from=build-stage /app/keyaccess/ /app/keyaccess/
 
+RUN mkdir /etc/keyaccess/
+RUN chown -R root:root /etc/keyaccess/
+RUN chmod -R 600 /etc/keyaccess/
+
+COPY --from=build-stage /app/keyaccess/fullchain.pem /etc/keyaccess/
+COPY --from=build-stage /app/keyaccess/privkey.pem /etc/keyaccess/
 
 # Copy nginx config file
 COPY nginx.conf /etc/nginx/nginx.conf
