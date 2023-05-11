@@ -61,162 +61,9 @@ export default {
     return {
       filter_text: "",
       estate_type: "",
-      condos: [
-        {
-          price: "Condo price",
-          name: "Condo name",
-          location: "Condo location",
-          bedroom: "N/A",
-          bathroom: "N/A",
-          garage: "N/A",
-          area: "N/A",
-          image: "https://via.placeholder.com/350x200?text=Estate+1",
-        },
-        {
-          price: "Condo price",
-          name: "Condo name",
-          location: "Condo location",
-          bedroom: "N/A",
-          bathroom: "N/A",
-          garage: "N/A",
-          area: "N/A",
-          image: "https://via.placeholder.com/350x200?text=Estate+2",
-        },
-        {
-          price: "Condo price",
-          name: "Condo name",
-          location: "Condo location",
-          bedroom: "N/A",
-          bathroom: "N/A",
-          garage: "N/A",
-          area: "N/A",
-          image: "https://via.placeholder.com/350x200?text=Estate+3",
-        },
-        {
-          price: "Condo price",
-          name: "Condo name",
-          location: "Condo location",
-          bedroom: "N/A",
-          bathroom: "N/A",
-          garage: "N/A",
-          area: "N/A",
-          image: "https://via.placeholder.com/350x200?text=Estate+4",
-        },
-        {
-          price: "Condo price",
-          name: "Condo name",
-          location: "Condo location",
-          bedroom: "N/A",
-          bathroom: "N/A",
-          garage: "N/A",
-          area: "N/A",
-          image: "https://via.placeholder.com/350x200?text=Estate+5",
-        },
-      ],
-      estates: [
-        {
-          price: "Estates price",
-          name: "Estates name",
-          location: "Estates location",
-          bedroom: "N/A",
-          bathroom: "N/A",
-          garage: "N/A",
-          area: "N/A",
-          image: "https://via.placeholder.com/350x200?text=Estate+1",
-        },
-        {
-          price: "Estates price",
-          name: "Estates name",
-          location: "Estates location",
-          bedroom: "N/A",
-          bathroom: "N/A",
-          garage: "N/A",
-          area: "N/A",
-          image: "https://via.placeholder.com/350x200?text=Estate+2",
-        },
-        {
-          price: "Estates price",
-          name: "Estates name",
-          location: "Estates location",
-          bedroom: "N/A",
-          bathroom: "N/A",
-          garage: "N/A",
-          area: "N/A",
-          image: "https://via.placeholder.com/350x200?text=Estate+3",
-        },
-        {
-          price: "Estates price",
-          name: "Estates name",
-          location: "Estates location",
-          bedroom: "N/A",
-          bathroom: "N/A",
-          garage: "N/A",
-          area: "N/A",
-          image: "https://via.placeholder.com/350x200?text=Estate+4",
-        },
-        {
-          price: "Estates price",
-          name: "Estates name",
-          location: "Estates location",
-          bedroom: "N/A",
-          bathroom: "N/A",
-          garage: "N/A",
-          area: "N/A",
-          image: "https://via.placeholder.com/350x200?text=Estate+5",
-        },
-      ],
-      townhouses: [
-        {
-          price: "Townhouse price",
-          name: "Townhouse name",
-          location: "Townhouse location",
-          bedroom: "N/A",
-          bathroom: "N/A",
-          garage: "N/A",
-          area: "N/A",
-          image: "https://via.placeholder.com/350x200?text=Estate+1",
-        },
-        {
-          price: "Townhouse price",
-          name: "Townhouse name",
-          location: "Townhouse location",
-          bedroom: "N/A",
-          bathroom: "N/A",
-          garage: "N/A",
-          area: "N/A",
-          image: "https://via.placeholder.com/350x200?text=Estate+2",
-        },
-        {
-          price: "Townhouse price",
-          name: "Townhouse name",
-          location: "Townhouse location",
-          bedroom: "N/A",
-          bathroom: "N/A",
-          garage: "N/A",
-          area: "N/A",
-          image: "https://via.placeholder.com/350x200?text=Estate+3",
-        },
-        {
-          price: "Townhouse price",
-          name: "Townhouse name",
-          location: "Townhouse location",
-          bedroom: "N/A",
-          bathroom: "N/A",
-          garage: "N/A",
-          area: "N/A",
-          image: "https://via.placeholder.com/350x200?text=Estate+4",
-        },
-        {
-          price: "Townhouse price",
-          name: "Townhouse name",
-          location: "Townhouse location",
-          bedroom: "N/A",
-          bathroom: "N/A",
-          garage: "N/A",
-          area: "N/A",
-          image: "https://via.placeholder.com/350x200?text=Estate+5",
-        },
-      ],
+      condos: [],
+      estates: [],
+      townhouses: [],
       translateValue: 0,
       maxCard: 4,
     };
@@ -262,9 +109,28 @@ export default {
         this.translateValue -= 100;
       }
     },
+    getEstateByCondo() {
+      this.$axios.get(this.$API_URL + '/carousel/condo').then((res) => {
+        console.log('condo: ', res)
+        this.condos = res.data.estate
+      })
+    },
+    getEstateByTownHouse() {
+      this.$axios.get(this.$API_URL + '/carousel/townhouse').then((res) => {
+        this.townhouses = res.data.estate
+      })
+    },
+    getEstateByHome() {
+      this.$axios.get(this.$API_URL + '/carousel/home').then((res) => {
+        this.estates = res.data.estate
+      })
+    }
   },
   mounted() {
     console.log("condos", this.condos.length);
+    this.getEstateByCondo()
+    this.getEstateByTownHouse()
+    this.getEstateByHome()
   },
 };
 </script>

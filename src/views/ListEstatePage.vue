@@ -213,8 +213,8 @@ export default {
         { value: "3", text: "มากกว่า 2 ห้องน้ำ" },
       ],
       currentPage: 1,
-      totalItems: null,
-      totalPages: null,
+      totalItems: 0,
+      totalPages: 0,
       perPage: 9,
     };
   },
@@ -248,9 +248,9 @@ export default {
       console.log('bodyJson', bodyJson)
       await this.$axios.post(this.$API_URL + '/list/estate', bodyJson).then((res) => {
         this.itemsEstate.data = res.data.estate.estates
-        this.currentPage = res.data.currentPage
-        this.totalItems = res.data.totalItems
-        this.totalPages = res.data.totalPages
+        this.currentPage = res.data.estate.currentPage
+        this.totalItems = res.data.estate.totalItems
+        this.totalPages = res.data.estate.totalPages
       })
     },
     findEstate() {

@@ -5,7 +5,7 @@
         <edit-profile-form data-background-color="green" :inputUser="inputUser" :getProfile="getProfile" > </edit-profile-form>
       </div>
       <div class="md-layout-item md-medium-size-100 md-size-33">
-        <user-card :user="inputUser"> </user-card>
+        <user-card @getProfile="getProfile" :image="linkImage" :user="inputUser"> </user-card>
       </div>
     </div>
   </div>
@@ -28,29 +28,43 @@ export default {
         address: '',
         phone: '',
         lineid: '',
+        image_profile: ''
       }
     }
   },
+  computed: {
+    linkImage() {
+      return this.$API_URL +  '/' + this.inputUser.image_profile
+    },
+  },
   methods: {
-    getProfile(){
+    async getProfile(){
       const headers = {
         headers: {
           token: localStorage.getItem("token")
         }
       }
-      this.$axios.get(this.$API_URL + '/getprofile',headers).then((res) => {
+      await this.$axios.get(this.$API_URL + '/getprofile',headers).then((res) => {
         localStorage.setItem("profiles", JSON.stringify(res.data.data))
+        const profiles = JSON.parse(localStorage.getItem('profiles'))
+        this.inputUser.email = profiles.email
+        this.inputUser.firstname = profiles.first_name
+        this.inputUser.lastname = profiles.last_name
+        this.inputUser.phone = profiles.phone
+        this.inputUser.lineid = profiles.Line_id
+        this.inputUser.image_profile = profiles.image_profile
       })
     }
   },
-  created() {
+  async mounted() {
+    await this.getProfile()
     const profiles = JSON.parse(localStorage.getItem('profiles'))
-    this.getProfile()
     this.inputUser.email = profiles.email
     this.inputUser.firstname = profiles.first_name
     this.inputUser.lastname = profiles.last_name
     this.inputUser.phone = profiles.phone
     this.inputUser.lineid = profiles.Line_id
+    this.inputUser.image_profile = profiles.image_profile
   }
 };
 </script>

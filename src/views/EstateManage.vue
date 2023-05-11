@@ -94,12 +94,11 @@
                       ไม่ว่าง
                   </div>
                 </md-table-cell>
-                <md-table-cell md-label="รูปภาพ">
+                <!-- <md-table-cell md-label="รูปภาพ">
                   <div class="w-100 mr-4 cursor-pointer">
                     <i class="fa-regular fa-images" style="font-size: 16px;"></i>
                   </div>
-                  <!-- // TODO: ทำ modal เพิ่ม -->
-                </md-table-cell>
+                </md-table-cell> -->
                 <md-table-cell md-label="จัดการ">
                   <div class="d-flex flex-row">
                     <div class="w-100 mr-4 cursor-pointer">
@@ -603,11 +602,11 @@
           <div class="col-lg-6 mt-4 align-self-end">
             <div class="d-flex align-items-end justify-content-end">
               <div class="mr-2">
-                <b-button variant="primary" @click="actionEditEstate"> ยืนยัน </b-button>
+                <b-button variant="primary" @click="openModal('modalEditEstate')"> ยืนยัน </b-button>
               </div>
               <div>
                 <b-button variant="danger" @click="ResetInput('resetedit')">
-                  รีเซ็ต
+                  ยกเลิก
                 </b-button>
               </div>
             </div>
@@ -657,6 +656,63 @@
               </b-button>
               <b-button
                 @click="actionYesOrNo()"
+                style="
+                  color: #fff;
+                  background-color: #df4759;
+                  border: 1px solid #df4759;
+                  height: 2.5em;
+                  width: 6em;
+                  margin-right: 20px;
+                  font-family: 'Kanit';
+                "
+              >
+                ยืนยัน
+              </b-button>
+            </div>
+          </div>
+        </template>
+      </b-modal>
+    </div>
+    <div class="modaleditEstate">
+      <b-modal
+        ref="modalYesOrNo"
+        id="modalEditEstate"
+        hide-header
+        centered
+        hide-footer
+      >
+        <template>
+          <div
+            class="d-flex align-items-center flex-column justify-content-center mt-3"
+          >
+            <div>
+              <i
+                class="fa-solid fa-triangle-exclamation"
+                style="color: #df4759; font-size: 40px"
+              ></i>
+            </div>
+            <p>
+              ยืนยันแก้ไขอสังหาริมทรัพย์
+            </p>
+          </div>
+          <div class="d-flex justify-content-center mt-3">
+            <div>
+              <b-button
+                @click="close('modalEditEstate')"
+                style="
+                  color: #fff;
+                  background-color: #000;
+                  border: 1px solid #000;
+                  height: 2.5em;
+                  width: 6em;
+                  margin-right: 20px;
+                  font-family: 'Kanit';
+                "
+              >
+                ยกเลิก
+              </b-button>
+              <b-button
+                @click="actionEditEstate()"
                 style="
                   color: #fff;
                   background-color: #df4759;
@@ -966,38 +1022,53 @@ export default {
       if (this.$v.editEstate.$invalid) {
         return false;
       }
-      // this.selectedFiles.forEach((file) => {
-      //   this.formSelect.append("images", file);
-      // });
-      // let setNameFile = [];
-      // if (this.selectedFiles.length > 0) {
-      //   this.$axios
-      //     .post(this.$API_URL + "/uploadimage", this.formSelect)
-      //     .then((res) => {
-      //       res.data.filepaths.map((res) => {
-      //         setNameFile.push(res);
-      //       });
-      //     });
-      // }
-      // const bodyJson = {
-      //   estate_name: this.addEstate.estate_name,
-      //   estate_type: this.addEstate.estate_type,
-      //   estate_price: this.addEstate.estate_price,
-      //   estate_area: this.addEstate.estate_area,
-      //   estate_bedrooms: this.addEstate.estate_bedrooms,
-      //   estate_bathrooms: this.addEstate.estate_bathrooms,
-      //   estate_garage: this.addEstate.estate_garage,
-      //   estate_description: this.addEstate.estate_description,
-      //   estate_image: setNameFile,
-      //   estate_verify: "verify",
-      //   address: this.addEstate.address, 
-      //   lat: this.coordinates.lat,
-      //   lng: this.coordinates.lng,
-      //   province: this.addEstate.province,
-      //   state: this.addEstate.state,
-      //   districts: this.addEstate.districts,
-      //   postcode: this.addEstate.postcode,
-      // };
+      this.selectedFiles.forEach((file) => {
+        this.formSelect.append("images", file);
+      });
+      let setNameFile = [];
+      if (this.selectedFiles.length > 0) {
+        this.$axios
+          .post(this.$API_URL + "/uploadimage", this.formSelect)
+          .then((res) => {
+            res.data.filepaths.map((res) => {
+              setNameFile.push(res);
+            });
+          });
+      }
+      const headers = {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      };
+      const bodyJson = {
+        estate_name: this.editEstate.estate_name,
+        estate_type: this.editEstate.estate_type,
+        estate_price: this.editEstate.estate_price,
+        estate_area: this.editEstate.estate_area,
+        estate_bedrooms: this.editEstate.estate_bedrooms,
+        estate_bathrooms: this.editEstate.estate_bathrooms,
+        estate_garage: this.editEstate.estate_garage,
+        estate_description: this.editEstate.estate_description,
+        estate_image: this.selectedFiles.length > 0 ? setNameFile : this.editEstate.estate_image,
+        estate_verify: "verify",
+        address: this.editEstate.address, 
+        lat: this.coordinates.lat,
+        lng: this.coordinates.lng,
+        province: this.editEstate.province,
+        state: this.editEstate.state,
+        districts: this.editEstate.districts,
+        postcode: this.editEstate.postcode,
+      }
+      this.$axios.post(this.$API_URL + `/update/estate/${this.editEstate.estate_id}`, bodyJson, headers).then(async (res) => {
+        if(res.data.status) {
+          this.$bvModal.hide("modalEditEstate")
+          await this.getListMyEstate();
+          this.stepPage = "listEstate"
+        }else {
+          this.$bvModal.hide("modalEditEstate")
+          showErrorModal("ขออภัย,เกิดข้อผิดพลาด");
+        }
+      })
     },
     openModal(key, estateId = null) {
       if (key === "trash") {
@@ -1007,6 +1078,8 @@ export default {
         this.$bvModal.show("modal-gps");
       } else if (key === "editEstate-gps") {
         this.$bvModal.show("modal-gps");
+      } else if (key === "modalEditEstate") {
+        this.$bvModal.show("modalEditEstate");
       }
     },
     goToListState(key, formParam = null) {
@@ -1015,8 +1088,9 @@ export default {
           (res) => res.estate_id === formParam
         );
         console.log("This edit value :", editvalue);
+        this.editEstate.address = editvalue.address
         this.editEstate.estate_id = editvalue.estate_id;
-        this.editEstate.name = editvalue.estate_name;
+        this.editEstate.estate_name = editvalue.estate_name;
         this.editEstate.estate_price = editvalue.estate_price;
         this.editEstate.state = editvalue.state;
         this.editEstate.postcode = editvalue.postcode;
@@ -1027,6 +1101,7 @@ export default {
         this.editEstate.estate_bedrooms = editvalue.estate_bedrooms;
         this.editEstate.estate_bathrooms = editvalue.estate_bathrooms;
         this.editEstate.estate_garage = editvalue.estate_garage;
+        this.editEstate.districts = editvalue.districts
         this.editEstate.images = editvalue.estate_image;
         this.editEstate.lat = editvalue.lat;
         this.editEstate.lng = editvalue.lng;
@@ -1053,6 +1128,8 @@ export default {
       if (key === "yesorno") {
         this.$bvModal.hide("modal-yes-or-no");
         this.tempEstateDelete = null
+      } else if (key === 'modalEditEstate') {
+        this.$bvModal.hide("modalEditEstate")
       }
     },
     getOverAllIndex(index) {
@@ -1102,6 +1179,7 @@ export default {
         this.editEstate.estate_bathrooms = 0;
         this.editEstate.estate_garage = 0;
         this.editEstate.estate_description = "";
+        this.stepPage = "listEstate"
         this.files = []
         this.selectedFiles = []
         this.formSelect = new FormData()

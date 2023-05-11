@@ -13,8 +13,9 @@
         @slideclick="handleSlideClick"
         v-for="(estate, index) in condos"
         :key="index"
+        class="py-2"
       >
-        <CardEstate :item="estate" />
+        <CardEstate class="h-100" :item="estate" @click.native="pushDetailEstate(estate.estate_id)" />
       </slide>
     </carousel>
   </div>
@@ -42,6 +43,9 @@ export default {
     },
   },
   methods: {
+    pushDetailEstate(key) {
+      return this.$router.push({ path: `/estatedetail/${key}`});
+    },
     handleSlideClick(dataset) {
       console.log(dataset.index, dataset.name);
     },

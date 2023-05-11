@@ -339,23 +339,28 @@
         margin-right: 6px;
     }
 
-    .md-card-avatar{
-        max-width: 130px;
-        max-height: 130px;
-        margin: -50px auto 0;
-        border-radius: 50%;
-        overflow: hidden;
-
-        @include shadow-big();
-
-        & + .md-card-content{
-            margin-top: 15px;
-        }
-    }
-
     &.md-card-plain{
         .card-avatar{
             margin-top: 0;
         }
     }
+}
+
+.md-card-avatar{
+    max-width: 130px;
+    max-height: 130px;
+    margin: -50px auto 0;
+    border-radius: 50%;
+    overflow: hidden;
+    
+    @include shadow-big();
+
+    & + .md-card-content{
+        margin-top: 15px;
+    }
+}
+
+.image-class {
+    height: 150px !important;
+    object-fit: fill;
 }

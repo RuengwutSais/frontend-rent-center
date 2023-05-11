@@ -110,7 +110,7 @@
         <div class="owner-detail">
           <div class="owner-pic">
             <div class="owner-avatar">
-              <img src="../assets/img/user_avatar.png" alt="Profile picture" />
+              <img :src="profile.image_profile ? linkImageProfile : require('../assets/img/user_avatar.png')" alt="Profile picture" />
             </div>
           </div>
           <h2>{{ profile.first_name }} {{ profile.last_name }}</h2>
@@ -162,7 +162,7 @@
           <div class="review-header">
             <img
               class="reviewer-img"
-              :src="reviewerImg.image"
+              :src="item.user.image_profile ? linkImage(item.user.image_profile) : reviewerImg.image"
               alt="reviewerImage"
             />
             <h2 class="reviewer-name">
@@ -365,14 +365,14 @@ export default {
       },
       isUser: false,
       center: {
-        lat: 18.313244,
-        lng: 99.421067,
+        lat: 0,
+        lng: 0,
       },
       slide: 0,
       sliding: null,
       markerPosition: {
-        lat: 18.313244,
-        lng: 99.421067,
+        lat: 0,
+        lng: 0,
       },
       estate: {},
       profile: {},
@@ -400,6 +400,9 @@ export default {
       const user = JSON.parse(localStorage.getItem("profiles"));
       return user ? this.profile.user_id === user.user_id : true;
     },
+    linkImageProfile() {
+      return this.$API_URL +  '/' + this.profile.image_profile
+    }
   },
   methods: {
     linkImage(img) {
@@ -428,6 +431,8 @@ export default {
         )
         .then((res) => {
           console.log("res create: ", res);
+        }).finally(async () => {
+          await this.getReviewByEstateId();
         });
     },
     formatDateThai(datenow) {
@@ -538,6 +543,10 @@ export default {
         .get(this.$API_URL + `/estate/${this.$route.params.estateId}`)
         .then((res) => {
           this.estate = res.data.estate;
+          this.markerPosition.lat = parseFloat(this.estate.lat)
+          this.markerPosition.lng = parseFloat(this.estate.lng)
+          this.center.lat = parseFloat(this.estate.lat)
+          this.center.lng = parseFloat(this.estate.lng)
           const jsonData = JSON.parse(this.estate.estate_image);
           const updatedData = jsonData.map(image => image.replace(/\\/g, "/"));
           this.estate.estate_image = updatedData
@@ -558,6 +567,7 @@ export default {
         .then((res) => {
           this.profile = res.data.user;
         });
+        console.log('this.res: ', this.profile)
     },
     showMore() {
       const newNumToShow = this.visibleReviews.length + this.numToShow;
@@ -571,7 +581,6 @@ export default {
     await this.getProfile();
     await this.getReviewByEstateId();
     this.visibleReviews = this.review.slice(0, this.numToShow);
-    // this.isUserProfileEqual()
   },
 };
 </script>
