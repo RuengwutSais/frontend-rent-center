@@ -2,8 +2,6 @@
 FROM node:12-alpine as build-stage
 WORKDIR /app
 COPY . .
-COPY keyaccess/fullchain.pem /etc/nginx/fullchain.pem
-COPY keyaccess/privkey.pem /etc/nginx/privkey.pem
 
 RUN npm install 
 RUN npm run build
