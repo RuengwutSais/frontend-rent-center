@@ -1,35 +1,52 @@
 <template>
   <div class="detail-wrapper">
     <div class="detail-card">
-      <div class="detail-header">
-        <h1>{{ estate.estate_name }}</h1>
-        <div class="estate-status"  v-if="estate.estate_status === 'available'" style="background: linear-gradient(60deg, #66bb6a, #43a047); border-color: #43a047;">
+      <div class="status">
+        <div
+          class="estate-status"
+          v-if="estate.estate_status === 'available'"
+          style="background: linear-gradient(60deg, #66bb6a, #43a047)"
+        >
           <p>
             <strong>ว่าง</strong>
           </p>
         </div>
-        <div v-else-if="estate.estate_status === 'rented'" class="estate-status"  style="background: linear-gradient(60deg, #df4759, #CC0000 ); border-color: #CC0000;">
+        <div
+          v-else-if="estate.estate_status === 'rented'"
+          class="estate-status"
+          style="background: linear-gradient(60deg, #df4759, #cc0000)"
+        >
           <p>
             <strong>ไม่ว่าง</strong>
           </p>
         </div>
-        <div v-else-if="estate.estate_status === 'suspended'" class="estate-status"  style="background: linear-gradient(60deg, #ffa726, #fb8c00); border-color: #fb8c00;">
+        <div
+          v-else-if="estate.estate_status === 'suspended'"
+          class="estate-status"
+          style="background: linear-gradient(60deg, #ffa726, #fb8c00)"
+        >
           <p>
             <strong>ถูกระงับ</strong>
           </p>
         </div>
-        <div v-else-if="estate.estate_status === 'sold'" class="estate-status"  style="background: linear-gradient(60deg, #26c6da, #00acc1); border-color: #00acc1;">
+        <div
+          v-else-if="estate.estate_status === 'sold'"
+          class="estate-status"
+          style="background: linear-gradient(60deg, #26c6da, #00acc1)"
+        >
           <p>
             <strong>ขายแล้ว</strong>
           </p>
         </div>
       </div>
+      <div class="detail-header">
+        <h1 class="margin-right-10px">{{ estate.estate_name }}</h1>
+        <span>
+          <i class="fa-solid fa-circle-check"></i>
+        </span>
+      </div>
       <div class="estate-rating">
-        <span
-          v-for="n in 5"
-          :key="n"
-          :class="{ active: n <= average_rate }"
-        >
+        <span v-for="n in 5" :key="n" :class="{ active: n <= average_rate }">
           <i class="fa-solid fa-star"></i>
         </span>
       </div>
@@ -49,7 +66,11 @@
           @sliding-start="onSlideStart"
           @sliding-end="onSlideEnd"
         >
-          <b-carousel-slide v-for="(item,index) in estate.estate_image" :key="index" class="w-100 height-650px">
+          <b-carousel-slide
+            v-for="(item, index) in estate.estate_image"
+            :key="index"
+            class="w-100 height-650px"
+          >
             <template #img>
               <img
                 class="img-fluid w-100 contain-image"
@@ -110,7 +131,14 @@
         <div class="owner-detail">
           <div class="owner-pic">
             <div class="owner-avatar">
-              <img :src="profile.image_profile ? linkImageProfile : require('../assets/img/user_avatar.png')" alt="Profile picture" />
+              <img
+                :src="
+                  profile.image_profile
+                    ? linkImageProfile
+                    : require('../assets/img/default_avatar.png')
+                "
+                alt="Profile picture"
+              />
             </div>
           </div>
           <h2>{{ profile.first_name }} {{ profile.last_name }}</h2>
@@ -162,7 +190,11 @@
           <div class="review-header">
             <img
               class="reviewer-img"
-              :src="item.user.image_profile ? linkImage(item.user.image_profile) : reviewerImg.image"
+              :src="
+                item.user.image_profile
+                  ? linkImage(item.user.image_profile)
+                  : require('../assets/img/default_avatar.png')
+              "
               alt="reviewerImage"
             />
             <h2 class="reviewer-name">
@@ -182,7 +214,9 @@
           </div>
         </div>
         <div v-if="visibleReviews.length < review.length">
-          <b-button variant="primary" block @click="showMore">อ่านเพิ่มเติ่ม</b-button>
+          <b-button variant="primary" block @click="showMore"
+            >อ่านเพิ่มเติ่ม</b-button
+          >
         </div>
       </div>
       <div class="review-estate mt-3" v-if="isUser && !isUserProfileEqual">
@@ -331,11 +365,6 @@ export default {
         text: "",
         star: 5,
       },
-      reviewerImg: {
-        image: "https://via.placeholder.com/350x200?text=User",
-        type: String,
-        required: true,
-      },
       reviewerName: {
         name: "Reviewer Name",
         type: String,
@@ -401,12 +430,12 @@ export default {
       return user ? this.profile.user_id === user.user_id : true;
     },
     linkImageProfile() {
-      return this.$API_URL +  '/' + this.profile.image_profile
-    }
+      return this.$API_URL + "/" + this.profile.image_profile;
+    },
   },
   methods: {
     linkImage(img) {
-      return this.$API_URL + '/' + img
+      return this.$API_URL + "/" + img;
     },
     actionReview() {
       this.$v.comment.$touch();
@@ -431,7 +460,8 @@ export default {
         )
         .then((res) => {
           console.log("res create: ", res);
-        }).finally(async () => {
+        })
+        .finally(async () => {
           await this.getReviewByEstateId();
         });
     },
@@ -543,13 +573,15 @@ export default {
         .get(this.$API_URL + `/estate/${this.$route.params.estateId}`)
         .then((res) => {
           this.estate = res.data.estate;
-          this.markerPosition.lat = parseFloat(this.estate.lat)
-          this.markerPosition.lng = parseFloat(this.estate.lng)
-          this.center.lat = parseFloat(this.estate.lat)
-          this.center.lng = parseFloat(this.estate.lng)
+          this.markerPosition.lat = parseFloat(this.estate.lat);
+          this.markerPosition.lng = parseFloat(this.estate.lng);
+          this.center.lat = parseFloat(this.estate.lat);
+          this.center.lng = parseFloat(this.estate.lng);
           const jsonData = JSON.parse(this.estate.estate_image);
-          const updatedData = jsonData.map(image => image.replace(/\\/g, "/"));
-          this.estate.estate_image = updatedData
+          const updatedData = jsonData.map((image) =>
+            image.replace(/\\/g, "/")
+          );
+          this.estate.estate_image = updatedData;
           console.log("this.estate: ", this.estate);
         });
     },
@@ -558,7 +590,7 @@ export default {
         .get(this.$API_URL + `/review/${this.estate.estate_id}`)
         .then((res) => {
           this.review = res.data.review;
-          this.average_rate = res.data.average_rate
+          this.average_rate = res.data.average_rate;
         });
     },
     async getProfile() {
@@ -567,7 +599,7 @@ export default {
         .then((res) => {
           this.profile = res.data.user;
         });
-        console.log('this.res: ', this.profile)
+      console.log("this.res: ", this.profile);
     },
     showMore() {
       const newNumToShow = this.visibleReviews.length + this.numToShow;

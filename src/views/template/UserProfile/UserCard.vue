@@ -1,9 +1,8 @@
 <template>
   <md-card class="md-card-profile">
       <div class="md-card-avatar">
-        <img class="img" :src="image" />
+        <img class="img" :src="image"/>
       </div>
-
     <md-card-content>
       <h4 class="card-title">{{ user.firstname }}  {{ user.lastname }}</h4>
       <b-button variant="primary" @click="handleImageUpload">
@@ -18,6 +17,7 @@ export default {
   props: {
     image: {
       type: String,
+      required: true
     },
     user: {
       type: Object,
