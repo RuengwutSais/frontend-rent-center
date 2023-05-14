@@ -20,8 +20,8 @@ COPY --from=build-stage /app/dist/ .
 
 # Copy nginx config file
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY /key/fullchain.key /etc/nginx/fullchain.key
-COPY /key/privkey.key /etc/nginx/privkey.key
+COPY /key/fullchain.pem /etc/nginx/fullchain.pem
+COPY /key/privkey.pem /etc/nginx/privkey.pem
 
 
 # Expose ports 80 and 443
