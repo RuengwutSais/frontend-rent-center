@@ -1,26 +1,3 @@
-// @mixin modal-variant($body-bg) {
-// 	.modal-title {
-// 		color: color-yiq($body-bg);
-// 	}
-// 	.modal-header,
-// 	.modal-footer {
-// 		border-color: rgba(color-yiq($body-bg), .075);
-// 	}
-// 	.modal-content {
-// 		background-color: $body-bg;
-// 		color: color-yiq($body-bg);
-
-// 		.heading {
-// 			color: color-yiq($body-bg);
-// 		}
-// 	}
-
-// 	.close { 
-//     	&>span:not(.sr-only) {
-//     		color: $white;
-//     	}
-//     }
-// }
 .modal-open {
     .modal-dialog{
         .modal-content{
