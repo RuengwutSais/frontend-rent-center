@@ -268,9 +268,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.height-1350px {
-  height: 1350px;
-}
+// .height-1350px {
+//   height: 1350px;
+// }
 .height-fixed-350px {
   height: 400px;
 }
@@ -280,14 +280,21 @@ export default {
 .border-left-solid {
   border-left: 2px solid #c4c0c0;
 }
+@media (max-width: 768px) {
+  .border-left-solid {
+    border-left: none;
+  }
+}
 .center-pagination {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translate(-50%, -50%);
-  margin: -5% auto;
+  // position: absolute;
+  // left: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // transform: translate(-50%, -50%);
+  margin-top: 10%;
 }
-.height-custom {
-  height: 1150px;
-}
+// .height-custom {
+//   height: 1150px;
+// }
 </style>

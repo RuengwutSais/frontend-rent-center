@@ -1,10 +1,9 @@
 
 .footer-layout {
   width: 100%;
-  position: absolute;
   background-color: #f8f9fa;
   padding: 30px 0;
-  left: 0;
+  margin-top: auto;
   font-family: 'Kanit' !important;
 }
 
@@ -56,12 +55,12 @@
 @media only screen and (max-width: 767px) {
     .footer{
         padding: 0 !important;
-        bottom: auto !important;
+        position: static;
     }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1024px){
     .footer{
-        bottom: auto !important;
+      position: static;
     }
 }

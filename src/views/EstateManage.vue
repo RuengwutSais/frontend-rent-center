@@ -23,7 +23,10 @@
                   v-model="filter_text"
                   placeholder="ค้นหาอสังหาริมทรัพย์"
                 />
-                <div class="input-group-append cursor-pointer" @click="getListMyEstate(currentPage)">
+                <div
+                  class="input-group-append cursor-pointer"
+                  @click="getListMyEstate(currentPage)"
+                >
                   <span class="input-group-text"
                     ><i class="fa-solid fa-magnifying-glass"></i
                   ></span>
@@ -52,83 +55,97 @@
           <div>
             <div v-if="products.length > 0">
               <md-table
-              v-model="products"
-              :table-header-color="dataBackgroundColor"
-            >
-              <md-table-row slot="md-table-row" slot-scope="{ item, index }">
-                <md-table-cell md-label="ลำดับ">{{
-                  getOverAllIndex(index)
-                }}</md-table-cell>
-                <md-table-cell md-label="ชื่ออสังหาริมทรัพย์">{{
-                  item.estate_name
-                }}</md-table-cell>
-                <md-table-cell md-label="ประเภทอสังหาริมทรัพย์">{{
-                  item.estate_type
-                }}</md-table-cell>
-                <md-table-cell md-label="ราคา">{{
-                  formatPrice(item.estate_price)
-                }}</md-table-cell>
-                <md-table-cell md-label="พื้นที่/ตร.ม">{{
-                  item.estate_area
-                }}</md-table-cell>
-                <md-table-cell md-label="ห้องน้ำ">{{
-                  item.estate_bathrooms
-                }}</md-table-cell>
-                <md-table-cell md-label="ห้องนอน">{{
-                  item.estate_bedrooms
-                }}</md-table-cell>
-                <md-table-cell md-label="โรงรถ">{{
-                  item.estate_garage
-                }}</md-table-cell>
-                <md-table-cell md-label="สถานะ">
-                  <div v-if="item.estate_status === 'available'">
-                      ว่าง
-                  </div>
-                  <div v-else-if="item.estate_status === 'sold'">
-                      ขายแล้ว
-                  </div>
-                  <div v-else-if="item.estate_status === 'suspended'">
+                v-model="products"
+                :table-header-color="dataBackgroundColor"
+              >
+                <md-table-row slot="md-table-row" slot-scope="{ item, index }">
+                  <md-table-cell md-label="ลำดับ">{{
+                    getOverAllIndex(index)
+                  }}</md-table-cell>
+                  <md-table-cell md-label="ชื่ออสังหาริมทรัพย์">{{
+                    item.estate_name
+                  }}</md-table-cell>
+                  <md-table-cell md-label="ประเภทอสังหาริมทรัพย์">{{
+                    item.estate_type
+                  }}</md-table-cell>
+                  <md-table-cell md-label="ราคา">{{
+                    formatPrice(item.estate_price)
+                  }}</md-table-cell>
+                  <md-table-cell md-label="พื้นที่/ตร.ม">{{
+                    item.estate_area
+                  }}</md-table-cell>
+                  <md-table-cell md-label="ห้องน้ำ">{{
+                    item.estate_bathrooms
+                  }}</md-table-cell>
+                  <md-table-cell md-label="ห้องนอน">{{
+                    item.estate_bedrooms
+                  }}</md-table-cell>
+                  <md-table-cell md-label="โรงรถ">{{
+                    item.estate_garage
+                  }}</md-table-cell>
+                  <md-table-cell md-label="สถานะ">
+                    <!-- <div v-if="item.estate_status === 'available'">ว่าง</div>
+                    <div v-else-if="item.estate_status === 'sold'">ขายแล้ว</div> -->
+                    <div id="estate-select-status" v-if="item.estate_status === 'suspended'">
                       ถูกระงับ
-                  </div>
-                  <div v-else-if="item.estate_status === 'rented'">
-                      ไม่ว่าง
-                  </div>
-                </md-table-cell>
-                <!-- <md-table-cell md-label="รูปภาพ">
+                    </div>
+                    <b-form-select
+                      id="estate-select-status"
+                      v-model="item.estate_status"
+                      v-if="item.estate_status !== 'suspended'"
+                      @change="updateStatusItem($event, item.estate_id)"
+                    >                  
+                      <b-form-select-option value="available">
+                        ว่าง
+                      </b-form-select-option>
+                      <b-form-select-option value="sold">
+                        ขายแล้ว
+                      </b-form-select-option>
+                      <b-form-select-option value="rented">
+                        ไม่ว่าง
+                      </b-form-select-option>
+                    </b-form-select>
+                  </md-table-cell>
+                  <!-- <md-table-cell md-label="รูปภาพ">
                   <div class="w-100 mr-4 cursor-pointer">
                     <i class="fa-regular fa-images" style="font-size: 16px;"></i>
                   </div>
                 </md-table-cell> -->
-                <md-table-cell md-label="จัดการ">
-                  <div class="d-flex flex-row">
-                    <div class="w-100 mr-4 cursor-pointer">
-                      <i
-                        class="fa-solid fa-pen-to-square"
-                        @click="goToListState('editEstate', item.estate_id)"
-                        style="font-size: 16px;"
-                      ></i>
+                  <md-table-cell md-label="จัดการ">
+                    <div class="d-flex flex-row">
+                      <div class="w-100 mr-4 cursor-pointer">
+                        <i
+                          class="fa-solid fa-pen-to-square"
+                          @click="goToListState('editEstate', item.estate_id)"
+                          style="font-size: 16px"
+                        ></i>
+                      </div>
+                      <div class="w-100 cursor-pointer">
+                        <i
+                          class="fa-solid fa-trash-can"
+                          @click="openModal('trash', item.estate_id)"
+                          style="font-size: 16px; color: #cc0000"
+                        ></i>
+                      </div>
                     </div>
-                    <div class="w-100 cursor-pointer">
-                      <i
-                        class="fa-solid fa-trash-can"
-                        @click="openModal('trash', item.estate_id)"
-                        style="font-size: 16px; color: #CC0000;"
-                      ></i>
-                    </div>
-                  </div>
-                </md-table-cell>
-              </md-table-row>
+                  </md-table-cell>
+                </md-table-row>
               </md-table>
             </div>
-            <div v-else class="d-flex flex-column justify-content-center align-items-center">
+            <div
+              v-else
+              class="d-flex flex-column justify-content-center align-items-center"
+            >
               <div class="w-250px">
-                <img class="w-100" src="../assets/img/estate/emptyproduct.png" alt="">
+                <img
+                  class="w-100"
+                  src="../assets/img/estate/emptyproduct.png"
+                  alt=""
+                />
               </div>
               <div>
                 <p class="kanit m-0">
-                  <strong>
-                    ไม่พบอสังหาริมทรัพย์ของคุณ
-                  </strong>
+                  <strong> ไม่พบอสังหาริมทรัพย์ของคุณ </strong>
                 </p>
               </div>
             </div>
@@ -151,7 +168,7 @@
     <div
       class="md-layout-item md-size-100 py-3"
       v-if="stepPage === 'addEstate'"
-      style="font-family: 'Kanit';"
+      style="font-family: 'Kanit'"
     >
       <div class="d-flex justify-content-start">
         <div class="cursor-pointer" @click="goToListState('listEstate')">
@@ -361,7 +378,11 @@
             <ul>
               <li v-for="(file, index) in selectedFiles" :key="index">
                 {{ file.name }}
-                <i class="fa-solid fa-circle-xmark" style="color: #df4759; cursor: pointer; margin-top: 5px;" @click="deleteFile(index)"></i>
+                <i
+                  class="fa-solid fa-circle-xmark"
+                  style="color: #df4759; cursor: pointer; margin-top: 5px"
+                  @click="deleteFile(index)"
+                ></i>
               </li>
             </ul>
           </div>
@@ -385,7 +406,7 @@
     <div
       class="md-layout-item md-size-100 py-3"
       v-if="stepPage === 'editEstate'"
-      style="font-family: 'Kanit';"
+      style="font-family: 'Kanit'"
     >
       <div class="d-flex justify-content-start">
         <div class="cursor-pointer" @click="goToListState('listEstate')">
@@ -602,7 +623,12 @@
           <div class="col-lg-6 mt-4 align-self-end">
             <div class="d-flex align-items-end justify-content-end">
               <div class="mr-2">
-                <b-button variant="primary" @click="openModal('modalEditEstate')"> ยืนยัน </b-button>
+                <b-button
+                  variant="primary"
+                  @click="openModal('modalEditEstate')"
+                >
+                  ยืนยัน
+                </b-button>
               </div>
               <div>
                 <b-button variant="danger" @click="ResetInput('resetedit')">
@@ -634,7 +660,9 @@
             </div>
             <p>
               ท่านยืนยันที่จะลบ
-              <span class="text-primary">{{ tempEstateDelete.estate_name }}</span>
+              <span class="text-primary">{{
+                tempEstateDelete.estate_name
+              }}</span>
               หรือไม่ ?
             </p>
           </div>
@@ -691,9 +719,7 @@
                 style="color: #df4759; font-size: 40px"
               ></i>
             </div>
-            <p>
-              ยืนยันแก้ไขอสังหาริมทรัพย์
-            </p>
+            <p>ยืนยันแก้ไขอสังหาริมทรัพย์</p>
           </div>
           <div class="d-flex justify-content-center mt-3">
             <div>
@@ -863,6 +889,7 @@ export default {
         lat: 0,
         lng: 0,
       },
+      selectedStatus: '',
       files: [],
       selectedFiles: [],
       formSelect: new FormData(),
@@ -905,10 +932,25 @@ export default {
     },
   },
   methods: {
+    updateStatusItem(e, estate_id) {
+      console.log("E: ", e)
+      console.log("EstateId: ", estate_id)
+      const headers = {
+        headers: {
+          token: localStorage.getItem("token")
+        }
+      }
+      const form_param = {
+        estate_status: e
+      }
+      this.$axios.post(this.$API_URL + `/update/status/${estate_id}`,form_param, headers).then((res) => {
+        console.log(res)
+      })
+    },
     onFileSelected(key) {
       if (key.length >= 6) {
         this.files = [];
-        this.selectedFiles = []
+        this.selectedFiles = [];
         return false;
       } else {
         this.selectedFiles = key;
@@ -930,23 +972,24 @@ export default {
         filter_text: this.filter_text,
         page: page ? page : this.currentPage,
       };
-      this.busy = true
+      this.busy = true;
       await this.$axios
         .post(this.$API_URL + "/get/list/estate", bodyJson, headers)
         .then((res) => {
           console.log("res", res);
-          this.products = res.data.estate.estates ;
+          this.products = res.data.estate.estates;
           this.currentPage = res.data.estate.currentPage;
           this.totalItems = res.data.estate.totalItems;
           this.totalPages = res.data.estate.totalPages;
-        }).finally(() => {
-          this.busy = false
         })
+        .finally(() => {
+          this.busy = false;
+        });
     },
     inputFormPrice($e, key) {
       if (key === "addEstate") {
         this.addEstate.estate_price = $e;
-      }else if(key === "editEstate") {
+      } else if (key === "editEstate") {
         this.editEstate.estate_price = $e;
       }
     },
@@ -977,7 +1020,7 @@ export default {
       });
       let setNameFile = [];
       if (this.selectedFiles.length > 0) {
-       await this.$axios
+        await this.$axios
           .post(this.$API_URL + "/uploadimage", this.formSelect)
           .then((res) => {
             res.data.filepaths.map((res) => {
@@ -996,7 +1039,7 @@ export default {
         estate_description: this.addEstate.estate_description,
         estate_image: setNameFile,
         estate_verify: "verify",
-        address: this.addEstate.address, 
+        address: this.addEstate.address,
         lat: this.coordinates.lat,
         lng: this.coordinates.lng,
         province: this.addEstate.province,
@@ -1049,31 +1092,42 @@ export default {
         estate_bathrooms: this.editEstate.estate_bathrooms,
         estate_garage: this.editEstate.estate_garage,
         estate_description: this.editEstate.estate_description,
-        estate_image: this.selectedFiles.length > 0 ? setNameFile : this.editEstate.estate_image,
+        estate_image:
+          this.selectedFiles.length > 0
+            ? setNameFile
+            : this.editEstate.estate_image,
         estate_verify: "verify",
-        address: this.editEstate.address, 
+        address: this.editEstate.address,
         lat: this.coordinates.lat,
         lng: this.coordinates.lng,
         province: this.editEstate.province,
         state: this.editEstate.state,
         districts: this.editEstate.districts,
         postcode: this.editEstate.postcode,
-      }
-      this.$axios.post(this.$API_URL + `/update/estate/${this.editEstate.estate_id}`, bodyJson, headers).then(async (res) => {
-        if(res.data.status) {
-          this.$bvModal.hide("modalEditEstate")
-          await this.getListMyEstate();
-          this.stepPage = "listEstate"
-        }else {
-          this.$bvModal.hide("modalEditEstate")
-          showErrorModal("ขออภัย,เกิดข้อผิดพลาด");
-        }
-      })
+      };
+      this.$axios
+        .post(
+          this.$API_URL + `/update/estate/${this.editEstate.estate_id}`,
+          bodyJson,
+          headers
+        )
+        .then(async (res) => {
+          if (res.data.status) {
+            this.$bvModal.hide("modalEditEstate");
+            await this.getListMyEstate();
+            this.stepPage = "listEstate";
+          } else {
+            this.$bvModal.hide("modalEditEstate");
+            showErrorModal("ขออภัย,เกิดข้อผิดพลาด");
+          }
+        });
     },
     openModal(key, estateId = null) {
       if (key === "trash") {
         this.$bvModal.show("modal-yes-or-no");
-        this.tempEstateDelete = this.products.find(res => res.estate_id === estateId)
+        this.tempEstateDelete = this.products.find(
+          (res) => res.estate_id === estateId
+        );
       } else if (key === "addEstate-gps") {
         this.$bvModal.show("modal-gps");
       } else if (key === "editEstate-gps") {
@@ -1088,7 +1142,7 @@ export default {
           (res) => res.estate_id === formParam
         );
         console.log("This edit value :", editvalue);
-        this.editEstate.address = editvalue.address
+        this.editEstate.address = editvalue.address;
         this.editEstate.estate_id = editvalue.estate_id;
         this.editEstate.estate_name = editvalue.estate_name;
         this.editEstate.estate_price = editvalue.estate_price;
@@ -1101,7 +1155,7 @@ export default {
         this.editEstate.estate_bedrooms = editvalue.estate_bedrooms;
         this.editEstate.estate_bathrooms = editvalue.estate_bathrooms;
         this.editEstate.estate_garage = editvalue.estate_garage;
-        this.editEstate.districts = editvalue.districts
+        this.editEstate.districts = editvalue.districts;
         this.editEstate.images = editvalue.estate_image;
         this.editEstate.lat = editvalue.lat;
         this.editEstate.lng = editvalue.lng;
@@ -1113,23 +1167,28 @@ export default {
         headers: {
           token: localStorage.getItem("token"),
         },
-      }
-      this.$axios.delete(this.$API_URL + `/delete/estate/${this.tempEstateDelete.estate_id}`, headers).then(async (res) => {
-        if(res.data.status) {
-          this.$bvModal.hide("modal-yes-or-no")
-          await this.getListMyEstate();
-        }else {
-          this.$bvModal.hide("modal-yes-or-no")
-          showErrorModal("ขออภัย,เกิดข้อผิดพลาด");
-        }
-      })
+      };
+      this.$axios
+        .delete(
+          this.$API_URL + `/delete/estate/${this.tempEstateDelete.estate_id}`,
+          headers
+        )
+        .then(async (res) => {
+          if (res.data.status) {
+            this.$bvModal.hide("modal-yes-or-no");
+            await this.getListMyEstate();
+          } else {
+            this.$bvModal.hide("modal-yes-or-no");
+            showErrorModal("ขออภัย,เกิดข้อผิดพลาด");
+          }
+        });
     },
     close(key) {
       if (key === "yesorno") {
         this.$bvModal.hide("modal-yes-or-no");
-        this.tempEstateDelete = null
-      } else if (key === 'modalEditEstate') {
-        this.$bvModal.hide("modalEditEstate")
+        this.tempEstateDelete = null;
+      } else if (key === "modalEditEstate") {
+        this.$bvModal.hide("modalEditEstate");
       }
     },
     getOverAllIndex(index) {
@@ -1161,10 +1220,10 @@ export default {
         this.addEstate.estate_bathrooms = 0;
         this.addEstate.estate_garage = 0;
         this.addEstate.estate_description = "";
-        this.addEstate.estate_type = null
-        this.files = []
-        this.selectedFiles = []
-        this.formSelect = new FormData()
+        this.addEstate.estate_type = null;
+        this.files = [];
+        this.selectedFiles = [];
+        this.formSelect = new FormData();
       } else if (key === "resetedit") {
         this.editEstate.estate_name = "";
         this.editEstate.state = "";
@@ -1179,15 +1238,15 @@ export default {
         this.editEstate.estate_bathrooms = 0;
         this.editEstate.estate_garage = 0;
         this.editEstate.estate_description = "";
-        this.stepPage = "listEstate"
-        this.files = []
-        this.selectedFiles = []
-        this.formSelect = new FormData()
+        this.stepPage = "listEstate";
+        this.files = [];
+        this.selectedFiles = [];
+        this.formSelect = new FormData();
       }
     },
-    formatPrice(num){
-      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-    }
+    formatPrice(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
   },
   async mounted() {
     await this.getListMyEstate();
