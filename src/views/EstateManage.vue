@@ -386,7 +386,42 @@
               </li>
             </ul>
           </div>
-          <div class="col-lg-6 mt-4 align-self-end">
+          <div class="col-lg-6 col-sm-12 align-self-end">
+            <label for="file-upload">อัพโหลดเอกสารยืนยันอสังหาริมทรัพย์</label>
+            <span
+              class="cursor-pointer"
+              v-b-tooltip.hover.top
+              title="ถ้าคุณอัพโหลดเอกสารเกี่ยวกับยืนยันตัวตน คุณจะได้สัญลักษณ์ ว่าผ่านการคัดกรองเบื้องต้นจาก RENT CENTRAL"
+            >
+              (โปรดอ่านรายละเอียด
+              <i class="ml-1 fa-solid fa-circle-exclamation"></i>)
+            </span>
+            <b-form-file
+              id="file-upload"
+              v-model="filesFake"
+              accept=".jpg, .png, .jpeg"
+              max-file-count="5"
+              multiple
+            >
+              <template slot="file-name" slot-scope="{ names }">
+                <b-badge variant="dark">{{ names[0] }}</b-badge>
+                <b-badge v-if="names.length > 1" variant="dark" class="ml-1">
+                  + {{ names.length - 1 }} More files
+                </b-badge>
+              </template>
+            </b-form-file>
+            <ul>
+              <li v-for="(file, index) in selectedFiles" :key="index">
+                {{ file.name }}
+                <i
+                  class="fa-solid fa-circle-xmark"
+                  style="color: #df4759; cursor: pointer; margin-top: 5px"
+                  @click="deleteFile(index)"
+                ></i>
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-12 mt-4 align-self-end">
             <div class="d-flex align-items-end justify-content-end">
               <div class="mr-2">
                 <b-button variant="primary" @click="actionAddEstate">
@@ -815,6 +850,7 @@ import { showErrorModal } from "../helper/index";
 export default {
   data() {
     return {
+      filesFake: [],
       busy: false,
       tempEstateDelete: {},
       filter_text: "",
@@ -1038,7 +1074,7 @@ export default {
         estate_garage: this.addEstate.estate_garage,
         estate_description: this.addEstate.estate_description,
         estate_image: setNameFile,
-        estate_verify: "verify",
+        estate_verify: this.filesFake.length > 0 ? 'verify' : 'non',
         address: this.addEstate.address,
         lat: this.coordinates.lat,
         lng: this.coordinates.lng,
