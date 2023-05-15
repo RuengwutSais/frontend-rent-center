@@ -14,8 +14,45 @@
   border-bottom:  15px solid #000;
 }
 
-.search-div{
+.picture-all{
   width: 60%;
+}
+
+.picture-all .gotolist-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.picture-all .gotolist-div i{
+  font-size: 18px;
+}
+
+.picture-all .gotolist-div .gotolist-btn{
+  height: 2.75rem;
+  width: 100%;
+  font-size: 18px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 0.7em;
+  border: 1px solid #000;
+  transition: 250ms;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.picture-all .gotolist-div .gotolist-btn:hover{
+  color: #000;
+  background-color: #fff;
+  border: 1px solid #000;
+}
+
+.picture-all .search-div{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .input-group-text {
@@ -56,7 +93,7 @@
   color: #000;
 }
 
-.picture-search .search-div .dropdown-wrapper {
+.picture-search .picture-all .search-div .dropdown-wrapper {
   display: flex;
   margin-top: 10px;
 }
@@ -338,10 +375,10 @@
 
 @media only screen and (max-width: 767px) {
   .picture-search {
-    height: 35vh;
-    border-bottom: 8px solid #000;
+    height: 45vh;
+    border-bottom: 9px solid #000;
   }
-  .picture-search .search-div {
+  .picture-search .picture-all{
     width: 90% !important;
   }
 
@@ -371,12 +408,12 @@
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
   /* styles for iPad */
   .picture-search {
-    height: 30vh;
+    height: 40vh;
   }
-  .picture-search .search-div {
+  .picture-search .picture-all {
     width: 90% !important;
   }
   .estate-pop{
-    margin: 20px;
+    margin: 30px;
   }
 }

@@ -13,20 +13,19 @@
         <p>รายงานอสังหาฯ</p>
       </sidebar-link>
       <sidebar-link to="/admin/holdestate">
-        <i class="fa-solid fa-house-flag" style="color: #000;"></i>
+        <i class="fa-solid fa-house-flag" style="color: #000; margin-left: 4px;"></i>
         <p>ระงับอสังหาฯ</p>
       </sidebar-link>
       <sidebar-link to="/admin/canclehold">
-        <i class="fa-solid fa-house-circle-check" style="color: #000;"></i>
+        <i class="fa-solid fa-house-circle-check" style="color: #000; margin-left: 4px"></i>
         <p>ยกเลิกระงับอสังหาฯ</p>
       </sidebar-link>
-      <div class="active-pro px-3">
-        <b-button @click="logout" block variant="danger">
+      <div class="active-pro px-4">
+        <b-button class="w-100" @click="logout" style="background-color: #FFF; border-color: #FFF; display: flex; align-items: center; margin-top: 16px;">
         <md-icon>unarchive</md-icon>
         <p>ออกจากระบบ</p>
         </b-button>
       </div>
-     
     </side-bar>
     <div class="main-panel">
       <top-navbar></top-navbar>

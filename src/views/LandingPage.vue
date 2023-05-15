@@ -1,20 +1,27 @@
 <template>
   <div>
     <div class="picture-search">
-      <div class="search-div d-flex w-60">
-        <div class="input-group mt-4">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="ค้นหาอสังหาริมทรัพย์"
-            v-model="filter_text"
-            @keydown.enter="findEstate()"
-          />
-          <div class="input-group-append cursor-pointer" @click="findEstate">
-            <span class="input-group-text"
-              ><i class="fa-solid fa-magnifying-glass"></i
-            ></span>
+      <div class="picture-all">
+        <div class="search-div d-flex w-60">
+          <div class="input-group mt-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="ค้นหาอสังหาริมทรัพย์"
+              v-model="filter_text"
+              @keydown.enter="findEstate()"
+            />
+            <div class="input-group-append cursor-pointer" @click="findEstate">
+              <span class="input-group-text"
+                ><i class="fa-solid fa-magnifying-glass"></i
+              ></span>
+            </div>
           </div>
+        </div>
+        <div class="gotolist-div">
+          <button class="gotolist-btn" @click="redirectPath('/listestate')">
+            <i class="fa-solid fa-building-circle-arrow-right"></i>
+            รายการอสังหาริมทรัพย์ทั้งหมด</button>
         </div>
       </div>
     </div>
@@ -70,11 +77,16 @@ export default {
   },
   methods: {
     findEstate() {
-      return this.$router.push({ path: '/listestate', query: { filter_text: this.filter_text}})
+      return this.$router.push({
+        path: "/listestate",
+        query: { filter_text: this.filter_text },
+      });
     },
     FindMore(key) {
-      return this.$router.push({ path: '/listestate', query: { estate_type: key}})
-      
+      return this.$router.push({
+        path: "/listestate",
+        query: { estate_type: key },
+      });
     },
     slideCondoLeft() {
       if (this.translateValue !== 0) {
@@ -110,27 +122,30 @@ export default {
       }
     },
     getEstateByCondo() {
-      this.$axios.get(this.$API_URL + '/carousel/condo').then((res) => {
-        console.log('condo: ', res)
-        this.condos = res.data.estate
-      })
+      this.$axios.get(this.$API_URL + "/carousel/condo").then((res) => {
+        console.log("condo: ", res);
+        this.condos = res.data.estate;
+      });
     },
     getEstateByTownHouse() {
-      this.$axios.get(this.$API_URL + '/carousel/townhouse').then((res) => {
-        this.townhouses = res.data.estate
-      })
+      this.$axios.get(this.$API_URL + "/carousel/townhouse").then((res) => {
+        this.townhouses = res.data.estate;
+      });
     },
     getEstateByHome() {
-      this.$axios.get(this.$API_URL + '/carousel/home').then((res) => {
-        this.estates = res.data.estate
-      })
-    }
+      this.$axios.get(this.$API_URL + "/carousel/home").then((res) => {
+        this.estates = res.data.estate;
+      });
+    },
+    redirectPath(path) {
+      return this.$router.push(path);
+    },
   },
   mounted() {
     console.log("condos", this.condos.length);
-    this.getEstateByCondo()
-    this.getEstateByTownHouse()
-    this.getEstateByHome()
+    this.getEstateByCondo();
+    this.getEstateByTownHouse();
+    this.getEstateByHome();
   },
 };
 </script>

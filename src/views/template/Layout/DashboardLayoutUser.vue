@@ -20,8 +20,8 @@
         <md-icon>library_books</md-icon>
         <p>ข้อความ</p>
       </sidebar-link>
-      <div class="active-pro px-3">
-        <b-button @click="logout" block variant="danger">
+      <div class="active-pro px-4">
+        <b-button class="w-100" @click="logout" style="background-color: #FFF; border-color: #FFF; display: flex; align-items: center; margin-top: 16px;">
         <md-icon>unarchive</md-icon>
         <p>ออกจากระบบ</p>
         </b-button>

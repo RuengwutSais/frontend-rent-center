@@ -11,13 +11,13 @@
               alt="logo"
             />
           </div>
-          <div class="d-flex flex-row text-right">
+          <!-- <div class="d-flex flex-row text-right">
               <div class="items">
                 <a class="cursor-pointer" @click="redirectPath('/listestate')">
                   อสังหาริมทรัพย์
                 </a>
               </div>
-          </div>
+          </div> -->
           <div class="navb-items">
             <div v-if="!isUser" class="d-flex flex-row">
               <div class="items">
