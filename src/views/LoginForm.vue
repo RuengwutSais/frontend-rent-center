@@ -84,12 +84,10 @@ export default {
         })
         .catch((error) => {
           console.log("what error", error.response.data);
-        });
-      if (this.rememberMe) {
-        localStorage.setItem("rememberMe", "true");
-      } else {
-        localStorage.removeItem("rememberMe");
-      }
+        })
+        
+        const profile = JSON.parse(localStorage.getItem('profiles'));
+        this.$socket.emit('connection', {user_id: profile.user_id});
     },
     togglePassword() {
       const passwordInput = document.querySelector(".passwordInput");
@@ -107,9 +105,6 @@ export default {
   mounted() {
     if (JSON.parse(localStorage.getItem("profiles"))) {
       this.$router.push("/landingpage");
-    }
-    if (localStorage.getItem("rememberMe") === "true") {
-      this.rememberMe = true;
     }
   },
 };

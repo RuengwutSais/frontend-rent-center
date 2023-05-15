@@ -103,6 +103,15 @@ export default {
       this.currentConversation.messages.push(message);
       this.newMessage = '';
     },
+    sendMessageWithSocket() {
+      const conversationId = 1; // Replace this with the actual conversation id
+      const senderId = 1; // Replace this with the actual sender id
+  
+      this.$socket.emit('sendMessage', conversationId, senderId, this.newMessage);
+      this.newMessage = '';
+    }
+  },
+  mounted() {
   },
 };
 </script>
