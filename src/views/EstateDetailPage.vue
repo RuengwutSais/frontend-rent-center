@@ -41,7 +41,7 @@
       </div>
       <div class="detail-header">
         <h1 class="margin-right-10px">{{ estate.estate_name }}</h1>
-        <span>
+        <span v-if="estate.estate_verify === 'verify'">
           <i class="fa-solid fa-circle-check"></i>
         </span>
       </div>

@@ -28,7 +28,9 @@
     <div class="card-info">
       <div class="card-name">
         <p>{{ truncatedText(item.estate_name) }}</p>
-        <i class="fa-solid fa-circle-check"></i>
+        <div v-if="item.estate_verify === 'verify'">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
       </div>
       <div class="card-price">
         <i class="fa-solid fa-tag"></i>
