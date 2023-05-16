@@ -230,7 +230,8 @@ export default {
         this.user.email &&
         this.user.firstname &&
         this.user.lastname &&
-        this.user.password === this.user.confirmPass
+        this.user.password === this.user.confirmPass &&
+        this.user.checked === true
       ) {
         const bodyraw = {
           first_name: this.user.firstname,
