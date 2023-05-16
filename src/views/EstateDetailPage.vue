@@ -45,9 +45,12 @@
           <i class="fa-solid fa-circle-check"></i>
         </span>
       </div>
-      <div class="estate-rating">
+      <div class="estate-rating" v-if="average_rate > 0">
         <span v-for="n in 5" :key="n" :class="{ active: n <= average_rate }">
           <i class="fa-solid fa-star"></i>
+        </span>
+        <span class="text-danger text-weight">
+          {{ float_average_rate.toFixed(2) }} คะแนนโดยเฉลี่ย
         </span>
       </div>
       <div class="detail-price">
@@ -409,6 +412,7 @@ export default {
       visibleReviews: [],
       numToShow: 3,
       average_rate: null,
+      float_average_rate: null
     };
   },
   validations: {
@@ -591,6 +595,7 @@ export default {
         .then((res) => {
           this.review = res.data.review;
           this.average_rate = res.data.average_rate;
+          this.float_average_rate = res.data.float_average_rate
         });
     },
     async getProfile() {
@@ -620,6 +625,9 @@ export default {
 <style lang="scss" scoped>
 .contain-image {
   object-fit: cover;
+}
+.text-weight {
+  font-weight: 900;
 }
 // .height-650px {
 //   height: 650px;
