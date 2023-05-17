@@ -66,7 +66,7 @@
             @blur="validatePassword"
             :class="{ input_error: user.passwordError }"
           />
-          <span class="toggle-password" @click="togglePassword()">
+          <span class="toggle-password-register" @click="togglePassword()">
             <i class="far fa-eye"></i>
           </span>
         </div>
@@ -215,7 +215,7 @@ export default {
     },
     togglePassword() {
       const passwordInput = document.querySelector('.passwordInput');
-      const togglePassword = document.querySelector('.toggle-password');
+      const togglePassword = document.querySelector('.toggle-password-register');
       if (passwordInput.type === "password") {
         passwordInput.type = "text";
         togglePassword.innerHTML = '<i class="far fa-eye-slash"></i>';

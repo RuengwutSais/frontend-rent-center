@@ -13,7 +13,7 @@
   height: 61rem;
 }
 
-.toggle-password {
+.toggle-password-login {
   position: absolute;
   top: 50%;
   right: 50px;
@@ -21,7 +21,7 @@
   cursor: pointer;
 }
 
-.toggle-password i{
+.toggle-password-login i{
   color: #7f7f7f;
 
 }
@@ -196,7 +196,7 @@ h1 {
   h1 {
     font-size: 40px;
   }
-  .toggle-password{
+  .toggle-password-login{
     right: 30px;
   }
 }

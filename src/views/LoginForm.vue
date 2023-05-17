@@ -24,7 +24,7 @@
             placeholder="อย่างน้อย 8 ตัวอักษร"
             required
           />
-          <span class="toggle-password" @click="togglePassword()">
+          <span class="toggle-password-login" @click="togglePassword()">
             <i class="far fa-eye"></i>
           </span>
         </div>
@@ -91,7 +91,7 @@ export default {
     },
     togglePassword() {
       const passwordInput = document.querySelector(".passwordInput");
-      const togglePassword = document.querySelector(".toggle-password");
+      const togglePassword = document.querySelector(".toggle-password-login");
       if (passwordInput.type === "password") {
         passwordInput.type = "text";
         togglePassword.innerHTML = '<i class="far fa-eye-slash"></i>';
