@@ -8,22 +8,22 @@
           style="background: linear-gradient(60deg, #66bb6a, #43a047)"
         >
           <p>
-            <strong>ว่าง</strong>
+            <strong>ให้เช่า</strong>
           </p>
         </div>
         <div
           v-else-if="estate.estate_status === 'rented'"
           class="estate-status"
-          style="background: linear-gradient(60deg, #df4759, #cc0000)"
+          style="background: linear-gradient(60deg, #ffa726, #fb8c00)" 
         >
           <p>
-            <strong>ไม่ว่าง</strong>
+            <strong>เช่าแล้ว</strong>
           </p>
         </div>
         <div
           v-else-if="estate.estate_status === 'suspended'"
           class="estate-status"
-          style="background: linear-gradient(60deg, #ffa726, #fb8c00)"
+          style="background: linear-gradient(60deg, #df4759, #cc0000)"
         >
           <p>
             <strong>ถูกระงับ</strong>
@@ -100,7 +100,7 @@
       <div class="estate-area">
         <div class="detail-garage">
           <i class="fa-solid fa-warehouse"></i>
-          <p>{{ estate.estate_garage }} โรงรถ</p>
+          <p>{{ estate.estate_garage }} ที่จอดรถ</p>
         </div>
         <div class="detail-area">
           <i class="fa-solid fa-chart-area"></i>

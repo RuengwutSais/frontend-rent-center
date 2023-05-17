@@ -53,12 +53,12 @@
                 <md-table-cell md-label="ห้องนำ้">{{
                   item.estate_bathrooms
                 }}</md-table-cell>
-                <md-table-cell md-label="โรงรถ">{{
+                <md-table-cell md-label="ที่จอดรถ">{{
                   item.estate_garage
                 }}</md-table-cell>
                 <md-table-cell md-label="สถานะ" class="full-cell">
                   <div v-if="item.estate_status === 'available'">
-                    ว่าง
+                    ให้เช่า
                   </div>
                   <div v-else-if="item.estate_status === 'sold'">
                     ขายแล้ว
@@ -67,7 +67,7 @@
                     ถูกระงับ
                   </div>
                   <div v-else-if="item.estate_status === 'rented'">
-                    เช่า
+                    เช่าแล้ว
                   </div>
                 </md-table-cell>
                 <md-table-cell md-label="จัดการ">
