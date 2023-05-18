@@ -20,7 +20,7 @@
     <div class="row mt-3 height-1350px">
       <div class="col-12 col-lg-4">
         <div class="select-type-estate">
-          <label for="">ประเภทอสังหาฯ</label>
+          <label for="">ประเภทอสังหาอสังหาริมทรัพย์</label>
           <b-form-select
             v-model="search.estate_type"
             :options="optionsTypeSelect"

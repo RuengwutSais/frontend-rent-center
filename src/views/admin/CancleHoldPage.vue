@@ -242,6 +242,14 @@ export default {
         this.busy = false;
       })
     },
+    formatDateThai(datenow) {
+      let date = new Date(datenow);
+      return date.toLocaleDateString("th-TH", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    },
     actionHold() {
       const headers = {
         headers: {

@@ -43,7 +43,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "RENT CENTRAL",
+      default: "RESIDENT RENT CENTER",
     },
     imgLogo: {
       type: String,

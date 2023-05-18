@@ -110,9 +110,9 @@
                       <b-form-select-option value="rented" class="child-option">
                         เช่าแล้ว
                       </b-form-select-option>
-                      <b-form-select-option value="sold" class="child-option">
+                      <!-- <b-form-select-option value="sold" class="child-option">
                         ขายแล้ว
-                      </b-form-select-option>
+                      </b-form-select-option> -->
                     </b-form-select>
                   </md-table-cell>
                   <!-- <md-table-cell md-label="รูปภาพ">
@@ -194,7 +194,7 @@
             <label for=""> ชื่ออสังหาริมทรัพย์ </label>
             <b-form-input
               v-model="addEstate.estate_name"
-              placeholder="กรุณาใส่ชื่ออสังหาฯ"
+              placeholder="กรุณาใส่ชื่ออสังหาริมทรัพย์"
               :class="{ 'is-invalid': $v.addEstate.estate_name.$error }"
             ></b-form-input>
           </div>
@@ -232,7 +232,7 @@
             <label for=""> ราคา </label>
             <b-form-input
               v-model="addEstate.estate_price"
-              placeholder="กรุณาใส่ราคาอสังหาฯ"
+              placeholder="กรุณาใส่ราคาอสังหาริมทรัพย์"
               @input="inputFormPrice($event, 'addEstate')"
               :class="{ 'is-invalid': $v.addEstate.estate_price.$error }"
             ></b-form-input>
@@ -467,7 +467,7 @@
             <label for=""> อสังหาริมทรัพย์ </label>
             <b-form-input
               v-model="editEstate.estate_name"
-              placeholder="กรุณาใส่ชื่ออสังหาฯ"
+              placeholder="กรุณาใส่ชื่ออสังหาริมทรัพย์"
               :class="{ 'is-invalid': $v.editEstate.estate_name.$error }"
             ></b-form-input>
           </div>
@@ -505,7 +505,7 @@
             <label for=""> ราคา </label>
             <b-form-input
               v-model="editEstate.estate_price"
-              placeholder="กรุณาใส่ราคาอสังหาฯ"
+              placeholder="กรุณาใส่ราคาอสังหาริมทรัพย์"
               @input="inputFormPrice($event, 'editEstate')"
               :class="{ 'is-invalid': $v.editEstate.estate_price.$error }"
             ></b-form-input>
