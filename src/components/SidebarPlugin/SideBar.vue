@@ -4,18 +4,21 @@
     :data-color="sidebarItemColor"
   >
     <div class="logo">
-      <a href="#" class="simple-text logo-mini">
+      <div class="pic-logo">
+        <a href="#" class="simple-text logo-mini">
         <div class="logo-img">
           <img @click="onPushMainPage" :src="imgLogo" alt="" />
         </div>
       </a>
-
-      <a
+      </div>
+      <div class="text-logo">
+        <a
         href="/"
         class="simple-text logo-normal"
       >
         {{ title }}
       </a>
+      </div>
     </div>
     <div class="sidebar-wrapper">
       <slot name="content"></slot>
@@ -43,7 +46,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "RESIDENT RENT CENTER",
+      default: "RESIDENCE RENT CENTER",
     },
     imgLogo: {
       type: String,
