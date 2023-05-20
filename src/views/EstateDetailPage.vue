@@ -159,18 +159,17 @@
               <i class="fa-solid fa-envelope"></i>
               <p>Email : {{ profile.email }}</p>
             </div>
-            <div v-if="!isUserProfileEqual" class="chat-owner">
-              <form>
-                <input
-                  class="chat-input"
-                  type="text"
-                  placeholder="แชทกับผู้ประกาศ..."
-                />
-                <button class="chat-button" type="submit">
-                  <i class="fa-solid fa-paper-plane"></i>
-                  ส่ง
-                </button>
-              </form>
+            <div v-if="!isUserProfileEqual" class="chat-owner">              
+              <input
+                class="chat-input"
+                type="text"
+                placeholder="แชทกับผู้ประกาศ..."
+                v-model="chatOwner"
+              />
+              <button class="chat-button" @click="createConversation">
+                <i class="fa-solid fa-paper-plane"></i>
+                ส่ง
+              </button>
             </div>
           </div>
         </div>
@@ -364,6 +363,7 @@ import { required } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
+      chatOwner: "",
       comment: {
         text: "",
         star: 5,
@@ -438,6 +438,19 @@ export default {
     },
   },
   methods: {
+    createConversation() {
+      const headers = {
+        headers: {
+          token: localStorage.getItem("token")
+        }
+      }
+      const bodyJson = {
+        message: this.chatOwner
+      }
+      this.$axios.post(this.$API_URL + `/chat/to/owner/${this.estate.estate_user_id}`,bodyJson, headers).then((res) => {
+        console.log('res: ', res)
+      })
+    },
     linkImage(img) {
       return this.$API_URL + "/" + img;
     },

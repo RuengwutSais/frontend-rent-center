@@ -83,6 +83,7 @@ export default {
           ],
         },
       ],
+      last_chat: [],
       currentConversation: null,
       newMessage: '',
     }
@@ -109,9 +110,21 @@ export default {
   
       this.$socket.emit('sendMessage', conversationId, senderId, this.newMessage);
       this.newMessage = '';
+    },
+    gettingAllPeople() {
+      const headers = {
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      }
+      this.$axios.get(this.$API_URL + '/get/chat/', headers).then((res) => {
+        console.log(res.data.chat)
+        this.last_chat = res.data.chat
+      })
     }
   },
   mounted() {
+    this.gettingAllPeople()
   },
 };
 </script>
