@@ -10,7 +10,17 @@ export default {
   name: 'App',
   metaInfo: {
     title: 'RESIDENCE RENT CENTER', 
-    titleTemplate: '%s'
+    titleTemplate: '%s',
+    meta: [
+        {
+          name: 'description',
+          content: 'ยินดีต้อนรับสู่เว็บไซต์ศูนย์รวมข้อมูลที่อยู่อาศัยให้เช่า เว็บไซต์นี้ จัดทำขึ้นและดำเนินการโดย กลุ่มผู้จัดทำโครงงานของมหาวิทยาลัยกรุงเทพ ภาควิชาเทคโนโลยีสารสนเทศ คณะเทคโนโลยีสารสนเทศและนวัตกรรม',
+        },
+        {
+          property: 'og:image',
+          content: 'https://cdn.discordapp.com/attachments/879213731219902515/1109515376565428245/bangkok-background.png',
+        },
+      ],
   },
   mounted() {
     const profile = JSON.parse(localStorage.getItem('profiles'));

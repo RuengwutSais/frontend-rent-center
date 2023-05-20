@@ -585,21 +585,25 @@ export default {
       this.sliding = false;
     },
     async getEstateId() {
-      console.log("estateId: ", this.$route.params.estateId);
       await this.$axios
         .get(this.$API_URL + `/estate/${this.$route.params.estateId}`)
         .then((res) => {
-          this.estate = res.data.estate;
-          this.markerPosition.lat = parseFloat(this.estate.lat);
-          this.markerPosition.lng = parseFloat(this.estate.lng);
-          this.center.lat = parseFloat(this.estate.lat);
-          this.center.lng = parseFloat(this.estate.lng);
-          const jsonData = JSON.parse(this.estate.estate_image);
-          const updatedData = jsonData.map((image) =>
-            image.replace(/\\/g, "/")
-          );
-          this.estate.estate_image = updatedData;
-          console.log("this.estate: ", this.estate);
+          if(res.data.status) {
+            this.estate = res.data.estate;
+            this.markerPosition.lat = parseFloat(this.estate.lat);
+            this.markerPosition.lng = parseFloat(this.estate.lng);
+            this.center.lat = parseFloat(this.estate.lat);
+            this.center.lng = parseFloat(this.estate.lng);
+            const jsonData = JSON.parse(this.estate.estate_image);
+            const updatedData = jsonData.map((image) =>
+              image.replace(/\\/g, "/")
+            );
+            this.estate.estate_image = updatedData;
+          }
+        }).catch((e) => {
+          if(!e.response.data.status) {
+            this.$router.push('/404FOUND')
+          }
         });
     },
     async getReviewByEstateId() {
@@ -617,7 +621,6 @@ export default {
         .then((res) => {
           this.profile = res.data.user;
         });
-      console.log("this.res: ", this.profile);
     },
     showMore() {
       const newNumToShow = this.visibleReviews.length + this.numToShow;
@@ -642,7 +645,4 @@ export default {
 .text-weight {
   font-weight: 900;
 }
-// .height-650px {
-//   height: 650px;
-// }
 </style>

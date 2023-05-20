@@ -10,15 +10,15 @@
       </sidebar-link>
       <sidebar-link to="/admin/reportestate">
         <md-icon>content_paste</md-icon>
-        <p>รายงานอสังหาฯ</p>
+        <p>รายงานอสังหาริมทรัพย์</p>
       </sidebar-link>
       <sidebar-link to="/admin/holdestate">
         <i class="fa-solid fa-house-flag" style="color: #000; margin-left: 4px;"></i>
-        <p>ระงับอสังหาฯ</p>
+        <p>ระงับอสังหาริมทรัพย์</p>
       </sidebar-link>
       <sidebar-link to="/admin/canclehold">
         <i class="fa-solid fa-house-circle-check" style="color: #000; margin-left: 4px"></i>
-        <p>ยกเลิกระงับอสังหาฯ</p>
+        <p>ยกเลิกระงับอสังหาริมทรัพย์</p>
       </sidebar-link>
       <div class="active-pro px-4">
         <b-button class="w-100" @click="logout" style="background-color: #FFF; border-color: #FFF; display: flex; align-items: center; margin-top: 16px;">

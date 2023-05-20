@@ -13,7 +13,7 @@
           </template>
 
           <template slot="content">
-            <p class="category">อสังหาฯ ที่ปล่อยเช่า</p>
+            <p class="category">อสังหาริมทรัพย์ ที่ปล่อยเช่า</p>
             <h3 class="title">
               {{ filterAvailable() }}
               <small>หลัง</small>
@@ -30,7 +30,7 @@
           </template>
 
           <template slot="content">
-            <p class="category">อสังหาฯ ที่ถูกเช่า</p>
+            <p class="category">อสังหาริมทรัพย์ ที่ถูกเช่า</p>
             <h3 class="title">
               {{ filterRented() }}
               <small>หลัง</small>
@@ -47,7 +47,7 @@
           </template>
 
           <template slot="content">
-            <p class="category">อสังหาฯ ที่ถูกระงับ</p>
+            <p class="category">อสังหาริมทรัพย์ ที่ถูกระงับ</p>
             <h3 class="title">
               {{ filterSuspended() }}
               <small>หลัง</small>

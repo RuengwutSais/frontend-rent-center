@@ -104,7 +104,10 @@
                       }"
                     >
                       >
-                      <b-form-select-option value="available" class="child-option">
+                      <b-form-select-option
+                        value="available"
+                        class="child-option"
+                      >
                         ให้เช่า
                       </b-form-select-option>
                       <b-form-select-option value="rented" class="child-option">
@@ -307,7 +310,7 @@
                 class="fa-solid fa-map-location-dot"
                 style="color: #ffffff"
               ></i>
-              ปักหมุดอสังหาฯ
+              ปักหมุดอสังหาริมทรัพย์
             </b-button>
           </div>
         </div>
@@ -359,7 +362,7 @@
           </div>
         </div>
         <div class="row mt-2">
-          <div class="col-lg-6 col-sm-12 align-self-end">
+          <div class="col-lg-6 col-sm-12 align-self-start">
             <label for="file-upload">อัพโหลดรูปภาพ</label>
             <span
               class="cursor-pointer"
@@ -395,8 +398,8 @@
               </li>
             </ul>
           </div>
-          <div class="col-lg-6 col-sm-12 align-self-end">
-            <label for="file-upload">อัพโหลดเอกสารยืนยันอสังหาริมทรัพย์</label>
+          <div class="col-lg-6 col-sm-12 align-self-start">
+            <label for="file-fake-upload">อัพโหลดเอกสารยืนยันอสังหาริมทรัพย์</label>
             <span
               class="cursor-pointer"
               v-b-tooltip.hover.top
@@ -406,8 +409,9 @@
               <i class="ml-1 fa-solid fa-circle-exclamation"></i>)
             </span>
             <b-form-file
-              id="file-upload"
+              id="file-fake-upload"
               v-model="filesFake"
+              @input="fakeonFileSelected"
               accept=".jpg, .png, .jpeg"
               max-file-count="5"
               multiple
@@ -420,12 +424,12 @@
               </template>
             </b-form-file>
             <ul>
-              <li v-for="(file, index) in selectedFiles" :key="index">
+              <li v-for="(file, index) in fakeselectedFiles" :key="index">
                 {{ file.name }}
                 <i
                   class="fa-solid fa-circle-xmark"
                   style="color: #df4759; cursor: pointer; margin-top: 5px"
-                  @click="deleteFile(index)"
+                  @click="deleteFileFake(index)"
                 ></i>
               </li>
             </ul>
@@ -579,7 +583,7 @@
                 class="fa-solid fa-map-location-dot"
                 style="color: #ffffff"
               ></i>
-              ปักหมุดอสังหาฯ
+              ปักหมุดอสังหาริมทรัพย์
             </b-button>
           </div>
         </div>
@@ -817,38 +821,55 @@
           <div
             class="d-flex align-items-center flex-column justify-content-center mt-3"
           >
-            <!-- <div class="position-relative" style="padding: 0"> -->
-            <GmapMap
-              ref="mymap"
-              :center="coordinates"
-              :zoom="17"
-              style="width: 100%; height: 550px"
-              map-type-id="roadmap"
-              @center_changed="updateCenter"
-              :options="{
-                zoomControl: true,
-                fullscreenControl: false,
-                disableDefaultUI: true,
-              }"
-            >
-            </GmapMap>
-            <div
-              class="position-absolute"
-              style="
-                margin-left: auto;
-                margin-right: auto;
-                left: 0;
-                right: 0;
-                text-align: center;
-                top: 50%;
-              "
-            >
-              <i
-                class="fa-solid fa-location-dot"
-                style="color: #ff0000; font-size: 30px"
-              ></i>
-            </div>
-            <!-- </div> -->
+          <div class="d-flex flex-row w-100">
+            <div class="input-group mb-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="searchInput"
+                  placeholder="กรุณากรอกที่อยู่ที่ท่านต้องการหาเบื้องต้น"
+                />
+                <div
+                  class="input-group-append cursor-pointer"
+                  @keyup.enter="searchLocation"
+                  @click="searchLocation"
+                >
+                  <span class="input-group-text"
+                    ><i class="fa-solid fa-magnifying-glass"></i
+                  ></span>
+                </div>
+              </div>
+          </div>
+              <GmapMap
+                ref="mymap"
+                :center="coordinates"
+                :zoom="15"
+                style="width: 100%; height: 550px"
+                map-type-id="roadmap"
+                @center_changed="updateCenter"
+                :options="{
+                  zoomControl: true,
+                  fullscreenControl: false,
+                  disableDefaultUI: true,
+                }"
+              >
+              </GmapMap>
+              <div
+                class="position-absolute"
+                style="
+                  margin-left: auto;
+                  margin-right: auto;
+                  left: 0;
+                  right: 0;
+                  text-align: center;
+                  top: 50%;
+                "
+              >
+                <i
+                  class="fa-solid fa-location-dot"
+                  style="color: #ff0000; font-size: 30px"
+                ></i>
+              </div>
           </div>
         </template>
       </b-modal>
@@ -863,6 +884,7 @@ import { showErrorModal } from "../helper/index";
 export default {
   data() {
     return {
+      searchInput: "",
       filesFake: [],
       busy: false,
       tempEstateDelete: {},
@@ -941,6 +963,7 @@ export default {
       selectedStatus: "",
       files: [],
       selectedFiles: [],
+      fakeselectedFiles: [],
       formSelect: new FormData(),
       timeoutId: null,
     };
@@ -981,6 +1004,22 @@ export default {
     },
   },
   methods: {
+    searchLocation() {
+      // eslint-disable-next-line no-undef
+      const geocoder = new google.maps.Geocoder();
+      geocoder.geocode({ address: this.searchInput }, (results, status) => {
+      // eslint-disable-next-line no-undef
+        if (status === google.maps.GeocoderStatus.OK) {
+          const location = results[0].geometry.location;
+          this.coordinates = {
+            lat: location.lat(),
+            lng: location.lng(),
+          };
+        } else {
+          console.log("Geocode was not successful for the following reason:", status);
+        }
+      });
+    },
     updateStatusItem(e, estate_id, value) {
       console.log("E: ", e);
       console.log("EstateId: ", estate_id);
@@ -1003,7 +1042,17 @@ export default {
         });
       this.selectedOption = value;
     },
+    fakeonFileSelected(key) {
+      if (key.length >=5) {
+        this.filesFake = [];
+        this.fakeselectedFiles = [];
+        return false;
+      } else {
+        this.fakeselectedFiles = key;
+      }
+    },
     onFileSelected(key) {
+      console.log('why doning')
       if (key.length >= 6) {
         this.files = [];
         this.selectedFiles = [];
@@ -1011,6 +1060,9 @@ export default {
       } else {
         this.selectedFiles = key;
       }
+    },
+    deleteFileFake(index) {
+      this.fakeselectedFiles.splice(index, 1);
     },
     deleteFile(index) {
       this.selectedFiles.splice(index, 1);
@@ -1054,12 +1106,16 @@ export default {
       this.editEstate.state = address.subdistrict;
       this.editEstate.districts = address.district;
       this.editEstate.postcode = address.postalCode;
+      this.searchInput = `${address.province} ${address.subdistrict} ${address.district} ${address.postalCode}`;
+      this.searchLocation()
     },
     onSelected(address) {
       this.addEstate.province = address.province;
       this.addEstate.state = address.subdistrict;
       this.addEstate.districts = address.district;
       this.addEstate.postcode = address.postalCode;
+      this.searchInput = `${address.province} ${address.subdistrict} ${address.district} ${address.postalCode}`;
+      this.searchLocation()
     },
     async actionAddEstate() {
       this.$v.addEstate.$touch();
@@ -1186,6 +1242,7 @@ export default {
         );
       } else if (key === "addEstate-gps") {
         this.$bvModal.show("modal-gps");
+        this.searchInput = ""
       } else if (key === "editEstate-gps") {
         this.$bvModal.show("modal-gps");
       } else if (key === "modalEditEstate") {
@@ -1215,6 +1272,8 @@ export default {
         this.editEstate.images = editvalue.estate_image;
         this.editEstate.lat = editvalue.lat;
         this.editEstate.lng = editvalue.lng;
+      }else if (key === 'listEstate') {
+        this.ResetInput('resetadd')
       }
       this.stepPage = key;
     },
@@ -1330,19 +1389,19 @@ export default {
   border-radius: 0.7em;
 }
 
-.option-green{
+.option-green {
   color: #43a047;
   font-weight: bold;
 }
-.option-blue{
+.option-blue {
   color: #00acc1;
   font-weight: bold;
 }
-.option-orange{
+.option-orange {
   color: #fb8c00;
   font-weight: bold;
 }
-.child-option{
+.child-option {
   color: #495057 !important;
 }
 </style>
