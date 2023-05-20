@@ -20,7 +20,7 @@
     <div class="row mt-3 height-1350px">
       <div class="col-12 col-lg-4">
         <div class="select-type-estate">
-          <label for="">ประเภทอสังหาฯ</label>
+          <label for="">ประเภทอสังหาอสังหาริมทรัพย์</label>
           <b-form-select
             v-model="search.estate_type"
             :options="optionsTypeSelect"
@@ -98,7 +98,7 @@
         <div class="select-room-bed mt-2">
           <div class="row">
             <div class="col-12">
-              <label for="">โรงรถ</label>
+              <label for="">ที่จอดรถ</label>
               <b-form-select v-model="search.estate_garage" :options="optionsGarage">
               </b-form-select>
             </div>
@@ -176,7 +176,7 @@ export default {
       },
       search: {
         estate_type: null,
-        estate_price: { start: 10000, end: 10000000 },
+        estate_price: { start: 1000, end: 10000000 },
         province: "",
         districts: "",
         state: "",
@@ -201,10 +201,10 @@ export default {
         { value: "5", text: "มากกว่า 4 ห้องนอน" },
       ],
       optionsGarage: [
-        { value: null, text: "กรุณาเลือกจำนวนโรงรถ" },
-        { value: "1", text: "1 โรงรถ" },
-        { value: "2", text: "2 โรงรถ" },
-        { value: "3", text: "มากกว่า 2 โรงรถ" },
+        { value: null, text: "กรุณาเลือกจำนวนที่จอดรถ" },
+        { value: "1", text: "1 ที่จอดรถ" },
+        { value: "2", text: "2 ที่จอดรถ" },
+        { value: "3", text: "มากกว่า 2 ที่จอดรถ" },
       ],
       optionsToilet: [
         { value: null, text: "กรุณาเลือกจำนวนห้องน้ำ" },

@@ -9,7 +9,7 @@
 export default {
   name: 'App',
   metaInfo: {
-    title: 'RENT CENTRAL',
+    title: 'RESIDENCE RENT CENTER', 
     titleTemplate: '%s'
   },
   mounted() {

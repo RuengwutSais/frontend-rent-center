@@ -37,7 +37,7 @@
             </md-field>
           </div>
           <div class="md-layout-item md-size-100 text-right">
-            <md-button class="md-raised md-success" @click="updateProfile">แก้ไขบัญชี</md-button>
+            <md-button class="md-raised md-success" @click="updateProfile" style="background-color: #007bff; border-color: #007bff; color: #FFF;">แก้ไขบัญชี</md-button>
           </div>
         </div>
       </md-card-content>

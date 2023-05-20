@@ -125,7 +125,7 @@
         <div class="footer-container">
           <div class="row">
             <div class="col-sm-12 col-md-6">
-              <p class="company-name">Rent Central</p>
+              <p class="company-name">RESIDENCE RENT CENTER</p>
               <p>@ Copy Right</p>
             </div>
             <div class="col-sm-12 col-md-6">

@@ -5,15 +5,15 @@
       <div class="card-status">
         <div class="estate-status"  v-if="item.estate_status === 'available'" style="background: linear-gradient(60deg, #69b66d, #43a047);">
           <p>
-            <strong>ว่าง</strong>
+            <strong>ให้เช่า</strong>
           </p>
         </div>
-        <div v-else-if="item.estate_status === 'rented'" class="estate-status"  style="background: linear-gradient(60deg, #df4759, #CC0000 );">
+        <div v-else-if="item.estate_status === 'rented'" class="estate-status"  style="background: linear-gradient(60deg, #ffa726, #fb8c00 );">
           <p>
-            <strong>ไม่ว่าง</strong>
+            <strong>เช่าแล้ว</strong>
           </p>
         </div>
-        <div v-else-if="item.estate_status === 'suspended'" class="estate-status"  style="background: linear-gradient(60deg, #ffa726, #fb8c00);">
+        <div v-else-if="item.estate_status === 'suspended'" class="estate-status"  style="background: linear-gradient(60deg, #df4759, #CC0000);">
           <p>
             <strong>ถูกระงับ</strong>
           </p>
@@ -32,6 +32,7 @@
           <i class="fa-solid fa-circle-check"></i>
         </div>
       </div>
+      <div class="review-date-card">{{ formatDateThai(item.created_at) }}</div>
       <div class="card-price">
         <i class="fa-solid fa-tag"></i>
         <p>{{ formatMoney(item.estate_price) }}</p>
@@ -54,7 +55,7 @@
       <div class="estate-area">
         <div class="card-garage">
           <i class="fa-solid fa-warehouse"></i>
-          <p>{{ item.estate_garage }} โรงรถ</p>
+          <p>{{ item.estate_garage }} ที่จอดรถ </p>
         </div>
         <div class="card-area">
           <i class="fa-solid fa-chart-area"></i>
@@ -93,6 +94,14 @@ export default {
       let parts = num.toFixed(0).toString().split('.');
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       return parts.join('.');
+    },
+    formatDateThai(datenow) {
+      let date = new Date(datenow);
+      return date.toLocaleDateString("th-TH", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
     },
   }
 };

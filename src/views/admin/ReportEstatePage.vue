@@ -57,7 +57,7 @@
                 }}</md-table-cell>
                 <md-table-cell md-label="สถานะ">
                   <div v-if="item.estate.estate_status === 'available'">
-                    ว่าง
+                    ให้เช่า
                   </div>
                   <div v-else-if="item.estate.estate_status === 'sold'">
                     ขายแล้ว
@@ -66,7 +66,7 @@
                     ถูกระงับ
                   </div>
                   <div v-else-if="item.estate.estate_status === 'rented'">
-                    เช่า
+                    เช่าแล้ว
                   </div>
                 </md-table-cell>
                 <md-table-cell md-label="ชื่อ-นามสกุล (ผู้ประกาศ)">{{

@@ -80,13 +80,16 @@
                   <md-table-cell md-label="ห้องนอน">{{
                     item.estate_bedrooms
                   }}</md-table-cell>
-                  <md-table-cell md-label="โรงรถ">{{
+                  <md-table-cell md-label="ที่จอดรถ">{{
                     item.estate_garage
                   }}</md-table-cell>
                   <md-table-cell md-label="สถานะ">
                     <!-- <div v-if="item.estate_status === 'available'">ว่าง</div>
                     <div v-else-if="item.estate_status === 'sold'">ขายแล้ว</div> -->
-                    <div id="estate-select-status" v-if="item.estate_status === 'suspended'">
+                    <div
+                      id="estate-select-status"
+                      v-if="item.estate_status === 'suspended'"
+                    >
                       ถูกระงับ
                     </div>
                     <b-form-select
@@ -94,16 +97,22 @@
                       v-model="item.estate_status"
                       v-if="item.estate_status !== 'suspended'"
                       @change="updateStatusItem($event, item.estate_id)"
-                    >                  
-                      <b-form-select-option value="available">
-                        ว่าง
+                      :class="{
+                        'option-green': item.estate_status === 'available',
+                        'option-blue': item.estate_status === 'sold',
+                        'option-orange': item.estate_status === 'rented',
+                      }"
+                    >
+                      >
+                      <b-form-select-option value="available" class="child-option">
+                        ให้เช่า
                       </b-form-select-option>
-                      <b-form-select-option value="sold">
+                      <b-form-select-option value="rented" class="child-option">
+                        เช่าแล้ว
+                      </b-form-select-option>
+                      <!-- <b-form-select-option value="sold" class="child-option">
                         ขายแล้ว
-                      </b-form-select-option>
-                      <b-form-select-option value="rented">
-                        ไม่ว่าง
-                      </b-form-select-option>
+                      </b-form-select-option> -->
                     </b-form-select>
                   </md-table-cell>
                   <!-- <md-table-cell md-label="รูปภาพ">
@@ -185,7 +194,7 @@
             <label for=""> ชื่ออสังหาริมทรัพย์ </label>
             <b-form-input
               v-model="addEstate.estate_name"
-              placeholder="กรุณาใส่ชื่ออสังหาฯ"
+              placeholder="กรุณาใส่ชื่ออสังหาริมทรัพย์"
               :class="{ 'is-invalid': $v.addEstate.estate_name.$error }"
             ></b-form-input>
           </div>
@@ -223,7 +232,7 @@
             <label for=""> ราคา </label>
             <b-form-input
               v-model="addEstate.estate_price"
-              placeholder="กรุณาใส่ราคาอสังหาฯ"
+              placeholder="กรุณาใส่ราคาอสังหาริมทรัพย์"
               @input="inputFormPrice($event, 'addEstate')"
               :class="{ 'is-invalid': $v.addEstate.estate_price.$error }"
             ></b-form-input>
@@ -322,11 +331,11 @@
             ></b-form-input>
           </div>
           <div class="col-lg-2 col-sm-12">
-            <label for=""> โรงรถ </label>
+            <label for=""> ที่จอดรถ </label>
             <b-form-input
               type="number"
               v-model="addEstate.estate_garage"
-              placeholder="กรุณากรอกจำนวนของโรงรถ"
+              placeholder="กรุณากรอกจำนวนของที่จอดรถ"
               :class="{ 'is-invalid': $v.addEstate.estate_garage.$error }"
             ></b-form-input>
           </div>
@@ -458,7 +467,7 @@
             <label for=""> อสังหาริมทรัพย์ </label>
             <b-form-input
               v-model="editEstate.estate_name"
-              placeholder="กรุณาใส่ชื่ออสังหาฯ"
+              placeholder="กรุณาใส่ชื่ออสังหาริมทรัพย์"
               :class="{ 'is-invalid': $v.editEstate.estate_name.$error }"
             ></b-form-input>
           </div>
@@ -496,7 +505,7 @@
             <label for=""> ราคา </label>
             <b-form-input
               v-model="editEstate.estate_price"
-              placeholder="กรุณาใส่ราคาอสังหาฯ"
+              placeholder="กรุณาใส่ราคาอสังหาริมทรัพย์"
               @input="inputFormPrice($event, 'editEstate')"
               :class="{ 'is-invalid': $v.editEstate.estate_price.$error }"
             ></b-form-input>
@@ -594,11 +603,11 @@
             ></b-form-input>
           </div>
           <div class="col-lg-2 col-sm-12">
-            <label for=""> โรงรถ </label>
+            <label for=""> ที่จอดรถ </label>
             <b-form-input
               type="number"
               v-model="editEstate.estate_garage"
-              placeholder="กรุณากรอกจำนวนของโรงรถ"
+              placeholder="กรุณากรอกจำนวนของที่จอดรถ"
               :class="{ 'is-invalid': $v.editEstate.estate_garage.$error }"
             ></b-form-input>
           </div>
@@ -650,7 +659,11 @@
             <ul>
               <li v-for="(file, index) in selectedFiles" :key="index">
                 {{ file.name }}
-                <button @click="deleteFile(index)">Delete</button>
+                <i
+                  class="fa-solid fa-circle-xmark"
+                  style="color: #df4759; cursor: pointer; margin-top: 5px"
+                  @click="deleteFile(index)"
+                ></i>
               </li>
             </ul>
           </div>
@@ -925,7 +938,7 @@ export default {
         lat: 0,
         lng: 0,
       },
-      selectedStatus: '',
+      selectedStatus: "",
       files: [],
       selectedFiles: [],
       formSelect: new FormData(),
@@ -968,20 +981,27 @@ export default {
     },
   },
   methods: {
-    updateStatusItem(e, estate_id) {
-      console.log("E: ", e)
-      console.log("EstateId: ", estate_id)
+    updateStatusItem(e, estate_id, value) {
+      console.log("E: ", e);
+      console.log("EstateId: ", estate_id);
       const headers = {
         headers: {
-          token: localStorage.getItem("token")
-        }
-      }
+          token: localStorage.getItem("token"),
+        },
+      };
       const form_param = {
-        estate_status: e
-      }
-      this.$axios.post(this.$API_URL + `/update/status/${estate_id}`,form_param, headers).then((res) => {
-        console.log(res)
-      })
+        estate_status: e,
+      };
+      this.$axios
+        .post(
+          this.$API_URL + `/update/status/${estate_id}`,
+          form_param,
+          headers
+        )
+        .then((res) => {
+          console.log(res);
+        });
+      this.selectedOption = value;
     },
     onFileSelected(key) {
       if (key.length >= 6) {
@@ -1074,7 +1094,7 @@ export default {
         estate_garage: this.addEstate.estate_garage,
         estate_description: this.addEstate.estate_description,
         estate_image: setNameFile,
-        estate_verify: this.filesFake.length > 0 ? 'verify' : 'non',
+        estate_verify: this.filesFake.length > 0 ? "verify" : "non",
         address: this.addEstate.address,
         lat: this.coordinates.lat,
         lng: this.coordinates.lng,
@@ -1308,5 +1328,21 @@ export default {
 
 .input-group-text {
   border-radius: 0.7em;
+}
+
+.option-green{
+  color: #43a047;
+  font-weight: bold;
+}
+.option-blue{
+  color: #00acc1;
+  font-weight: bold;
+}
+.option-orange{
+  color: #fb8c00;
+  font-weight: bold;
+}
+.child-option{
+  color: #495057 !important;
 }
 </style>
