@@ -126,7 +126,6 @@ export default {
       )}`;
     },
     onSubmit() {
-      console.log("this.value_price : ", this.value);
       this.$emit("filterByPriceChanged", this.value);
       this.visible = false;
     },

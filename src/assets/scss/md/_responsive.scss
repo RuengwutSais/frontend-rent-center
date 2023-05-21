@@ -58,7 +58,11 @@
 }
 
 /*          Changes for small display      */
-
+.wrapper .sidebar{
+    .nav p {
+        white-space: normal;
+    }
+}
 @media (max-width: 991px){
   .md-toolbar .md-collapse{
     display: none !important;
@@ -72,7 +76,6 @@
   .wrapper .sidebar{
         display: none;
         box-shadow: none;
-
         .sidebar-wrapper{
             padding-bottom: 60px;
         }

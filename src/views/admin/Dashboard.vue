@@ -181,6 +181,7 @@ export default {
       totalPages: null,
       currentPage: 1,
       perPage: 8,
+      estateStatus: [],
     };
   },
   methods: {
@@ -218,23 +219,37 @@ export default {
           this.busy = false;
         });
     },
+    getAllstatus() {
+      const header = {
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      }
+      this.$axios.post(this.$API_URL + '/admin/status/estate', {}, header).then((res) => {
+        this.estateStatus = res.data.estate
+        const filterlength = this.estateStatus.find(
+        (product) => product.estate_status === "available"
+        );
+        console.log('filterlength: ', filterlength.count)
+      })
+    },
     filterAvailable() {
-      const filterlength = this.products.filter(
+      const filterlength = this.estateStatus.find(
         (product) => product.estate_status === "available"
       );
-      return filterlength.length;
+      return  filterlength && filterlength.count ? filterlength.count : 0
     },
     filterRented() {
-      const filterlength = this.products.filter(
+      const filterlength = this.estateStatus.find(
         (product) => product.estate_status === "rented"
       );
-      return filterlength.length;
+      return  filterlength && filterlength.count ? filterlength.count : 0
     },
     filterSuspended() {
-      const filterlength = this.products.filter(
+      const filterlength = this.estateStatus.find(
         (product) => product.estate_status === "suspended"
       );
-      return filterlength.length;
+      return  filterlength && filterlength.count ? filterlength.count : 0
     },
     formatPrice(num){
       return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -242,7 +257,8 @@ export default {
   },
   mounted() {
     this.getListEstateAdmin();
-    console.log("available: ", this.filterAvailable());
+    this.getAllstatus()
+    // console.log("available: ", this.filterAvailable());
   },
 };
 </script>

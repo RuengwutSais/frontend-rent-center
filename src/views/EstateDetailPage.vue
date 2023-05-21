@@ -412,7 +412,8 @@ export default {
       visibleReviews: [],
       numToShow: 3,
       average_rate: null,
-      float_average_rate: null
+      float_average_rate: null,
+      myUser: null,
     };
   },
   validations: {
@@ -438,18 +439,28 @@ export default {
     },
   },
   methods: {
-    createConversation() {
-      const headers = {
-        headers: {
-          token: localStorage.getItem("token")
-        }
-      }
-      const bodyJson = {
+    async createConversation() {
+      // const headers = {
+      //   headers: {
+      //     token: localStorage.getItem("token")
+      //   }
+      // }
+      // const bodyJson = {
+      //   message: this.chatOwner
+      // }
+      // await this.$axios.post(this.$API_URL + `/chat/to/owner/${this.estate.estate_user_id}`,bodyJson, headers).then((res) => {
+      //   console.log('res: ', res)
+      // }).finally(() => {
+      //   this.$router.push('/manage/chatuser')
+      // })
+      const form_send_to = {
+        user_one: this.myUser.user_id,
+        user_two: this.estate.estate_user_id,
         message: this.chatOwner
       }
-      this.$axios.post(this.$API_URL + `/chat/to/owner/${this.estate.estate_user_id}`,bodyJson, headers).then((res) => {
-        console.log('res: ', res)
-      })
+      this.$socket.emit('sendMessage', form_send_to);
+      this.$router.push('/manage/chatuser')
+
     },
     linkImage(img) {
       return this.$API_URL + "/" + img;
@@ -634,6 +645,8 @@ export default {
     await this.getProfile();
     await this.getReviewByEstateId();
     this.visibleReviews = this.review.slice(0, this.numToShow);
+    const profiles = JSON.parse(localStorage.getItem("profiles"))
+    this.myUser = profiles
   },
 };
 </script>
