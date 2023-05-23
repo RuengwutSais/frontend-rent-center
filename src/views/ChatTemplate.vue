@@ -1,11 +1,13 @@
 <template>
-  <div class="chat">
-    <div class="conversation-list">
+  <div class="chat" :class="!showChatWindow ? 'block-chat' : 'flex-chat'">
+    <div
+      class="conversation-list"
+      v-if="!showChatWindow"
+    >
       <div
-        class="conversation"
+        class="conversation mt-2"
         v-for="(conversation, index) in last_chat"
         :key="index"
-        :class="{ active: index === tabActive }"
         @click="
           setCurrentConversation(
             conversation.user_one === myUser.user_id
@@ -17,9 +19,16 @@
         "
       >
         <div
-          class="d-flex flex-row mt-3"
+          class="d-flex flex-row py-2 px-3 w-100 white-background"
           v-if="conversation.user_one === myUser.user_id"
-          @click="loadMessage(conversation.user_two)"
+          @click="
+            loadMessage(
+              conversation.user_two,
+              conversation.user_two_info.image_profile,
+              conversation.user_two_info.first_name,
+              conversation.user_two_info.last_name
+            )
+          "
         >
           <img
             class="avatar"
@@ -39,13 +48,20 @@
               }}
             </div>
             <div class="message">{{ conversation.messages[0].message }}</div>
-            <div class="time">{{  formattedDate(conversation.created_at) }}</div>
+            <div class="time">{{ formattedDate(conversation.created_at) }}</div>
           </div>
         </div>
         <div
-          class="d-flex flex-row mt-3"
+          class="d-flex flex-row py-2 px-3 w-100 white-background"
           v-else-if="conversation.user_two === myUser.user_id"
-          @click="loadMessage(conversation.user_one)"
+          @click="
+            loadMessage(
+              conversation.user_one,
+              conversation.user_one_info.image_profile,
+              conversation.user_two_info.first_name,
+              conversation.user_two_info.last_name
+            )
+          "
         >
           <img
             class="avatar"
@@ -78,12 +94,21 @@
         </div> -->
       </div>
     </div>
-    <div class="chat-window" v-if="currentConversation" ref="chatWindow">
+    <div
+      class="chat-window"
+      v-if="showChatWindow"
+    >
       <div class="header">
-        <img class="avatar" :src="currentConversation.avatar" alt="" />
+        <div
+          class="back-button mb-2"
+          @click="goBack"
+        >
+          <i class="fa-solid fa-arrow-left"></i>
+        </div>
+        <img class="avatar" :src="currentImage" alt="" />
         <div class="info">
-          <div class="name">{{ currentConversation.name }}</div>
-          <div class="status">{{ currentConversation.status }}</div>
+          <div class="name">{{ currentName }}</div>
+          <div class="status"></div>
         </div>
       </div>
       <div class="messages" ref="messageContainer">
@@ -113,73 +138,26 @@
           type="text"
           placeholder="พิมพ์ข้อความ..."
           v-model="newMessage"
+          maxlength="50"
           @keyup.enter="sendMessage()"
         />
+        <div class="sent-message">
+          <b-button variant="primary" @keyup.enter="sendMessage()">
+            <i class="fa-solid fa-paper-plane"></i>
+          </b-button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import moment from 'moment';
+import moment from "moment";
 export default {
   name: "ChatPage",
   data() {
     return {
-      conversations: [
-        {
-          id: 1,
-          name: "Alice",
-          avatar: "https://randomuser.me/api/portraits/women/22.jpg",
-          status: "online",
-          lastMessage: {
-            content: "Hi there! How are you?",
-            time: "9:30 AM",
-          },
-          messages: [
-            {
-              id: 1,
-              from: "me",
-              content: "I'm good. How about you?",
-              time: "9:35 AM",
-              avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-            },
-            {
-              id: 2,
-              from: "other",
-              content: "I'm doing well, thanks for asking!",
-              time: "9:37 AM",
-              avatar: "https://randomuser.me/api/portraits/women/22.jpg",
-            },
-          ],
-        },
-        {
-          id: 2,
-          name: "Bob",
-          avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-          status: "offline",
-          lastMessage: {
-            content: "See you later!",
-            time: "Yesterday",
-          },
-          messages: [
-            {
-              id: 1,
-              from: "other",
-              content: "Goodbye!",
-              time: "Yesterday",
-              avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-            },
-            {
-              id: 2,
-              from: "me",
-              content: "ค!",
-              time: "Yesterday",
-              avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-            },
-          ],
-        },
-      ],
+      conversations: [],
       myUser: [],
       last_chat: [],
       chatRealtime: [],
@@ -188,7 +166,15 @@ export default {
       tempConverId: null,
       newMessage: "",
       tempId: "",
+      currentImage: "",
+      showChatWindow: false,
+      currentName: "",
     };
+  },
+  computed: {
+    isMobile() {
+      return window.innerWidth <= 768;
+    }
   },
   methods: {
     linkImage(image) {
@@ -200,6 +186,9 @@ export default {
       this.tempConverId = tempConverId;
     },
     async sendMessage() {
+      if (this.newMessage === "") {
+        return false;
+      }
       const form_send_to = {
         user_one: this.myUser.user_id,
         user_two: this.tempId,
@@ -216,18 +205,27 @@ export default {
       const messageContainer = this.$refs.messageContainer;
       messageContainer.scrollTop = messageContainer.scrollHeight;
     },
-    gettingAllPeople() {
+    async gettingAllPeople() {
       const headers = {
         headers: {
           token: localStorage.getItem("token"),
         },
       };
-      this.$axios.get(this.$API_URL + "/get/chat/", headers).then((res) => {
+      await this.$axios.get(this.$API_URL + "/get/chat/", headers).then((res) => {
         this.last_chat = res.data.chat;
       });
     },
-    async loadMessage(id) {
+    goBack() {
+      // Toggle visibility of chat window
+      this.showChatWindow = false;
+    },
+    async loadMessage(id, images, first_name, last_name) {
+      this.showChatWindow = true;
       this.tempId = id;
+      this.currentName = first_name + " " + last_name;
+      this.currentImage = images
+        ? this.linkImage(images)
+        : require("../assets/img/user_avatar.png");
       const headers = {
         headers: {
           token: localStorage.getItem("token"),
@@ -252,26 +250,47 @@ export default {
     },
     formattedDate(date) {
       const momentDate = moment(date);
-      const day = momentDate.format('D');
-      const month = momentDate.format('MMM');
-      const year = momentDate.format('YYYY');
-      const time = momentDate.format('HH:mm');
-      console.log(month)
-      const thaiMonths = [
-        'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.',
-        'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'
-      ];
-
-      const thaiMonth = thaiMonths[momentDate.month()];
-
-      return `${day} ${thaiMonth} ${year} : ${time} `;
-    }
+      const now = moment();
+      const timeDiffMinutes = now.diff(momentDate, 'minutes');
+      const timeDiffHours = now.diff(momentDate, 'hours');
+      const timeDiffDays = now.diff(momentDate, 'days');
+      const timeDiffMonths = now.diff(momentDate, 'months');
+      if (timeDiffMinutes < 60) {
+        return `${timeDiffMinutes} นาทีที่ผ่านมา`;
+      } else if (timeDiffHours < 24) {
+        return `${timeDiffHours} ชั่วโมงที่ผ่านมา`;
+      } else if (timeDiffDays < 30) {
+        return `${timeDiffDays} วันที่ผ่านมา`;
+      } else if (timeDiffMonths < 12) {
+        return `${timeDiffMonths} เดือนที่ผ่านมา`;
+      }
+    },
+    activeFirst() {
+      this.tabActive = 0;
+      console.log('tihs.last_chat[0]: ', this.last_chat)
+      this.last_chat[0].user_one === this.myUser.user_id
+        ? this.loadMessage(
+            this.last_chat[0].user_two,
+            this.last_chat[0].user_two_info.image_profile,
+            this.last_chat[0].user_two_info.first_name,
+            this.last_chat[0].user_two_info.last_name
+          )
+        : this.loadMessage(
+            this.last_chat[0].user_one,
+            this.last_chat[0].user_one_info.image_profile,
+            this.last_chat[0].user_one_info.first_name,
+            this.last_chat[0].user_one_info.last_name
+          );
+    },
   },
-  mounted() {
+  async mounted() {
     const myUser = JSON.parse(localStorage.getItem("profiles"));
     this.myUser = myUser;
-    this.gettingAllPeople();
-
+    await this.gettingAllPeople();
+    console.log('this.isMobile: ', this.isMobile);
+    // if(!this.isMobile) {
+    //   this.activeFirst();
+    // }
     this.$socket.on("reloadMessage", (data) => {
       this.chatRealtime = data;
       console.log("reloadMessage");
@@ -302,26 +321,37 @@ export default {
       }
       // this.scrollChatToBottom()
     });
-
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.white-background {
+  background: #fff;
+  box-shadow: 0px 4px 24px rgba(136, 152, 170, 0.15);
+}
+.block-chat {
+  display: block !important;
+}
+.flex-chat {
+  display: flex;
+}
 .chat {
   display: flex;
   height: 92vh;
-  font-family: 'Kanit';
+  font-family: "Kanit";
+  flex-direction: row;
+  width: 100%;
 
   .conversation-list {
-    flex-basis: 30%;
-    background-color: #f0f2f5;
-    padding: 0.5rem;
+    // flex-basis: 30%;
+    // background-color: #fafafa;
+    // width: 30%;
 
     .conversation {
+      background-color: #fff;
       display: flex;
       align-items: center;
-      padding: 0.5rem;
       cursor: pointer;
 
       &:hover {
@@ -342,7 +372,7 @@ export default {
       .message {
         flex-grow: 1;
         overflow: hidden;
-        white-space: nowrap;
+        white-space: normal;
         text-overflow: ellipsis;
       }
 
@@ -351,7 +381,7 @@ export default {
       }
 
       &.active {
-        background-color: #fff;
+        background-color: #f8f8f8;
         font-weight: bold;
       }
     }
@@ -362,6 +392,7 @@ export default {
     display: flex;
     flex-direction: column;
     background-color: #fff;
+    // width: 70%;
 
     .header {
       padding: 1rem;
@@ -387,7 +418,7 @@ export default {
     .messages {
       flex-grow: 1;
       overflow-y: auto;
-      padding: 1rem;
+      padding: 1.5rem;
 
       .message {
         display: flex;
@@ -408,7 +439,6 @@ export default {
           padding: 0.5rem;
           border-radius: 1rem;
           text-align: start;
-
         }
 
         &.outgoing {
@@ -418,6 +448,7 @@ export default {
             background-color: #0084ff;
             color: #fff;
             text-align: end;
+            white-space: normal;
           }
           .avatar {
             margin-right: 0;
@@ -427,10 +458,12 @@ export default {
       }
     }
 
+    position: relative;
+
     .input {
       padding: 1rem;
       border-top: 1px solid #d3d3d3;
-
+      width: 100%;
       input[type="text"] {
         width: 100%;
         padding: 0.5rem;
@@ -438,7 +471,27 @@ export default {
         border-radius: 1rem;
         outline: none;
       }
+      .sent-message {
+        position: absolute;
+        bottom: 3%;
+        right: 10px;
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    .chat-window {
+      width: 100%;
+    }
+    .conversation-list {
+      width: 100%;
     }
   }
 }
+@media (max-width: 768px) {
+  .chat {
+    flex-direction: column;
+  }
+}
+
+
 </style>
