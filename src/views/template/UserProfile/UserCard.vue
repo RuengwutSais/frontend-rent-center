@@ -1,7 +1,7 @@
 <template>
   <md-card class="md-card-profile">
       <div class="md-card-avatar">
-        <img class="img" :src="image"/>
+        <img class="img" :src="image ? image : defaultImage" />
       </div>
     <md-card-content>
       <h4 class="card-title">{{ user.firstname }}  {{ user.lastname }}</h4>
@@ -12,12 +12,13 @@
   </md-card>
 </template>
 <script>
+import defaultImage from '@/assets/img/user_avatar.png';
 export default {
   name: "user-card",
   props: {
     image: {
       type: String,
-      required: true
+      required: true,
     },
     user: {
       type: Object,
@@ -25,7 +26,9 @@ export default {
   },
   data() {
     return {
-      tempImageName: ''
+      tempImageName: '',
+      defaultImage: defaultImage,
+      default: ""
     };
   },
   methods: {

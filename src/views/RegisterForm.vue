@@ -132,6 +132,41 @@
       <button class="log" @click="registerUser">สมัครสมาชิก</button>
       <span>หากมีบัญชีอยู่แล้ว <a href="/login">เข้าสู่ระบบ</a> </span>
     </div>
+    <div class="modal-alert">
+      <b-modal
+        ref="modalalert"
+        id="modal-alert"
+        hide-header
+        centered
+        hide-footer
+      >
+        <template>
+          <div
+            class="d-flex align-items-center flex-column justify-content-center mt-3"
+          >
+            <h4>อีเมลนี้ได้ถูกใช้งานไปแล้ว กรุณาเข้าสู่ระบบ</h4>
+          </div>
+          <div class="d-flex justify-content-center mt-3">
+            <div>
+              <b-button
+                @click="closeAlert('canclealert')"
+                style="
+                  color: #fff;
+                  background-color: #000;
+                  border: 1px solid #000;
+                  height: 2.5em;
+                  width: 6em;
+                  margin-right: 20px;
+                  font-family: 'Kanit';
+                "
+              >
+                ตกลง
+              </b-button>
+            </div>
+          </div>
+        </template>
+      </b-modal>
+    </div>
   </div>
 </template>
 
@@ -214,8 +249,10 @@ export default {
       }
     },
     togglePassword() {
-      const passwordInput = document.querySelector('.passwordInput');
-      const togglePassword = document.querySelector('.toggle-password-register');
+      const passwordInput = document.querySelector(".passwordInput");
+      const togglePassword = document.querySelector(
+        ".toggle-password-register"
+      );
       if (passwordInput.type === "password") {
         passwordInput.type = "text";
         togglePassword.innerHTML = '<i class="far fa-eye-slash"></i>';
@@ -223,7 +260,12 @@ export default {
         passwordInput.type = "password";
         togglePassword.innerHTML = '<i class="far fa-eye"></i>';
       }
-      console.log('Click Eye')
+      console.log("Click Eye");
+    },
+    closeAlert(key) {
+      if (key === "canclealert") {
+        this.$bvModal.hide("modal-alert");
+      }
     },
     async registerUser() {
       if (
@@ -255,6 +297,15 @@ export default {
           })
           .catch((error) => {
             console.log("respon error", error);
+            console.log("Message Error", error.message);
+            if (
+              error.response &&
+              error.response.data &&
+              error.response.data.message ===
+                "User already exists. Please Login"
+            ) {
+              this.$bvModal.show("modal-alert");
+            }
           });
       } else {
         this.validateEmail();

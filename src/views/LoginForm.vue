@@ -10,12 +10,13 @@
             name="email"
             v-model="user.email"
             placeholder="อีเมล"
+            :class="{ input_error: errorEmail }"
           />
         </div>
       </div>
       <div class="in">
         <label for="name">กรอกรหัสผ่าน</label>
-        <div>
+        <div class="password-login-container">
           <input
             class="passwordInput"
             type="password"
@@ -23,6 +24,7 @@
             v-model="user.password"
             placeholder="อย่างน้อย 8 ตัวอักษร"
             required
+            :class="{ input_error: errorEmail }"
           />
           <span class="toggle-password-login" @click="togglePassword()">
             <i class="far fa-eye"></i>
@@ -34,6 +36,14 @@
           <input type="checkbox" id="remember-me" v-model="rememberMe" />
           <label for="">จดจำฉัน</label>
         </div>
+      </div>
+      <div class="show-error" v-if="errorEmail">
+        <i class="fa-solid fa-circle-xmark error-icon"></i>
+        <p class="message_error">{{ errorEmail }}</p>
+      </div>
+      <div class="show-error" v-if="errorToken">
+        <i class="fa-solid fa-circle-xmark error-icon"></i>
+        <p class="message_error">{{ errorToken }}</p>
       </div>
       <button class="log" @click="LoginUser">เข้าสู่ระบบ</button>
       <span>หากยังไม่มีบัญชี <a href="/register">สมัครสมาชิก</a> </span>
@@ -52,6 +62,8 @@ export default {
         emailError: "",
       },
       rememberMe: false,
+      errorEmail: "",
+      errorToken: "",
     };
   },
   validations: {
@@ -84,6 +96,24 @@ export default {
         })
         .catch((error) => {
           console.log("what error", error.response.data);
+          if (
+              error.response &&
+              error.response.data &&
+              error.response.data.message ===
+                "Invalid email or password"
+            ) {
+              this.errorEmail = "กรุณากรอกอีเมลและรหัสผ่าน";
+              this.errorToken = "";
+            }
+            if (
+              error.response &&
+              error.response.data &&
+              error.response.data.message ===
+                "Invalid token"
+            ) {
+              this.errorToken = "อีเมลหรือรหัสผ่านไม่ถูกต้อง";
+              this.errorEmail = "";
+            }
         })
         
         const profile = JSON.parse(localStorage.getItem('profiles'));

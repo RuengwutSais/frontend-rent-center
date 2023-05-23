@@ -15,8 +15,8 @@
 
 .toggle-password-login {
   position: absolute;
-  top: 50%;
-  right: 50px;
+  top: 25%;
+  right: 20px;
   transform: translateY(-50%);
   cursor: pointer;
 }
@@ -24,6 +24,10 @@
 .toggle-password-login i{
   color: #7f7f7f;
 
+}
+
+.password-login-container{
+  position: relative;
 }
 
 h1 {
@@ -180,6 +184,12 @@ h1 {
     rgba(60, 64, 67, 0.15) 0px 0px 3px 0px;
 }
 
+.show-error{
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
 @media only screen and (max-width: 767px) {
   .login-wrapper {
     height: 50rem;
@@ -195,9 +205,6 @@ h1 {
   }
   h1 {
     font-size: 40px;
-  }
-  .toggle-password-login{
-    right: 30px;
   }
 }
 
