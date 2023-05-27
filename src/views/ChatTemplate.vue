@@ -304,10 +304,11 @@ export default {
     //   this.activeFirst();
     // }
     this.$socket.on("reloadMessage", (data) => {
+      console.log('reloadMessage: ', data)
       this.chatRealtime = data;
-      console.log("reloadMessage");
       this.$nextTick(() => {
         this.scrollChatToBottom();
+        console.log('finish bottom: ')
       });
       const length = data.length;
       this.tempConverId = data[length - 1].conversation_id;
