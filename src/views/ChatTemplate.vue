@@ -1,108 +1,117 @@
 <template>
   <div class="chat" :class="!showChatWindow ? 'block-chat' : 'flex-chat'">
-    <div
-      class="conversation-list"
-      v-if="!showChatWindow"
-    >
+    <div class="conversation-list" v-if="!showChatWindow">
       <div
-        class="conversation mt-2"
-        v-for="(conversation, index) in last_chat"
-        :key="index"
-        @click="
-          setCurrentConversation(
-            conversation.user_one === myUser.user_id
-              ? conversation.user_one
-              : conversation.user_two,
-            index,
-            conversation.conversation_id
-          )
-        "
+      v-if="last_chat.length > 0"
       >
         <div
-          class="d-flex flex-row py-2 px-3 w-100 white-background"
-          v-if="conversation.user_one === myUser.user_id"
+          class="conversation mt-2"
+          v-for="(conversation, index) in last_chat"
+          :key="index"
           @click="
-            loadMessage(
-              conversation.user_two,
-              conversation.user_two_info.image_profile,
-              conversation.user_two_info.first_name,
-              conversation.user_two_info.last_name
+            setCurrentConversation(
+              conversation.user_one === myUser.user_id
+                ? conversation.user_one
+                : conversation.user_two,
+              index,
+              conversation.conversation_id
             )
           "
         >
-          <img
-            class="avatar"
-            :src="
-              conversation.user_two_info.image_profile
-                ? linkImage(conversation.user_two_info.image_profile)
-                : require('../assets/img/user_avatar.png')
-            "
-            alt=""
-          />
-          <div class="details">
-            <div class="name">
-              {{
-                conversation.user_two_info.first_name +
-                " " +
+          <div
+            class="d-flex flex-row py-2 px-3 w-100 white-background"
+            v-if="conversation.user_one === myUser.user_id"
+            @click="
+              loadMessage(
+                conversation.user_two,
+                conversation.user_two_info.image_profile,
+                conversation.user_two_info.first_name,
                 conversation.user_two_info.last_name
-              }}
-            </div>
-            <div class="message">{{ conversation.messages[0].message }}</div>
-            <div class="time">{{ formattedDate(conversation.created_at) }}</div>
-          </div>
-        </div>
-        <div
-          class="d-flex flex-row py-2 px-3 w-100 white-background"
-          v-else-if="conversation.user_two === myUser.user_id"
-          @click="
-            loadMessage(
-              conversation.user_one,
-              conversation.user_one_info.image_profile,
-              conversation.user_two_info.first_name,
-              conversation.user_two_info.last_name
-            )
-          "
-        >
-          <img
-            class="avatar"
-            :src="
-              conversation.user_one_info.image_profile
-                ? linkImage(conversation.user_one_info.image_profile)
-                : require('../assets/img/user_avatar.png')
+              )
             "
+          >
+            <img
+              class="avatar"
+              :src="
+                conversation.user_two_info.image_profile
+                  ? linkImage(conversation.user_two_info.image_profile)
+                  : require('../assets/img/user_avatar.png')
+              "
+              alt=""
+            />
+            <div class="details">
+              <div class="name">
+                {{
+                  conversation.user_two_info.first_name +
+                  " " +
+                  conversation.user_two_info.last_name
+                }}
+              </div>
+              <div class="message">{{ conversation.messages[0].message }}</div>
+              <div class="time">{{ formattedDate(conversation.created_at) }}</div>
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row py-2 px-3 w-100 white-background"
+            v-else-if="conversation.user_two === myUser.user_id"
+            @click="
+              loadMessage(
+                conversation.user_one,
+                conversation.user_one_info.image_profile,
+                conversation.user_two_info.first_name,
+                conversation.user_two_info.last_name
+              )
+            "
+          >
+            <img
+              class="avatar"
+              :src="
+                conversation.user_one_info.image_profile
+                  ? linkImage(conversation.user_one_info.image_profile)
+                  : require('../assets/img/user_avatar.png')
+              "
+              alt=""
+            />
+            <div class="details">
+              <div class="name">
+                {{
+                  conversation.user_one_info.first_name +
+                  " " +
+                  conversation.user_one_info.last_name
+                }}
+              </div>
+              <div class="message">{{ conversation.messages[0].message }}</div>
+              <div class="time">{{ formattedDate(conversation.created_at) }}</div>
+            </div>
+          </div>
+          <!-- <div class="d-flex flex-row">
+            <img class="avatar" :src="conversation.avatar" alt="">
+            <div class="details">
+              <div class="name">{{ conversation.name }}</div>
+              <div class="message">{{ conversation.lastMessage.content }}</div>
+              <div class="time">{{ conversation.lastMessage.time }}</div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <div v-else class="d-flex flex-column justify-content-center align-items-center h-100">
+        <div class="w-250px">
+          <img
+            class="w-100"
+            src="../assets/img/chat/emptyMessage.png"
             alt=""
           />
-          <div class="details">
-            <div class="name">
-              {{
-                conversation.user_one_info.first_name +
-                " " +
-                conversation.user_one_info.last_name
-              }}
-            </div>
-            <div class="message">{{ conversation.messages[0].message }}</div>
-            <div class="time">{{ formattedDate(conversation.created_at) }}</div>
-          </div>
         </div>
-        <!-- <div class="d-flex flex-row">
-          <img class="avatar" :src="conversation.avatar" alt="">
-          <div class="details">
-            <div class="name">{{ conversation.name }}</div>
-            <div class="message">{{ conversation.lastMessage.content }}</div>
-            <div class="time">{{ conversation.lastMessage.time }}</div>
-          </div>
-        </div> -->
+        <div>
+          <p class="kanit m-0">
+            <strong> ไม่มีข้อความถึงคุณ </strong>
+          </p>
+        </div>
       </div>
     </div>
-    <div
-      class="chat-window"
-      v-if="showChatWindow"
-    >
+    <div class="chat-window" v-if="showChatWindow">
       <div class="header">
-        <div
-          class="back-button mb-2"
-          @click="goBack"
-        >
+        <div class="back-button mb-2" @click="goBack">
           <i class="fa-solid fa-arrow-left"></i>
         </div>
         <img class="avatar" :src="currentImage" alt="" />
@@ -142,7 +151,7 @@
           @keyup.enter="sendMessage()"
         />
         <div class="sent-message">
-          <b-button variant="primary" @keyup.enter="sendMessage()">
+          <b-button variant="primary" @click="sendMessage()">
             <i class="fa-solid fa-paper-plane"></i>
           </b-button>
         </div>
@@ -174,7 +183,7 @@ export default {
   computed: {
     isMobile() {
       return window.innerWidth <= 768;
-    }
+    },
   },
   methods: {
     linkImage(image) {
@@ -211,9 +220,12 @@ export default {
           token: localStorage.getItem("token"),
         },
       };
-      await this.$axios.get(this.$API_URL + "/get/chat/", headers).then((res) => {
-        this.last_chat = res.data.chat;
-      });
+      await this.$axios
+        .get(this.$API_URL + "/get/chat/", headers)
+        .then((res) => {
+          console.log('res: ', res)
+          this.last_chat = res.data.chat;
+        });
     },
     goBack() {
       // Toggle visibility of chat window
@@ -251,10 +263,10 @@ export default {
     formattedDate(date) {
       const momentDate = moment(date);
       const now = moment();
-      const timeDiffMinutes = now.diff(momentDate, 'minutes');
-      const timeDiffHours = now.diff(momentDate, 'hours');
-      const timeDiffDays = now.diff(momentDate, 'days');
-      const timeDiffMonths = now.diff(momentDate, 'months');
+      const timeDiffMinutes = now.diff(momentDate, "minutes");
+      const timeDiffHours = now.diff(momentDate, "hours");
+      const timeDiffDays = now.diff(momentDate, "days");
+      const timeDiffMonths = now.diff(momentDate, "months");
       if (timeDiffMinutes < 60) {
         return `${timeDiffMinutes} นาทีที่ผ่านมา`;
       } else if (timeDiffHours < 24) {
@@ -267,7 +279,7 @@ export default {
     },
     activeFirst() {
       this.tabActive = 0;
-      console.log('tihs.last_chat[0]: ', this.last_chat)
+      console.log("tihs.last_chat[0]: ", this.last_chat);
       this.last_chat[0].user_one === this.myUser.user_id
         ? this.loadMessage(
             this.last_chat[0].user_two,
@@ -287,7 +299,7 @@ export default {
     const myUser = JSON.parse(localStorage.getItem("profiles"));
     this.myUser = myUser;
     await this.gettingAllPeople();
-    console.log('this.isMobile: ', this.isMobile);
+    console.log("this.isMobile: ", this.isMobile);
     // if(!this.isMobile) {
     //   this.activeFirst();
     // }
@@ -344,6 +356,8 @@ export default {
   width: 100%;
 
   .conversation-list {
+    height: 100vh;
+    overflow-y: auto;
     // flex-basis: 30%;
     // background-color: #fafafa;
     // width: 30%;
@@ -458,8 +472,6 @@ export default {
       }
     }
 
-    position: relative;
-
     .input {
       padding: 1rem;
       border-top: 1px solid #d3d3d3;
@@ -487,11 +499,9 @@ export default {
     }
   }
 }
-@media (max-width: 768px) {
-  .chat {
-    flex-direction: column;
-  }
-}
-
-
+// @media (max-width: 768px) {
+// .chat {
+//   flex-direction: column;
+// }
+// }
 </style>
