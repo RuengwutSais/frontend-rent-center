@@ -7,11 +7,10 @@
           class="form-control"
           placeholder="ค้นหาอสังหาริมทรัพย์"
           v-model="filter_text"
-          @click="findEstate"
           @keydown.enter="findEstate"
         />
         <div class="input-group-append cursor-pointer">
-          <span class="input-group-text"
+          <span class="input-group-text" @click="findEstate"
             ><i class="fa-solid fa-magnifying-glass"></i
           ></span>
         </div>
@@ -26,11 +25,6 @@
             :options="optionsTypeSelect"
             class="mt-2"
           >
-            <template #first>
-              <b-form-select-option value="all"
-                >-- ประเภทอสังหาริมทรัพย์ทั้งหมด --</b-form-select-option
-              >
-            </template>
           </b-form-select>
         </div>
         <div class="select-city mt-2">
@@ -107,21 +101,11 @@
             <div class="col-6">
               <label for="">ห้องนอน</label>
               <b-form-select v-model="search.estate_bedrooms" :options="optionsBedroom">
-                <template #first>
-                  <b-form-select-option value="all"
-                    >-- ทั้งหมด --</b-form-select-option
-                  >
-                </template>
               </b-form-select>
             </div>
             <div class="col-6">
               <label for="">ห้องน้ำ</label>
               <b-form-select v-model="search.estate_bathrooms" :options="optionsToilet">
-                <template #first>
-                  <b-form-select-option value="all"
-                    >-- ทั้งหมด --</b-form-select-option
-                  >
-                </template>
               </b-form-select>
             </div>
           </div>
@@ -186,14 +170,14 @@ export default {
         estate_garage: null,
       },
       optionsTypeSelect: [
-        { value: null, text: "กรุณาเลือกประเภทอสังหาริมทรัพย์" },
+        { value: null, text: "-- ประเภทอสังหาริมทรัพย์ทั้งหมด --" },
         { value: "คอนโด", text: "คอนโด" },
         { value: "บ้านเดี่ยว", text: "บ้านเดี่ยว" },
         { value: "ทาวน์เฮ้าส์", text: "ทาวน์เฮ้าส์" },
         { value: "อพาร์ทเมนท์", text: "อพาร์ทเมนท์" },
       ],
       optionsBedroom: [
-        { value: null, text: "กรุณาเลือกจำนวนห้องนอน" },
+        { value: null, text: "-- ทั้งหมด --" },
         { value: "1", text: "1 ห้องนอน" },
         { value: "2", text: "2 ห้องนอน" },
         { value: "3", text: "3 ห้องนอน" },
@@ -201,13 +185,13 @@ export default {
         { value: "5", text: "มากกว่า 4 ห้องนอน" },
       ],
       optionsGarage: [
-        { value: null, text: "กรุณาเลือกจำนวนที่จอดรถ" },
+        { value: null, text: "-- ทั้งหมด --" },
         { value: "1", text: "1 ที่จอดรถ" },
         { value: "2", text: "2 ที่จอดรถ" },
         { value: "3", text: "มากกว่า 2 ที่จอดรถ" },
       ],
       optionsToilet: [
-        { value: null, text: "กรุณาเลือกจำนวนห้องน้ำ" },
+        { value: null, text: "-- ทั้งหมด --" },
         { value: "1", text: "1 ห้องน้ำ" },
         { value: "2", text: "2 ห้องน้ำ" },
         { value: "3", text: "มากกว่า 2 ห้องน้ำ" },

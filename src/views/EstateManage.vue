@@ -1199,17 +1199,8 @@ export default {
               errorimage = true
               this.files = [];
               this.selectedFiles = [];
-            }else {
-              this.$bvModal.hide("modalEditEstate");
-              errorimage = true
-              showErrorModal("ขออภัย,เกิดข้อผิดพลาด");
-              this.files = [];
-              this.selectedFiles = [];
             }
           });
-      }
-      if(errorimage){
-        return false
       }
       const headers = {
         headers: {

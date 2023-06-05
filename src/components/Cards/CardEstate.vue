@@ -79,8 +79,8 @@ export default {
       return this.$API_URL +  '/' + updatedData[0]
     },
     truncatedText(text) {
-      if (text.length > 50) {
-        return text.slice(0, 50) + "...";
+      if (text.length > 45) {
+        return text.slice(0, 45) + "...";
       } else {
         return text;
       }
