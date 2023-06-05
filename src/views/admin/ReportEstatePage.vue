@@ -49,31 +49,31 @@
                 <md-table-cell md-label="เบอร์โทรศัพท์ (ผู้รายงาน)">{{
                   item.user.phone
                 }}</md-table-cell>
-                <md-table-cell md-label="ชื่ออสังหาริมทรัพย์">{{
-                  item.estate.estate_name
-                }}</md-table-cell>
+                <md-table-cell md-label="ชื่ออสังหาริมทรัพย์">
+                  {{ item.estate?.estate_name }}
+                </md-table-cell>
                 <md-table-cell md-label="ประเภทอสังหาริมทรัพย์">{{
-                  item.estate.estate_type
+                  item.estate?.estate_type
                 }}</md-table-cell>
                 <md-table-cell md-label="สถานะ">
-                  <div v-if="item.estate.estate_status === 'available'">
+                  <div v-if="item.estate?.estate_status === 'available'">
                     ให้เช่า
                   </div>
-                  <div v-else-if="item.estate.estate_status === 'sold'">
+                  <div v-else-if="item.estate?.estate_status === 'sold'">
                     ขายแล้ว
                   </div>
-                  <div v-else-if="item.estate.estate_status === 'suspended'">
+                  <div v-else-if="item.estate?.estate_status === 'suspended'">
                     ถูกระงับ
                   </div>
-                  <div v-else-if="item.estate.estate_status === 'rented'">
+                  <div v-else-if="item.estate?.estate_status === 'rented'">
                     เช่าแล้ว
                   </div>
                 </md-table-cell>
                 <md-table-cell md-label="ชื่อ-นามสกุล (ผู้ประกาศ)">{{
-                  item.estate.user.first_name + " " + item.estate.user.last_name
+                  item.estate?.user.first_name + " " + item.estate?.user.last_name
                 }}</md-table-cell>
                 <md-table-cell md-label="เบอร์โทรศัพท์ (ผู้ประกาศ)">{{
-                  item.estate.user.phone
+                  item.estate?.user.phone
                 }}</md-table-cell>
                 <md-table-cell md-label="รายละเอียด">{{
                   item.description
@@ -149,11 +149,13 @@ export default {
       await this.$axios
         .post(this.$API_URL + "/all/report", bodyJson, headers)
         .then((res) => {
-          console.log("res: ", res);
-          this.users = res.data.report.reports;
-          this.totalItems = res.data.report.totalItems;
-          this.totalPages = res.data.report.totalPages;
-          this.currentPage = res.data.report.currentPage;
+          console.log("res: ", res.data.report);
+          // this.$nextTick(() => {
+            this.users = res.data.report.reports;
+            this.totalItems = res.data.report.totalItems;
+            this.totalPages = res.data.report.totalPages;
+            this.currentPage = res.data.report.currentPage;
+          // })
           this.busy = false;
         });
     },
@@ -169,8 +171,8 @@ export default {
       return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
   },
-  mounted() {
-    this.getAllReport();
+  async mounted() {
+    await this.getAllReport()
   },
 };
 </script>

@@ -952,7 +952,7 @@ export default {
         estate_bathrooms: "",
         estate_garage: "",
         estate_description: "",
-        images: [],
+        estate_image: [],
         lat: "",
         lng: "",
       },
@@ -1127,6 +1127,7 @@ export default {
           token: localStorage.getItem("token"),
         },
       };
+      this.formSelect = new FormData()
       this.selectedFiles.forEach((file) => {
         this.formSelect.append("images", file);
       });
@@ -1172,23 +1173,43 @@ export default {
           }
         });
     },
-    actionEditEstate() {
+    async actionEditEstate() {
       this.$v.editEstate.$touch();
       if (this.$v.editEstate.$invalid) {
         return false;
       }
+      this.formSelect = new FormData()
       this.selectedFiles.forEach((file) => {
         this.formSelect.append("images", file);
       });
       let setNameFile = [];
+      let errorimage = false
       if (this.selectedFiles.length > 0) {
-        this.$axios
+        await this.$axios
           .post(this.$API_URL + "/uploadimage", this.formSelect)
           .then((res) => {
             res.data.filepaths.map((res) => {
               setNameFile.push(res);
             });
+          })
+          .catch((error) => {
+            if(!error.response.data.status && error.response.data.error === "File too large") {
+              this.$bvModal.hide("modalEditEstate");
+              showErrorModal("ขออภัยรูปภาพมีขนาดใหญ่เกินไป");
+              errorimage = true
+              this.files = [];
+              this.selectedFiles = [];
+            }else {
+              this.$bvModal.hide("modalEditEstate");
+              errorimage = true
+              showErrorModal("ขออภัย,เกิดข้อผิดพลาด");
+              this.files = [];
+              this.selectedFiles = [];
+            }
           });
+      }
+      if(errorimage){
+        return false
       }
       const headers = {
         headers: {
@@ -1206,7 +1227,7 @@ export default {
         estate_description: this.editEstate.estate_description,
         estate_image:
           this.selectedFiles.length > 0
-            ? setNameFile
+            ? JSON.stringify(setNameFile)
             : this.editEstate.estate_image,
         estate_verify: "verify",
         address: this.editEstate.address,
@@ -1217,22 +1238,31 @@ export default {
         districts: this.editEstate.districts,
         postcode: this.editEstate.postcode,
       };
-      this.$axios
+      if(!errorimage) {
+        await this.$axios
         .post(
           this.$API_URL + `/update/estate/${this.editEstate.estate_id}`,
           bodyJson,
           headers
         )
         .then(async (res) => {
+          console.log('res.data: ', res.data)
           if (res.data.status) {
             this.$bvModal.hide("modalEditEstate");
             await this.getListMyEstate();
             this.stepPage = "listEstate";
-          } else {
+            this.ResetInput("resetedit");
+          }else {
             this.$bvModal.hide("modalEditEstate");
             showErrorModal("ขออภัย,เกิดข้อผิดพลาด");
           }
-        });
+          if(res.data.error === "File too large")
+          {
+            this.$bvModal.hide("modalEditEstate");
+            showErrorModal("ขออภัย,เกิดข้อผิดพลาด");
+          }
+        }); 
+      }
     },
     openModal(key, estateId = null) {
       if (key === "trash") {
@@ -1269,7 +1299,7 @@ export default {
         this.editEstate.estate_bathrooms = editvalue.estate_bathrooms;
         this.editEstate.estate_garage = editvalue.estate_garage;
         this.editEstate.districts = editvalue.districts;
-        this.editEstate.images = editvalue.estate_image;
+        this.editEstate.estate_image = editvalue.estate_image;
         this.editEstate.lat = editvalue.lat;
         this.editEstate.lng = editvalue.lng;
       }else if (key === 'listEstate') {
