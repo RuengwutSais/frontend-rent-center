@@ -953,6 +953,7 @@ export default {
         estate_garage: "",
         estate_description: "",
         estate_image: [],
+        estate_verify: "",
         lat: "",
         lng: "",
       },
@@ -1220,7 +1221,7 @@ export default {
           this.selectedFiles.length > 0
             ? JSON.stringify(setNameFile)
             : this.editEstate.estate_image,
-        estate_verify: "verify",
+        estate_verify: this.editEstate.estate_verify,
         address: this.editEstate.address,
         lat: this.coordinates.lat,
         lng: this.coordinates.lng,
@@ -1289,6 +1290,7 @@ export default {
         this.editEstate.estate_bedrooms = editvalue.estate_bedrooms;
         this.editEstate.estate_bathrooms = editvalue.estate_bathrooms;
         this.editEstate.estate_garage = editvalue.estate_garage;
+        this.editEstate.estate_verify = editvalue.estate_verify
         this.editEstate.districts = editvalue.districts;
         this.editEstate.estate_image = editvalue.estate_image;
         this.editEstate.lat = editvalue.lat;
