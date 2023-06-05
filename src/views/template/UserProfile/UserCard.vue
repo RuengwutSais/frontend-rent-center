@@ -1,7 +1,7 @@
 <template>
   <md-card class="md-card-profile">
       <div class="md-card-avatar">
-        <img class="img" :src="image ? image : defaultImage" />
+        <img class="img" :src="image ? image : require('../../../assets/img/user_avatar.png')" />
       </div>
     <md-card-content>
       <h4 class="card-title">{{ user.firstname }}  {{ user.lastname }}</h4>

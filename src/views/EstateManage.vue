@@ -1219,7 +1219,7 @@ export default {
         estate_description: this.editEstate.estate_description,
         estate_image:
           this.selectedFiles.length > 0
-            ? setNameFile
+            ? setNameFile.length > 0 ? setNameFile : null
             : this.editEstate.estate_image.length === 0 ? null : this.editEstate.estate_image ,
         estate_verify: this.editEstate.estate_verify,
         address: this.editEstate.address,
