@@ -34,7 +34,10 @@ export default {
   },
   computed: {
     linkImage() {
-      return this.$API_URL +  '/' + this.inputUser.image_profile
+      if(this.inputUser.image_profile) {
+        return this.$API_URL +  '/' + this.inputUser.image_profile
+      }
+      return null
     },
   },
   methods: {
