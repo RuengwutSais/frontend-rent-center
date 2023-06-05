@@ -1219,8 +1219,8 @@ export default {
         estate_description: this.editEstate.estate_description,
         estate_image:
           this.selectedFiles.length > 0
-            ? JSON.stringify(setNameFile)
-            : this.editEstate.estate_image,
+            ? setNameFile
+            : this.editEstate.estate_image.length === 0 ? null : this.editEstate.estate_image ,
         estate_verify: this.editEstate.estate_verify,
         address: this.editEstate.address,
         lat: this.coordinates.lat,
@@ -1248,12 +1248,16 @@ export default {
             this.$bvModal.hide("modalEditEstate");
             showErrorModal("ขออภัย,เกิดข้อผิดพลาด");
           }
-          if(res.data.error === "File too large")
-          {
-            this.$bvModal.hide("modalEditEstate");
-            showErrorModal("ขออภัย,เกิดข้อผิดพลาด");
-          }
-        }); 
+        })
+        .catch((error) => {
+            if(error) {
+              this.$bvModal.hide("modalEditEstate");
+              showErrorModal("เกิดข้อผิดพลาด 500 backend");
+              this.ResetInput("resetedit");
+              this.files = [];
+              this.selectedFiles = [];
+            }
+        });
       }
     },
     openModal(key, estateId = null) {
