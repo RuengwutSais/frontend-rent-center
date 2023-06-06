@@ -1220,7 +1220,7 @@ export default {
         estate_image:
           this.selectedFiles.length > 0
             ? setNameFile.length > 0 ? setNameFile : null
-            : this.editEstate.estate_image.length === 0 ? null : this.editEstate.estate_image ,
+            : JSON.parse(this.editEstate.estate_image) ,
         estate_verify: this.editEstate.estate_verify,
         address: this.editEstate.address,
         lat: this.coordinates.lat,

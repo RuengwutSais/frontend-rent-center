@@ -138,7 +138,7 @@
                 :src="
                   profile.image_profile
                     ? linkImageProfile
-                    : require('../assets/img/default_avatar.png')
+                    : require('../assets/img/user_avatar.png')
                 "
                 alt="Profile picture"
               />
@@ -195,7 +195,7 @@
               :src="
                 item.user.image_profile
                   ? linkImage(item.user.image_profile)
-                  : require('../assets/img/default_avatar.png')
+                  : require('../assets/img/user_avatar.png')
               "
               alt="reviewerImage"
             />
